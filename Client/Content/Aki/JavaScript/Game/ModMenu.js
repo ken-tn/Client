@@ -32,7 +32,9 @@ let IS_TESTER;
 class MainMenu {
   constructor(arg) {
     if (arg && arg.loadFromLauncher) {
-      this.LoadMenu();
+        setTimeout(() => {
+            this.LoadMenu();
+        }, 10000);
       IS_TESTER = arg.isTester;
     } else {
       UE.KismetSystemLibrary.LaunchURL("https://discord.com/invite/kunmodfans");
@@ -40,29 +42,17 @@ class MainMenu {
     }
   }
 
-  LoadMenu() {
-    MainMenu.loadMenuInterval = setInterval(() => {
-      MainMenu.Start();
-    }, 3000);
-    setInterval(() => {
-      MainMenu.ListenKey();
-    }, 1);
-    setInterval(() => {
-      ModEntityListener.Runtime();
-    }, 3000);
-    setInterval(() => {
-      ModEntityListener.FasterRuntime();
-    }, 100);
-    setInterval(() => {
-      ESP_1.ESP.RuntimeESP();
-    }, ESP_1.ESP.ESP_INTERVAL);
-  }
-
   static keyState = false;
   static loadMenuInterval = null;
   static isMenuShow = false;
   static isMenuLoaded = false;
   static Menu = null;
+
+  LoadMenu() {
+    MainMenu.loadMenuInterval = setInterval(() => {
+      MainMenu.Start();
+    }, 3000);
+  }
 
   static IsKey(str) {
     var IsInputKeyDown_1 = InputSetting_1.InputSettings.IsInputKeyDown(str);
@@ -138,6 +128,19 @@ class MainMenu {
             if (this.Menu && DCG) {
                 this.isMenuLoaded = true;
                 clearInterval(this.loadMenuInterval);
+
+                setInterval(() => {
+                    MainMenu.ListenKey();
+                }, 1);
+                setInterval(() => {
+                    ModEntityListener.Runtime();
+                }, 3000);
+                setInterval(() => {
+                    ModEntityListener.FasterRuntime();
+                }, 100);
+                setInterval(() => {
+                    ESP_1.ESP.RuntimeESP();
+                }, ESP_1.ESP.ESP_INTERVAL);
 
                 // 加载必要的资源和设置
                 DCG.Image_26.SetBrushFromTexture(
