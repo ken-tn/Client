@@ -36,7 +36,7 @@ class ModManager {
     ModEnabled: true,
     GodMode: false,
     HitMultiplier: false,
-    Hitcount: 15,
+    Hitcount: 3,
     AutoPickTreasure: false,
     AntiDither: false,
     NoCD: false,

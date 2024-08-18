@@ -26,11 +26,12 @@ class ModMethod {
   //怪物淹死
   static MonsterDrownRequest(entity) {
     //v1.10
-    CombatMessage_1.CombatNet.Call(
-      24697 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
-      entity,
-      Protocol_1.Aki.Protocol.jNn.create()
-    );
+    // update here
+    // CombatMessage_1.CombatNet.Call(
+    //   24697 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
+    //   entity,
+    //   Protocol_1.Aki.Protocol.jNn.create()
+    // );
   }
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {
@@ -45,13 +46,14 @@ class ModMethod {
 
   static AnimalDieRequest(entity) {
     //v1.1work
-    ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
-      entity.GetComponent(0).GetCreatureDataId(),
-      entity.GetComponent(1).ActorLocationProxy
-    );
-    entity
-      .CheckGetComponent(0)
-      .SetLivingStatus(Protocol_1.Aki.Protocol.Rvs.Proto_Dead);
+    // update here
+    // ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
+    //   entity.GetComponent(0).GetCreatureDataId(),
+    //   entity.GetComponent(1).ActorLocationProxy
+    // );
+    // entity
+    //   .CheckGetComponent(0)
+    //   .SetLivingStatus(Protocol_1.Aki.Protocol.Rvs.Proto_Dead);
   }
   static AnimalDropRequest(entity) {
     let id = entity.Entity.Id;
@@ -61,11 +63,12 @@ class ModMethod {
   }
 
   static LandingDamageRequest(Entity) {
-    let Protocol = Protocol_1.Aki.Protocol.Ezn.create();
-    Protocol.rkn = MathUtils_1.MathUtils.NumberToLong(Entity.Id);
-    Protocol.K7n = -4000;
-    Protocol.Q7n = 66;
-    Net_1.Net.Call(25622, Protocol);
+    // update here
+    // let Protocol = Protocol_1.Aki.Protocol.Ezn.create();
+    // Protocol.rkn = MathUtils_1.MathUtils.NumberToLong(Entity.Id);
+    // Protocol.K7n = -4000;
+    // Protocol.Q7n = 66;
+    // Net_1.Net.Call(25622, Protocol);
   }
 
   static SetWorldTimeDilation(t) {

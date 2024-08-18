@@ -1220,11 +1220,12 @@ class ForceUnlocker {
         let data = new Protocol_1.Aki.Protocol.o$n();
         data.Ekn = achievement.Id;
         data.QFn = achievement.GroupId;
-        Net_1.Net.Call(
-          24815 /*NetDefine_1.ERequestMessageId.AchievementReceiveRequest*/,
-          data,
-          (e) => {}
-        );
+        // here needs to be updated
+        // Net_1.Net.Call(
+        //   24815 /*NetDefine_1.ERequestMessageId.AchievementReceiveRequest*/,
+        //   data,
+        //   (e) => {}
+        // );
       }
     }
   }

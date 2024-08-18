@@ -26,17 +26,12 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
             this.CloseMe()
         }, this.qAt = () => {
             var t = this.InputText.GetText();
-            // here
-            this.ExecuteInputConfirm(t);
-            //     i = StringUtils_1.StringUtils.GetStringRealCount(t);
-            // i > this.GetMaxLimit()?(this.RefreshTips(2), this.j3 = 0) : 0 === i && this.InputData.IsCheckNone?(this.RefreshTips(1), this.j3 = 0) : i < this.GetMinLimit()?(this.RefreshTips(3), this.j3 = 0) : this.ExtraConfirmCheck(i, t) && this.ExecuteInputConfirm(t)
+            this.ExecuteInputConfirm(t)
         }, this.GAt = () => {
             this.SetTipsVisible(!1), this.ConfirmButton.SetSelfInteractive(!0), this.j3 = CommonDefine_1.INVALID_VALUE
         }, this.NAt = () => {
             this.OAt("PrefabTextItem_Entertext_Text", 0)
-        }, this.kAt = () => {
-            // this.OAt("PrefabTextItem_Textoverlength_Text", CommonDefine_1.INVALID_VALUE), this.ConfirmButton.SetSelfInteractive(!1)
-        }, this.FAt = () => {
+        }, this.kAt = () => {}, this.FAt = () => {
             this.OAt("CDKey_TooShort", 0), this.ConfirmButton.SetSelfInteractive(!1)
         }, this.VAt = () => {
             this.OAt("PrefabTextItem_Textillegality_Text", 0)
@@ -77,25 +72,19 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
             [4, this.qAt]
         ]
     }
-    ExtraConfirmCheck(t, i) {
+    ExtraConfirmCheck(t, e) {
         return !0
     }
     ExecuteInputConfirm(t) {
-        if (this.InputData?.CustomFunc) {
-            //Add CustomFunc
-            this.InputData.CustomFunc?.(t).then(() => this.CloseMe());
-        } else {
-            //The original
-            this.InputData.ConfirmFunc?.(t).then(t => {
-                t === Protocol_1.Aki.Protocol.O4n.Proto_ContainsDirtyWord?this.RefreshTips(4) : this.CloseMe()
-            }, () => {
-                Log_1.Log.CheckError() && Log_1.Log.Error("UiCommon", 11, "通用输入框执行出现未知错误")
-            })
-        }
+        this.InputData?.CustomFunc?this.InputData.CustomFunc?.(t).then((() => this.CloseMe())) : this.InputData.ConfirmFunc?.(t).then((t => {
+            t === Protocol_1.Aki.Protocol.O4n.Proto_ContainsDirtyWord?this.RefreshTips(4) : this.CloseMe()
+        }), (() => {
+            Log_1.Log.CheckError() && Log_1.Log.Error("UiCommon", 11, "通用输入框执行出现未知错误")
+        }))
     }
     OnBeforeCreate() {
         this.InputData = this.OpenParam, this.xAt = {
-            [0]: this.GAt,
+            0: this.GAt,
             1: this.NAt,
             2: this.kAt,
             3: this.FAt,
@@ -104,17 +93,17 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
             6: this.WAt
         }
     }
-    OAt(t, i, ...e) {
+    OAt(t, e, ...i) {
         this.SetTipsVisible(!0);
-        var s = this.GetText(2);
-        LguiUtil_1.LguiUtil.SetLocalTextNew(s, t, e), this.j3 = i
+        var n = this.GetText(2);
+        LguiUtil_1.LguiUtil.SetLocalTextNew(n, t, i), this.j3 = e
     }
-    jAt(t, i) {
-        this.SetTipsVisible(!0), this.GetText(2).SetText(t), this.j3 = i
+    jAt(t, e) {
+        this.SetTipsVisible(!0), this.GetText(2).SetText(t), this.j3 = e
     }
-    SetBottomTipsTextAndColor(t, i) {
-        var e = this.GetText(8);
-        LguiUtil_1.LguiUtil.SetLocalTextNew(e, t), e.SetColor(i)
+    SetBottomTipsTextAndColor(t, e) {
+        var i = this.GetText(8);
+        LguiUtil_1.LguiUtil.SetLocalTextNew(i, t), i.SetColor(e)
     }
     SetBottomTipsShowState(t) {
         this.GetText(8).SetUIActive(t)
@@ -148,7 +137,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
         this.InputText.OnTextChange.Unbind()
     }
     mGe() {
-        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), this.InputData.TitleTextArgs.TextKey, ...this.InputData.TitleTextArgs.Params)
+        this.InputData?.Title?this.GetText(0).SetText(this.InputData.Title) : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), this.InputData.TitleTextArgs.TextKey, ...this.InputData.TitleTextArgs.Params)
     }
     RefreshTips(t) {
         t !== this.PAt && (this.PAt = t, this.xAt[t]())
@@ -159,4 +148,3 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
     }
 }
 exports.CommonInputViewBase = CommonInputViewBase;
-//# sourceMappingURL=CommonInputViewBase.js.map

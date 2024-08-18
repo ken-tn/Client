@@ -17,11 +17,12 @@ const puerts_1 = require("puerts"),
     TimeUtil_1 = require("../../Common/TimeUtil"),
     ConfigManager_1 = require("../../Manager/ConfigManager"),
     ModelManager_1 = require("../../Manager/ModelManager"),
-    EntityManager_1 = require("../../Manager/ModFuncs/EntityManager"),
     ModManager_1 = require("../../Manager/ModManager"),
+    EntityManager_1 = require("../../Manager/ModFuncs/EntityManager"),
     InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
     TsInteractionUtils_1 = require("./TsInteractionUtils"),
     DEFAULT_CD = .5;
+    const { EntityFilter } = require("../../Manager/ModFuncs/EntityFilter");
 class SameTipInteract {
     constructor() {
         this.EntityId = 0, this.CurrentDistance = 0
@@ -117,11 +118,15 @@ class InteractionModel extends ModelBase_1.ModelBase {
     GetCommonExitOption() {
         return this.I_i || this.w_i(), this.I_i
     }
-    EnterInteractCd(t = DEFAULT_CD) {
-        this.T_i = TimeUtil_1.TimeUtil.GetServerTime() + t
-    }
+    // here
+    EnterInteractCd(t = .5) {}
     InInteractCd() {
-        return this.T_i > TimeUtil_1.TimeUtil.GetServerTime()
+        return !1
+    }
+    InteractPawn(t) {
+        const e = t.GetComponent(105),
+            i = ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(0);
+        e.dhn(i)
     }
     HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
         if (n) {
