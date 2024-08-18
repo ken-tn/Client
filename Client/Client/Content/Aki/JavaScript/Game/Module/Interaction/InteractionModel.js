@@ -124,30 +124,30 @@ class InteractionModel extends ModelBase_1.ModelBase {
         return this.T_i > TimeUtil_1.TimeUtil.GetServerTime()
     }
     HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
-        // if (n) {
-        //     // auto interact
-        //     const Entity = n.GetEntity();
-        //     const BlueprintType =
-        //         EntityManager_1.EntityManager.GetBlueprintType3(Entity);
-        //     if (
-        //         EntityFilter.isneedLoot(BlueprintType) &&
-        //         ModManager_1.ModManager.Settings.AutoLoot
-        //     ) {
-        //         return this.InteractPawn(Entity);
-        //     }
-        //     if (
-        //         EntityFilter.isneedTreasure(BlueprintType) &&
-        //         ModManager_1.ModManager.Settings.AutoPickTreasure
-        //     ) {
-        //         return this.InteractPawn(Entity);
-        //     }
-        //     if (
-        //         BlueprintType.startsWith("VisionItem") &&
-        //         ModManager_1.ModManager.Settings.AutoAbsorbnew
-        //     ) {
-        //         return this.InteractPawn(Entity);
-        //     }
-        // }
+        if (n) {
+            // auto interact
+            const Entity = n.GetEntity();
+            const BlueprintType =
+                EntityManager_1.EntityManager.GetBlueprintType3(Entity);
+            if (
+                EntityFilter.isneedLoot(BlueprintType) &&
+                ModManager_1.ModManager.Settings.AutoLoot
+            ) {
+                return this.InteractPawn(Entity);
+            }
+            if (
+                EntityFilter.isneedTreasure(BlueprintType) &&
+                ModManager_1.ModManager.Settings.AutoPickTreasure
+            ) {
+                return this.InteractPawn(Entity);
+            }
+            if (
+                BlueprintType.startsWith("VisionItem") &&
+                ModManager_1.ModManager.Settings.AutoAbsorbnew
+            ) {
+                return this.InteractPawn(Entity);
+            }
+        }
 
         if (t) {
             let t = !1;

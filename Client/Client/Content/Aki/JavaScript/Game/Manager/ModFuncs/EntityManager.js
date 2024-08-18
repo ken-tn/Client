@@ -14,6 +14,7 @@ const puerts_1 = require("puerts"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
 
+  // obfuscated variable here! gXr
 class EntityManager {
   static GetEntitybyId(entityId) {
     return EntitySystem_1.EntitySystem.Get(entityId);
@@ -77,7 +78,7 @@ class EntityManager {
   }
   static GetBlueprintType2(entity) {
     try {
-      let Type = entity.Entity.Components[0].qXr;
+      let Type = entity.Entity.Components[0].gXr;
       return Type;
     } catch (error) {
       return "unknownBlueprintType";
@@ -86,7 +87,7 @@ class EntityManager {
 
   static GetBlueprintType3(Entity) {
     try {
-      let Type = Entity.Components[0].qXr;
+      let Type = Entity.Components[0].gXr;
       return Type;
     } catch (error) {
       return "unknownBlueprintType";
@@ -134,7 +135,7 @@ class EntityManager {
     return BlueprintType.startsWith("Quest");
   }
   static isVision(entity) {
-    return entity.Entity.Components[0].qXr.startsWith("VisionItem");
+    return entity.Entity.Components[0].gXr.startsWith("VisionItem");
   }
   static isWeapon(entity) {
     let BlueprintType = this.GetBlueprintType(entity);
@@ -149,13 +150,13 @@ class EntityManager {
     return BlueprintType.startsWith("SceneObj");
   }
   static isTeleport(entity) {
-    return entity.Entity.Components[0].qXr.startsWith("Teleport");
+    return entity.Entity.Components[0].gXr.startsWith("Teleport");
   }
   static isSonanceCasket(entity) {
-    return entity.Entity.Components[0].qXr == "Gameplay021";
+    return entity.Entity.Components[0].gXr == "Gameplay021";
   }
   static isMutterfly(entity) {
-    return entity.Entity.Components[0].qXr == "Gameplay111";
+    return entity.Entity.Components[0].gXr == "Gameplay111";
   }
   static SetPlayerSpeed(value) {
     let player = this.GetPlayerEntity();
