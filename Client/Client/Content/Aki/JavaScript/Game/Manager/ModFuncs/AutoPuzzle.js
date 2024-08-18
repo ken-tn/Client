@@ -62,7 +62,7 @@ class AutoPuzzle extends EntityManager_1.EntityManager {
 
   static SetGuideRange(entity) {
     if (this.isneed(entity, SetGuidelist)) {
-      let PawnPerceptionComponent = entity.Entity.GetComponent(104);
+      let PawnPerceptionComponent = entity.Entity.GetComponent(106);
       try {
         PawnPerceptionComponent.SetGuideRange(1e9);
       } catch (error) {}
