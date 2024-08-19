@@ -115,8 +115,15 @@ class EntityManager {
     return BlueprintType.startsWith("Treasure");
   }
   static isMonster(entity) {
-    let BlueprintType = this.GetBlueprintType2(entity);
-    return BlueprintType.startsWith("Monster");
+    // let BlueprintType = this.GetBlueprintType2(entity);
+    // let monster = BlueprintType.startsWith("Monster");
+    let monster = false;
+    try {
+        monster = entity.Entity.GetComponent(0).IsRealMonster();
+    } catch {
+
+    }
+    return monster;
   }
   static isGameplay(entity) {
     let BlueprintType = this.GetBlueprintType2(entity);

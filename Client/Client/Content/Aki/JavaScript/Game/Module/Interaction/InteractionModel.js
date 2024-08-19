@@ -119,7 +119,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         return this.I_i || this.w_i(), this.I_i
     }
     // here
-    EnterInteractCd(t = .5) {}
+    EnterInteractCd(t = .1) {}
     InInteractCd() {
         return !1
     }

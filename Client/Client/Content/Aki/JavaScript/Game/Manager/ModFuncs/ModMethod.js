@@ -25,13 +25,18 @@ const puerts_1 = require("puerts"),
 class ModMethod {
   //怪物淹死
   static MonsterDrownRequest(entity) {
-    //v1.10
+    //v1.20
     // update here
+    let prot = Protocol_1.Aki.Protocol.v4n.create()
+    prot.e8n = entity.GetComponent(3).ActorLocationProxy
+
     CombatMessage_1.CombatNet.Call(
         18989 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
         entity,
-        Protocol_1.Aki.Protocol.v4n.create()
+        prot
     );
+
+    // ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(1, )
   }
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {
@@ -47,13 +52,13 @@ class ModMethod {
   static AnimalDieRequest(entity) {
     //v1.1work
     // update here
-    // ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
-    //   entity.GetComponent(0).GetCreatureDataId(),
-    //   entity.GetComponent(1).ActorLocationProxy
-    // );
-    // entity
-    //   .CheckGetComponent(0)
-    //   .SetLivingStatus(Protocol_1.Aki.Protocol.Rvs.Proto_Dead);
+    ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
+      entity.GetComponent(0).GetCreatureDataId(),
+      entity.GetComponent(1).ActorLocationProxy
+    );
+    entity
+      .CheckGetComponent(0)
+      .SetLivingStatus(Protocol_1.Aki.Protocol.HEs.Proto_Dead);
   }
   static AnimalDropRequest(entity) {
     let id = entity.Entity.Id;
