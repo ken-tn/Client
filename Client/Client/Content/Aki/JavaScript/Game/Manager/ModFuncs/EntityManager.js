@@ -119,6 +119,7 @@ class EntityManager {
     // let monster = BlueprintType.startsWith("Monster");
     let monster = false;
     try {
+        // CreatureDataComponent
         monster = entity.Entity.GetComponent(0).IsRealMonster();
     } catch {
 

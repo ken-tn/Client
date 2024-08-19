@@ -50,13 +50,14 @@ class MobVacuum extends EntityManager_1.EntityManager {
   }
 
   static SyncMonster(entity, pos) {
-    var t = entity.Entity.GetComponent(57);
+    // update here CombatMessageController.js AfterTick
+    var t = entity.Entity.GetComponent(58);
     var i = t.GetCurrentMoveSample();
     i.Location = pos;
     t.PendingMoveInfos.push(i);
-    var s = Protocol_1.Aki.Protocol.Xhs.create();
-    s.Mys.push(t.CollectPendingMoveInfos());
-    Net_1.Net.Send(29494 /*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
+    var s = Protocol_1.Aki.Protocol.$us.create();
+    s.kRs.push(t.CollectPendingMoveInfos());
+    Net_1.Net.Send(28674 /*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
   }
 }
 //puerts.logger.info(debug)
