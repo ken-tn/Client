@@ -27,11 +27,11 @@ class ModMethod {
   static MonsterDrownRequest(entity) {
     //v1.10
     // update here
-    // CombatMessage_1.CombatNet.Call(
-    //   24697 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
-    //   entity,
-    //   Protocol_1.Aki.Protocol.jNn.create()
-    // );
+    CombatMessage_1.CombatNet.Call(
+        18989 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
+        entity,
+        Protocol_1.Aki.Protocol.v4n.create()
+    );
   }
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {
