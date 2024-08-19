@@ -15,11 +15,14 @@ const puerts_1 = require("puerts"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
+  ModMenu_1 = require("../../ModMenu"),
   CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  CharacterDamageCalculations_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterDamageCalculations"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   WeatherController_1 = require("../../Module/Weather/WeatherController"),
   TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
+  EntityManager_1 = require("./EntityManager"),
   ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
@@ -35,8 +38,22 @@ class ModMethod {
         entity,
         prot
     );
+    // ModMenu_1.MainMenu.KunLog("Calling 1");
+    // this.ThrowDamageChangeRequest(entity, 5, "1604001001n");
+    // this.LandingDamageRequest(EntityManager_1.EntityManager.GetPlayerEntity());
 
-    // ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(1, )
+    // entity.GetComponent(188).RemoveTag(1918148596);
+    // entity.GetComponent(188).RemoveTag(560942831);
+    // ModMenu_1.MainMenu.KunLog("Called 2")
+
+    // var t = Protocol_1.Aki.Protocol.g4n.create();
+    // t.P4n = entity.GetComponent(0).GetCreatureDataId()
+    // t.$4n = 1
+    // CombatMessage_1.CombatNet.Call(16858, this.Entity, t, () => {})
+    // ModMenu_1.MainMenu.KunLog("Called 3")
+
+    // this.LandingDamageRequest(entity);
+    // ModMenu_1.MainMenu.KunLog("Called 4")
   }
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {
@@ -68,12 +85,13 @@ class ModMethod {
   }
 
   static LandingDamageRequest(Entity) {
-    // update here
-    // let Protocol = Protocol_1.Aki.Protocol.Ezn.create();
-    // Protocol.rkn = MathUtils_1.MathUtils.NumberToLong(Entity.Id);
-    // Protocol.K7n = -4000;
-    // Protocol.Q7n = 66;
-    // Net_1.Net.Call(25622, Protocol);
+    // update here (they're immune to fall damage🗿)
+    let Protocol = Protocol_1.Aki.Protocol.gis.create();
+    // ModMenu_1.MainMenu.KunLog(Entity.GetComponent(0).GetCreatureDataId());
+    Protocol.P4n = MathUtils_1.MathUtils.NumberToLong(Entity.GetComponent(0).GetCreatureDataId())
+    Protocol.TKn = 2037;
+    Protocol.LKn = 3000;
+    Net_1.Net.Call(28127, Protocol);
   }
 
   static SetWorldTimeDilation(t) {

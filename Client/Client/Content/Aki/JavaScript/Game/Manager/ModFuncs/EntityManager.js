@@ -55,6 +55,9 @@ class EntityManager {
   static GetPosition(Entity) {
     let a = Entity.GetComponent(1);
     let actor = a.ActorInternal;
+    if (!actor) {
+        return;
+    }
     let pos = actor.K2_GetActorLocation();
 
     return pos;
@@ -173,7 +176,9 @@ class EntityManager {
   }
   static SetPlayerSpeed(value) {
     let player = this.GetPlayerEntity();
-    player.SetTimeDilation(value);
+    if (player) {
+        player.SetTimeDilation(value);
+    }
   }
   static GetCurrRoleId() {
     let player = this.GetPlayerEntity();

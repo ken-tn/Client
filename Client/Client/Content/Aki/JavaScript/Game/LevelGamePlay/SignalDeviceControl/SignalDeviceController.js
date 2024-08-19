@@ -12,7 +12,7 @@ class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.OpenView("SignalDeviceView", e),
       (this.HDe = a);
     if (ModManager_1.ModManager.Settings.AutoPuzzle) {
-      ModelManager_1.ModelManager.SignalDeviceModel.SDe();
+      ModelManager_1.ModelManager.SignalDeviceModel.EDe();
     }
   }
   static OnDotPressed(e, a) {
