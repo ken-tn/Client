@@ -27,11 +27,26 @@ class MobVacuum extends EntityManager_1.EntityManager {
 
   static MobVacuum(entity) {
     if (!ModManager_1.ModManager.Settings.MobVacuum) return;
+    
     if (this.isMonster(entity) && this.isIndistance(entity)) {
-      let playerpos = this.GetPlayerPos();
-      let ActorComp = entity.Entity.GetComponent(1);
-      ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
-      this.SyncMonster(entity, playerpos);
+        // confirm TP
+        let timer = null
+        timer = setInterval(() => {
+            const monsterPos = this.GetPosition(entity.Entity);
+            const distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
+            if (distance < 500) {
+                clearInterval(timer);
+            }
+            let playerpos = this.GetPlayerPos();
+            playerpos.Z += 50;
+            let fv = this.GetPlayerForwardVector();
+            playerpos.X = playerpos.X - (fv.X * 200);
+            playerpos.Y = playerpos.Y - (fv.Y * 200);
+            let ActorComp = entity.Entity.GetComponent(1);
+            ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
+            // ActorComp.ActorInternal.SetActorEnableCollision(0); no hit detection ;-;
+            this.SyncMonster(entity, playerpos);
+        }, 100);
     }
   }
 

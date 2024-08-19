@@ -902,6 +902,7 @@ class ModEntityListener {
         KillAura_1.KillAura.killAura(entity);
         KillAura_1.KillAura.KillAnimal(entity);
         AutoDestroy_1.AutoDestroy.AutoDestroy(entity);
+        MobVacuum_1.MobVacuum.MobVacuum(entity);
         MobVacuum_1.MobVacuum.VacuumCollect(entity);
         AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entity);
     });
@@ -911,7 +912,6 @@ class ModEntityListener {
     if (!ModUtils_1.ModUtils.isInGame()) return;
 
     ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
-        MobVacuum_1.MobVacuum.MobVacuum(entity);
         if (ModManager_1.ModManager.Settings.PerceptionRange) {
             PerceptionRange_1.PerceptionRange.SetAll(entity);
         }

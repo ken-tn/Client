@@ -34,6 +34,11 @@ class EntityManager {
     let pos = Actor?.K2_GetActorLocation();
     return pos;
   }
+  static GetPlayerForwardVector() {
+    let Actor = this.GetPlayerActor();
+    let vec = Actor?.GetActorForwardVector();
+    return vec;
+  }
 
   static GetEntityType(entity) {
     let type = entity.Entity.GetComponent(0).GetEntityType();
