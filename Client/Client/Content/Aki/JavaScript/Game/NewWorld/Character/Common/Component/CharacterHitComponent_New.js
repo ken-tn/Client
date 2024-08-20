@@ -43,6 +43,7 @@ const UE = require("ue"),
     ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
     ModelManager_1 = require("../../../../Manager/ModelManager"),
     EntityManager_1 = require("../../../../Manager/ModFuncs/EntityManager"),
+    KillAura_1 = require("../../../../Manager/ModFuncs/KillAura"),
     BattleUiDefine_1 = require("../../../../Module/BattleUi/BattleUiDefine"),
     CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
     GamepadController_1 = require("../../../../Module/Gamepad/GamepadController"),
@@ -297,14 +298,6 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         this.l6r(), this.ProcessOnHitMaterial(), this.jVr()
     }
 
-    isIndistance(entity) {
-        let monsterPos = EntityManager_1.EntityManager.GetPosition(entity.Entity);
-        let distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
-        if (distance < ModManager_1.ModManager.Settings.killAuraRadius * 100) {
-            return true;
-        } return false;
-    }
-
     OnHit(t, e, i, r, o, a, n, s, h) {
         var l = Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity,
             c = EntitySystem_1.EntitySystem.Get(t.Target.Id),
@@ -454,60 +447,43 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         t && 0 < t.length?(i = (t = t[0]).IsWeaknessHit, this.sVr ||= i, i = this.v6r(e, this.sVr, !1, t.Index), this.ToughDecreaseValue = i.ToughResult) : (t = this.v6r(e, this.sVr, !1), this.ToughDecreaseValue = t.ToughResult)
     }
     v6r(t, e, i, r = -1, o = 1) {
+        var a, n, s = t.ReBulletData.Base.DamageId,
+        h = t.Target.GetComponent(18), n = t.Target.GetComponent(33)
+        a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId
+        const dict = {
+            DamageDataId: s,
+            SkillLevel: t.SkillLevel,
+            Attacker: t.Attacker,
+            HitPosition: t.HitPosition.ToUeVector(),
+            IsAddEnergy: this.aVr,
+            IsCounterAttack: this.IsTriggerCounterAttack,
+            ForceCritical: e,
+            IsBlocked: i,
+            PartId: r,
+            ExtraRate: o,
+            CounterSkillMessageId: this.IsTriggerCounterAttack?n.CurrentSkill?.CombatMessageId : void 0,
+            BulletId: t.BulletId,
+            CounterSkillId: this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
+        }
+
+        let res = s < 1 || !h?{
+            DamageResult: 0,
+            ToughResult: 0
+        } : (h && n?(h?.ExecuteBulletDamage(t.BulletEntityId, dict, a)) : {
+            DamageResult: 1e4,
+            ToughResult: 0
+        })
+        
         if (ModManager_1.ModManager.Settings.hitAll) {
             ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
                 // hit all enemies here
-                if (EntityManager_1.EntityManager.isMonster(entity) && (ModManager_1.ModManager.Settings.killAuraState === 0 ? this.isIndistance(entity) : true)) {
-                    var a, n, s = t.ReBulletData.Base.DamageId,
-                        h = t.Target;
-                    return s < 1 || !h?{
-                        DamageResult: 0,
-                        ToughResult: 0
-                    } : (h = entity.Entity.GetComponent(18), n = entity.Entity.GetComponent(33), entity.Entity.GetComponent(18) && n?(a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId, n = n.CurrentSkill, entity.Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, {
-                        DamageDataId: s,
-                        SkillLevel: t.SkillLevel,
-                        Attacker: t.Attacker,
-                        HitPosition: t.HitPosition.ToUeVector(),
-                        IsAddEnergy: this.aVr,
-                        IsCounterAttack: this.IsTriggerCounterAttack,
-                        ForceCritical: e,
-                        IsBlocked: i,
-                        PartId: r,
-                        ExtraRate: o,
-                        CounterSkillMessageId: this.IsTriggerCounterAttack?n?.CombatMessageId : void 0,
-                        BulletId: t.BulletId,
-                        CounterSkillId: this.IsTriggerCounterAttack?Number(n?.SkillId) : void 0
-                    }, a)) : {
-                        DamageResult: 1e4,
-                        ToughResult: 0
-                    })
+                if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
+                    ModUtils_1.ModUtils.Sleep(Math.floor(Math.random() * 500)); // async sleep
+                    res = entity.Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
                 }
-            });
-        } else {
-            var a, n, s = t.ReBulletData.Base.DamageId,
-            h = t.Target;
-            return s < 1 || !h?{
-                DamageResult: 0,
-                ToughResult: 0
-            } : (h = t.Target.GetComponent(18), n = t.Target.GetComponent(33), h && n?(a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId, n = n.CurrentSkill, h?.ExecuteBulletDamage(t.BulletEntityId, {
-                DamageDataId: s,
-                SkillLevel: t.SkillLevel,
-                Attacker: t.Attacker,
-                HitPosition: t.HitPosition.ToUeVector(),
-                IsAddEnergy: this.aVr,
-                IsCounterAttack: this.IsTriggerCounterAttack,
-                ForceCritical: e,
-                IsBlocked: i,
-                PartId: r,
-                ExtraRate: o,
-                CounterSkillMessageId: this.IsTriggerCounterAttack?n?.CombatMessageId : void 0,
-                BulletId: t.BulletId,
-                CounterSkillId: this.IsTriggerCounterAttack?Number(n?.SkillId) : void 0
-            }, a)) : {
-                DamageResult: 1e4,
-                ToughResult: 0
             })
-        }
+        };
+        return res;
     }
     C6r(t) {
         return (t = Object.assign(t)).Attacker = this.iVr.GetComponent(48).GetAttributeHolder(), t.Target = this.Entity.GetComponent(48)?.GetAttributeHolder() ?? this.Entity, t

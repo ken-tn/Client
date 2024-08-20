@@ -414,6 +414,7 @@ class MainMenu {
         value = value.toFixed(1);
         this.Menu.NewKillAuraValue.SetText(value);
         ModManager_1.ModManager.Settings.killAuraRadius = value;
+        ModManager_1.ModManager.Settings.VacuumRadius = value;
         this.KunLog("Hit Multiplier Count: " + value);
       });
 

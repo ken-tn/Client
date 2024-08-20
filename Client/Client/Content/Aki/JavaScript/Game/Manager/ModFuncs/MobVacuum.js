@@ -32,11 +32,13 @@ class MobVacuum extends EntityManager_1.EntityManager {
         // confirm TP
         let timer = null
         timer = setInterval(() => {
-            if (!entity) {
+            let monsterPos = null
+            try {
+                monsterPos = this.GetPosition(entity.Entity);
+            } catch {
                 clearInterval(timer);
                 return;
             }
-            const monsterPos = this.GetPosition(entity.Entity);
             const distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
             if (distance < 500) {
                 clearInterval(timer);
