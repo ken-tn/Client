@@ -42,6 +42,7 @@ const UE = require("ue"),
     ConfigManager_1 = require("../../../../Manager/ConfigManager"),
     ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
     ModelManager_1 = require("../../../../Manager/ModelManager"),
+    EntityManager_1 = require("../../../../Manager/ModFuncs/EntityManager"),
     BattleUiDefine_1 = require("../../../../Module/BattleUi/BattleUiDefine"),
     CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
     GamepadController_1 = require("../../../../Module/Gamepad/GamepadController"),
@@ -53,7 +54,9 @@ const UE = require("ue"),
     BulletTypes_1 = require("../../../Bullet/BulletTypes"),
     BulletUtil_1 = require("../../../Bullet/BulletUtil"),
     ModManager_1 = require("../../../../Manager/ModManager"),
+    ModUtils_1 = require("../../../../Manager/ModFuncs/ModUtils"),
     ModMenu_1 = require("../../../../ModMenu"),
+    BulletController_1 = require("../../../Bullet/BulletController"),
     FightLibrary_1 = require("../Blueprint/Utils/FightLibrary"),
     CharacterBuffIds_1 = require("./Abilities/CharacterBuffIds"),
     CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
@@ -271,10 +274,38 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         ModelManager_1.ModelManager.GameModeModel.IsMulti || (t.gWn.F8n = 0, t.gWn.sVn = 0, t.gWn.cWn = !1, t.gWn.rWn = void 0, t.gWn.oWn = void 0, t.gWn.jDs = !1, t.gWn.aWn = !1, t.gWn.hWn = !1, t.gWn.uWn = void 0, t.gWn.dWn = !1, t.gWn.mWn = "", t.gWn.sWn = 0)
     }
     OnHitOne(t, e, i, r, o, a, n, s, h) {
-        this.rVr = t, this.LastHitData = t, this.iVr = EntitySystem_1.EntitySystem.Get(t.Attacker.Id), this.nVr = e, this.aVr = r, this.hVr = a, this.lVr = n, this._Vr = s, this.uVr = h, this.IVr = o, this.fVr = !1, this.JVr(), this.zVr(i), this.IsTriggerCounterAttack && this.ZVr(), this.t6r(), this.o6r(), this.iwr(i), this.n6r(), this.a6r(i), GlobalData_1.GlobalData.Networking() && this.XVr(i), this.l6r(), this.ProcessOnHitMaterial(), this.jVr()
+        this.rVr = t,
+        this.LastHitData = t,
+        this.iVr = EntitySystem_1.EntitySystem.Get(t.Attacker.Id),
+        this.nVr = e,
+        this.aVr = r,
+        this.hVr = a,
+        this.lVr = n,
+        this._Vr = s,
+        this.uVr = h,
+        this.IVr = o,
+        this.fVr = !1,
+        this.JVr(),
+        this.zVr(i)
+        this.IsTriggerCounterAttack && this.ZVr()
+        this.t6r()
+        this.o6r() // trigger
+        this.iwr(i),
+        this.n6r(),
+        this.a6r(i)
+        GlobalData_1.GlobalData.Networking() && this.XVr(i)
+        this.l6r(), this.ProcessOnHitMaterial(), this.jVr()
     }
+
+    isIndistance(entity) {
+        let monsterPos = EntityManager_1.EntityManager.GetPosition(entity.Entity);
+        let distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
+        if (distance < ModManager_1.ModManager.Settings.killAuraRadius * 100) {
+            return true;
+        } return false;
+    }
+
     OnHit(t, e, i, r, o, a, n, s, h) {
-        // ModMenu_1.MainMenu.KunLog("DamageCalledHere" + t.toString() + ",," + e.toString() + ",," + i.toString() + ",," + r.toString() + ",," + o.toString() + ",," + a.toString() + ",," + n.toString() + ",," + s.toString() + ",," + h.toString());
         var l = Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity,
             c = EntitySystem_1.EntitySystem.Get(t.Target.Id),
             m = EntitySystem_1.EntitySystem.Get(t.Attacker.Id);
@@ -423,29 +454,60 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         t && 0 < t.length?(i = (t = t[0]).IsWeaknessHit, this.sVr ||= i, i = this.v6r(e, this.sVr, !1, t.Index), this.ToughDecreaseValue = i.ToughResult) : (t = this.v6r(e, this.sVr, !1), this.ToughDecreaseValue = t.ToughResult)
     }
     v6r(t, e, i, r = -1, o = 1) {
-        var a, n, s = t.ReBulletData.Base.DamageId,
+        if (ModManager_1.ModManager.Settings.hitAll) {
+            ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
+                // hit all enemies here
+                if (EntityManager_1.EntityManager.isMonster(entity) && (ModManager_1.ModManager.Settings.killAuraState === 0 ? this.isIndistance(entity) : true)) {
+                    var a, n, s = t.ReBulletData.Base.DamageId,
+                        h = t.Target;
+                    return s < 1 || !h?{
+                        DamageResult: 0,
+                        ToughResult: 0
+                    } : (h = entity.Entity.GetComponent(18), n = entity.Entity.GetComponent(33), entity.Entity.GetComponent(18) && n?(a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId, n = n.CurrentSkill, entity.Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, {
+                        DamageDataId: s,
+                        SkillLevel: t.SkillLevel,
+                        Attacker: t.Attacker,
+                        HitPosition: t.HitPosition.ToUeVector(),
+                        IsAddEnergy: this.aVr,
+                        IsCounterAttack: this.IsTriggerCounterAttack,
+                        ForceCritical: e,
+                        IsBlocked: i,
+                        PartId: r,
+                        ExtraRate: o,
+                        CounterSkillMessageId: this.IsTriggerCounterAttack?n?.CombatMessageId : void 0,
+                        BulletId: t.BulletId,
+                        CounterSkillId: this.IsTriggerCounterAttack?Number(n?.SkillId) : void 0
+                    }, a)) : {
+                        DamageResult: 1e4,
+                        ToughResult: 0
+                    })
+                }
+            });
+        } else {
+            var a, n, s = t.ReBulletData.Base.DamageId,
             h = t.Target;
-        return s < 1 || !h?{
-            DamageResult: 0,
-            ToughResult: 0
-        } : (h = t.Target.GetComponent(18), n = t.Target.GetComponent(33), h && n?(a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId, n = n.CurrentSkill, h?.ExecuteBulletDamage(t.BulletEntityId, {
-            DamageDataId: s,
-            SkillLevel: t.SkillLevel,
-            Attacker: t.Attacker,
-            HitPosition: t.HitPosition.ToUeVector(),
-            IsAddEnergy: this.aVr,
-            IsCounterAttack: this.IsTriggerCounterAttack,
-            ForceCritical: e,
-            IsBlocked: i,
-            PartId: r,
-            ExtraRate: o,
-            CounterSkillMessageId: this.IsTriggerCounterAttack?n?.CombatMessageId : void 0,
-            BulletId: t.BulletId,
-            CounterSkillId: this.IsTriggerCounterAttack?Number(n?.SkillId) : void 0
-        }, a)) : {
-            DamageResult: 1e4,
-            ToughResult: 0
-        })
+            return s < 1 || !h?{
+                DamageResult: 0,
+                ToughResult: 0
+            } : (h = t.Target.GetComponent(18), n = t.Target.GetComponent(33), h && n?(a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId, n = n.CurrentSkill, h?.ExecuteBulletDamage(t.BulletEntityId, {
+                DamageDataId: s,
+                SkillLevel: t.SkillLevel,
+                Attacker: t.Attacker,
+                HitPosition: t.HitPosition.ToUeVector(),
+                IsAddEnergy: this.aVr,
+                IsCounterAttack: this.IsTriggerCounterAttack,
+                ForceCritical: e,
+                IsBlocked: i,
+                PartId: r,
+                ExtraRate: o,
+                CounterSkillMessageId: this.IsTriggerCounterAttack?n?.CombatMessageId : void 0,
+                BulletId: t.BulletId,
+                CounterSkillId: this.IsTriggerCounterAttack?Number(n?.SkillId) : void 0
+            }, a)) : {
+                DamageResult: 1e4,
+                ToughResult: 0
+            })
+        }
     }
     C6r(t) {
         return (t = Object.assign(t)).Attacker = this.iVr.GetComponent(48).GetAttributeHolder(), t.Target = this.Entity.GetComponent(48)?.GetAttributeHolder() ?? this.Entity, t

@@ -218,7 +218,6 @@ class Calculation {
     }
     static LandingDamageCalculationMonster(e, t) {
         var a, r = CommonParamById_1.configCommonParamById.GetIntArrayConfig("landing_damage_args_monster");
-        ModMenu_1.MainMenu.KunLog("HERE!!!!" + ",, " + e.toString() + ",," + t.toString() + ",," + s.toString() + ",," + a.toString());
         return e < r[0]?0 : (a = Math.floor(Math.pow(e, r[1] / 1e4) * (r[3] / 1e4) * t / r[2]), Log_1.Log.CheckDebug() && Log_1.Log.Debug("Battle", 29, "怪物跌落伤害", ["height", e], ["landing_damage_args_monster", r], ["damage", a], ["lifeMax", t]), a)
     }
     static ReactionDamageRateCalculation(e, t, a, r, n, u, D) {

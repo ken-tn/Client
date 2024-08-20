@@ -38,6 +38,7 @@ class ModMethod {
         entity,
         prot
     );
+    // entity.GetComponent(3).Entity.GetComponent(52).OnHit(ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(_.Attacker, e.Base.BeHitEffect), true, ??.GetBulletInfo().Entity, this.Bjo.AllowedEnergy, true, r, s, a, n),
     // ModMenu_1.MainMenu.KunLog("Calling 1");
     // this.ThrowDamageChangeRequest(entity, 5, "1604001001n");
     // this.LandingDamageRequest(EntityManager_1.EntityManager.GetPlayerEntity());
@@ -90,7 +91,7 @@ class ModMethod {
     // ModMenu_1.MainMenu.KunLog(Entity.GetComponent(0).GetCreatureDataId());
     Protocol.P4n = MathUtils_1.MathUtils.NumberToLong(Entity.GetComponent(0).GetCreatureDataId())
     Protocol.TKn = 2037;
-    Protocol.LKn = 3000;
+    Protocol.LKn = 300000;
     Net_1.Net.Call(28127, Protocol);
   }
 

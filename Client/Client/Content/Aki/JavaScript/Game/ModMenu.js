@@ -287,8 +287,8 @@ class MainMenu {
       });
 
       this.Menu.KillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
-        ModManager_1.ModManager.Settings.killAura = isChecked;
-        this.KunLog("Kill Aura: " + isChecked);
+        ModManager_1.ModManager.Settings.hitAll = isChecked;
+        this.KunLog("Hit All: " + isChecked);
       });
 
       for (const option in this.killAura()) {
@@ -700,7 +700,7 @@ class MainMenu {
       this.Menu.AutoPickTreasureText.SetText(
         ModLanguage_1.ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE")
       );
-      this.Menu.KillAuraText.SetText(ModLanguage_1.ModLanguage.ModTr("TEXT_KILL_AURA"));
+      this.Menu.KillAuraText.SetText(ModLanguage_1.ModLanguage.ModTr("TEXT_HIT_ALL"));
       this.Menu.PerceptionRangeText.SetText(
         ModLanguage_1.ModLanguage.ModTr("TEXT_PERCEPTION_RANGE")
       );
@@ -797,7 +797,7 @@ class MainMenu {
       this.Menu.AutoPickTreasureCheck.SetIsChecked(
         ModManager_1.ModManager.Settings.AutoPickTreasure
       );
-      this.Menu.KillAuraCheck.SetIsChecked(ModManager_1.ModManager.Settings.killAura);
+      this.Menu.KillAuraCheck.SetIsChecked(ModManager_1.ModManager.Settings.hitAll);
       this.Menu.AutoLootCheck.SetIsChecked(ModManager_1.ModManager.Settings.AutoLoot);
       this.Menu.KillAnimalCheck.SetIsChecked(ModManager_1.ModManager.Settings.KillAnimal);
       this.Menu.PerceptionRangeCheck.SetIsChecked(
