@@ -467,17 +467,16 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         }
         
         if (ModManager_1.ModManager.Settings.hitAll) {
-            try {
-                ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
-                    try {
-                        // hit all enemies here
-                        if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
-                            ModUtils_1.ModUtils.Sleep(Math.floor(Math.random() * 500)); // async sleep
-                            res = entity.Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
-                        }
-                    } catch {}
-                })
-            } catch {}
+            ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
+                try {
+                    // hit all enemies here
+                    if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
+                        TimerSystem_1.TimerSystem.Delay(() => {
+                            entity.Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                        }, Math.floor(Math.random() * 500))
+                    }
+                } catch {}
+            })
         };
         
         return s < 1 || !h?{

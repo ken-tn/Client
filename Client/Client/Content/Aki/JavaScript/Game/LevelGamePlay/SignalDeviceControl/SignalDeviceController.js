@@ -5,7 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 const IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
     ModelManager_1 = require("../../Manager/ModelManager"),
     UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
-    UiManager_1 = require("../../Ui/UiManager");
+    UiManager_1 = require("../../Ui/UiManager"),
+    ModManager_1 = require("../../Manager/ModManager");
 class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
     static OpenGameplay(e, a) {
         ModelManager_1.ModelManager.SignalDeviceModel.InitData(e),
