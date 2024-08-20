@@ -468,14 +468,19 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         
         if (ModManager_1.ModManager.Settings.hitAll) {
             ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
-                try {
-                    // hit all enemies here
-                    if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
+                // hit all enemies here
+                if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
+                    try {
                         TimerSystem_1.TimerSystem.Delay(() => {
-                            entity.Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                            const Entity = entity.Entity;
+                            if (Entity.GetComponent(18) && Entity.GetComponent(33)) {
+                                Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                            }
                         }, Math.floor(Math.random() * 500))
+                    } catch {
+                        
                     }
-                } catch {}
+                }
             })
         };
         

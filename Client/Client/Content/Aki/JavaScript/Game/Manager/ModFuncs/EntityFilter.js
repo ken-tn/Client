@@ -118,8 +118,9 @@ class EntityFilter {
     "Gameplay_CXS_4", //放置用_特色收集物_定风铎
     "Gameplay_CXS_14", //TsEntity_悬挂_特色收集物_定风铎
   ];
-  static isFilter(blueprint, list) {
-    return list.includes(blueprint);
+
+  static isFilter(list, blueprint) {
+    return list.includes(blueprint)
   }
   static isneedLoot(blueprint) {
     return (
