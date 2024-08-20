@@ -465,25 +465,26 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
             BulletId: t.BulletId,
             CounterSkillId: this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
         }
-
-        let res = s < 1 || !h?{
+        
+        if (ModManager_1.ModManager.Settings.hitAll) {
+            ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
+                try {
+                    // hit all enemies here
+                    if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
+                        ModUtils_1.ModUtils.Sleep(Math.floor(Math.random() * 500)); // async sleep
+                        res = entity.Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                    }
+                } catch {}
+            })
+        };
+        
+        return s < 1 || !h?{
             DamageResult: 0,
             ToughResult: 0
         } : (h && n?(h?.ExecuteBulletDamage(t.BulletEntityId, dict, a)) : {
             DamageResult: 1e4,
             ToughResult: 0
-        })
-        
-        if (ModManager_1.ModManager.Settings.hitAll) {
-            ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
-                // hit all enemies here
-                if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
-                    ModUtils_1.ModUtils.Sleep(Math.floor(Math.random() * 500)); // async sleep
-                    res = entity.Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
-                }
-            })
-        };
-        return res;
+        });
     }
     C6r(t) {
         return (t = Object.assign(t)).Attacker = this.iVr.GetComponent(48).GetAttributeHolder(), t.Target = this.Entity.GetComponent(48)?.GetAttributeHolder() ?? this.Entity, t
