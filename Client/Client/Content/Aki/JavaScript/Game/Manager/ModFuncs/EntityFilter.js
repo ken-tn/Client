@@ -119,6 +119,11 @@ class EntityFilter {
     "Gameplay_CXS_14", //TsEntity_悬挂_特色收集物_定风铎
   ];
 
+  static FriendlyMonster = [
+    "Monster143", // ranger
+    "Monster142" // ranger
+  ]
+
   static isFilter(list, blueprint) {
     return list.includes(blueprint)
   }

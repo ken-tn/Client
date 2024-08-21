@@ -7,6 +7,7 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
+  EntityFilter_1 = require("./EntityFilter"),
   Global_1 = require("../../Global"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
@@ -123,8 +124,10 @@ class EntityManager {
     return BlueprintType.startsWith("Treasure");
   }
   static isMonster(entity) {
-    // let BlueprintType = this.GetBlueprintType2(entity);
-    // let monster = BlueprintType.startsWith("Monster");
+    let BlueprintType = this.GetBlueprintType2(entity);
+    if (EntityFilter_1.EntityFilter.isFilter(EntityFilter_1.EntityFilter.FriendlyMonster, BlueprintType)) {
+        return false;
+    }
     let monster = false;
     try {
         // CreatureDataComponent
