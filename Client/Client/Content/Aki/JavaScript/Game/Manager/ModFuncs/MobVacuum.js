@@ -70,7 +70,6 @@ class MobVacuum extends EntityManager_1.EntityManager {
   }
 
   static SyncMonster(entity, pos) {
-    // update here CombatMessageController.js AfterTick
     var t = entity.Entity.GetComponent(58);
     if (!t) {
         return;
