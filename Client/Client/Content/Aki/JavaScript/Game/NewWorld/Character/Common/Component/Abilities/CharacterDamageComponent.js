@@ -23,6 +23,8 @@ const puerts_1 = require("puerts"),
     EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
     RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
     RandomSystem_1 = require("../../../../../../Core/Random/RandomSystem"),
+    DataTableUtil_1 = require("../../../../../../Core/Utils/DataTableUtil"),
+    CharacterPartComponent_1 = require("../../../../../NewWorld/Character/Common/Component/CharacterPartComponent"),
     TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem"),
     MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
     EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
@@ -84,8 +86,49 @@ let CharacterDamageComponent = CharacterDamageComponent_1 = class extends Entity
     }
     ExecuteBulletDamage(e, t, a) {
         var r, o = (e = EntitySystem_1.EntitySystem.Get(e)).GetBulletInfo(),
-            i = DamageById_1.configDamageById.GetConfig(t.DamageDataId);
-        return i?((r = new ExtraEffectBaseTypes_1.RequirementPayload).BulletId = BigInt(o.BulletRowName), r.SkillId = Number(o.BulletInitParams.SkillId), r.BulletTags = o.Tags ?? [], r.PartId = t.PartId, 0 <= r.PartId && (r.PartTag = this.Entity.GetComponent(60).GetPartByIndex(r.PartId).PartTag?.TagId), o = {
+            i = DamageById_1.configDamageById.GetConfig(t.DamageDataId); // Damage.js
+        
+        ModMenu_1.MainMenu.KunLog("PartId: " + t.PartId + ",, Damage: " + i.toString()); 
+        let CharacterPartComponent = this.Entity.GetComponent(60); // 60 = CharacterPartComponent
+        if (!CharacterPartComponent) {
+            ModMenu_1.MainMenu.KunLog("failed here"); 
+            return {
+                DamageResult: 0,
+                ToughResult: 0
+            }
+        }
+        // CharacterPartComponent.ajr = true;
+        // CharacterPartComponent.OnActivate();
+
+        // let ActorComp = this.Entity.GetComponent(3);
+        // let BaseChar = ActorComp.Actor;
+        // let DtCharacterPart = BaseChar.DtCharacterPart;
+        // let partinfo = DataTableUtil_1.DataTableUtil.GetAllDataTableRowFromTable(DtCharacterPart);
+        // ModMenu_1.MainMenu.KunLog("obtained partinfo"); 
+        // for (const idk of partinfo) {
+        //     ModMenu_1.MainMenu.KunLog("partinfo " + idk.toString()); 
+        // }
+        // if (partinfo.length > 0) {
+        //     let part = new CharacterPartComponent_1.CharacterPart(
+        //         this.Entity,
+        //         CharacterPartComponent.Parts.length,
+        //         partinfo[0]);
+        //     CharacterPartComponent.Parts.push(part);
+        // }
+        
+        // if (CharacterPartComponent.Parts.length === 0) {
+        //     ModMenu_1.MainMenu.KunLog("failed here 1"); 
+        //     return {
+        //         DamageResult: 0,
+        //         ToughResult: 0
+        //     }
+        // }
+        CharacterPartComponent.OnInitData();
+        CharacterPartComponent.OnInit();
+        CharacterPartComponent.OnActivate();
+        
+        let part = CharacterPartComponent.GetPartByIndex(t.PartId);
+        return i?((r = new ExtraEffectBaseTypes_1.RequirementPayload).BulletId = BigInt(o.BulletRowName), r.SkillId = Number(o.BulletInitParams.SkillId), r.BulletTags = o.Tags ?? [], r.PartId = t.PartId, 0 <= r.PartId && (r.PartTag = part.PartTag?.TagId), o = {
             ...t,
             DamageData: i,
             Attacker: t.Attacker.CheckGetComponent(18),

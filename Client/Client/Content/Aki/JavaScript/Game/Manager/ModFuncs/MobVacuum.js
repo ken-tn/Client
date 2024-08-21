@@ -53,7 +53,7 @@ class MobVacuum extends EntityManager_1.EntityManager {
             ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
             // ActorComp.ActorInternal.SetActorEnableCollision(0); no hit detection ;-;
             this.SyncMonster(entity, playerpos);
-        }, 100);
+        }, 50);
     }
   }
 
@@ -74,6 +74,9 @@ class MobVacuum extends EntityManager_1.EntityManager {
   static SyncMonster(entity, pos) {
     // update here CombatMessageController.js AfterTick
     var t = entity.Entity.GetComponent(58);
+    if (!t) {
+        return;
+    }
     var i = t.GetCurrentMoveSample();
     i.Location = pos;
     t.PendingMoveInfos.push(i);

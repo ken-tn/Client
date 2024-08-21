@@ -450,6 +450,9 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         var a, n, s = t.ReBulletData.Base.DamageId,
         h = t.Target.GetComponent(18), n = t.Target.GetComponent(33)
         a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId
+        // 1205401001 changli lib
+        // 1301400001 calcharo lib
+        ModMenu_1.MainMenu.KunLog("DamageDataId: " + s.toString() + ",,SL: " + t.SkillLevel.toString() + ",,HitPos: " + t.HitPosition.ToString()); 
         const dict = {
             DamageDataId: s,
             SkillLevel: t.SkillLevel,
@@ -473,10 +476,21 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
                     try {
                         TimerSystem_1.TimerSystem.Delay(() => {
                             const Entity = entity.Entity;
-                            if (Entity.GetComponent(18) && Entity.GetComponent(33)) {
-                                Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                            const entityPos = Entity.GetComponent(3).ActorLocationProxy;
+                            if (Entity && EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo()) {
+                                if (Entity.GetComponent(18) && Entity.GetComponent(33) && entityPos) {
+                                    dict.HitPosition = entityPos.ToUeVector();
+                                    if (ModManager_1.ModManager.Settings.killAuraState == 1) {
+                                        dict.DamageDataId = 1205401001n
+                                        Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                                        dict.DamageDataId = 1301400001n
+                                        Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                                    } else {
+                                        Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                                    }
+                                }
                             }
-                        }, Math.floor(Math.random() * 500))
+                        }, Math.floor(Math.random() * 500) + 20)
                     } catch {
                         
                     }

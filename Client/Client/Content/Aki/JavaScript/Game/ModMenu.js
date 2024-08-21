@@ -134,7 +134,7 @@ class MainMenu {
                 }, 1);
                 setInterval(() => {
                     ModEntityListener.Runtime();
-                }, 3000);
+                }, 1500);
                 setInterval(() => {
                     ModEntityListener.FasterRuntime();
                 }, 100);
@@ -900,12 +900,12 @@ class ModEntityListener {
     if (!ModUtils_1.ModUtils.isInGame()) return;
 
     ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
-        KillAura_1.KillAura.killAura(entity);
-        KillAura_1.KillAura.KillAnimal(entity);
-        AutoDestroy_1.AutoDestroy.AutoDestroy(entity);
         MobVacuum_1.MobVacuum.MobVacuum(entity);
+        AutoDestroy_1.AutoDestroy.AutoDestroy(entity);
         MobVacuum_1.MobVacuum.VacuumCollect(entity);
         AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entity);
+        KillAura_1.KillAura.killAura(entity);
+        KillAura_1.KillAura.KillAnimal(entity);
     });
   }
 
