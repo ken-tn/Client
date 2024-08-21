@@ -482,7 +482,9 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
                                         dict.DamageDataId = 1301400001n
                                         Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
                                     } else {
-                                        Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                                        if (s >= 1) {
+                                            Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                                        }
                                     }
                                 }
                             }
