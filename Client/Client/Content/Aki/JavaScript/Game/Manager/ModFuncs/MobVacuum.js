@@ -65,7 +65,7 @@ class MobVacuum extends EntityManager_1.EntityManager {
             let ActorComp = entity.Entity.GetComponent(1);
             ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
             this.SyncMonster(entity, playerpos);
-        }, 200);
+        }, 100);
     }
   }
 
