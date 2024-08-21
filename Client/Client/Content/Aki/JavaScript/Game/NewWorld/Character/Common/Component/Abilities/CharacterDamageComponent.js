@@ -88,7 +88,7 @@ let CharacterDamageComponent = CharacterDamageComponent_1 = class extends Entity
         var r, o = (e = EntitySystem_1.EntitySystem.Get(e)).GetBulletInfo(),
             i = DamageById_1.configDamageById.GetConfig(t.DamageDataId); // Damage.js
         
-        ModMenu_1.MainMenu.KunLog("PartId: " + t.PartId + ",, Damage: " + i.toString()); 
+        // ModMenu_1.MainMenu.KunLog("PartId: " + t.PartId + ",, Damage: " + i.toString()); 
         let CharacterPartComponent = this.Entity.GetComponent(60); // 60 = CharacterPartComponent
         if (!CharacterPartComponent) {
             ModMenu_1.MainMenu.KunLog("failed here"); 
@@ -131,19 +131,26 @@ let CharacterDamageComponent = CharacterDamageComponent_1 = class extends Entity
         if (CharacterPartComponent.Parts.length > 0) {
             part = CharacterPartComponent.GetPartByIndex(0)
         }
-        return i?((r = new ExtraEffectBaseTypes_1.RequirementPayload).BulletId = BigInt(o.BulletRowName), r.SkillId = Number(o.BulletInitParams.SkillId), r.BulletTags = o.Tags ?? [], r.PartId = t.PartId, 0 <= r.PartId && (r.PartTag = part.PartTag?.TagId), o = {
-            ...t,
-            DamageData: i,
-            Attacker: t.Attacker.CheckGetComponent(18),
-            SourceType: Protocol_1.Aki.Protocol.VAs.Proto_FromBullet,
-            IsReaction: i.PayloadId !== damageDataPayloadIdDefault,
-            Accumulation: ExtraEffectDamageAccumulation_1.DamageAccumulation.GetAccumulation(e.Id),
-            PartId: t.PartId,
-            RandomSeed: ModelManager_1.ModelManager.PlayerInfoModel.GetRandomSeed()
-        }, this.aqr(o), this.ProcessDamage(r, o, a)) : {
-            DamageResult: 0,
-            ToughResult: 0
-        }
+        let res = null;
+        try {
+            res = i?((r = new ExtraEffectBaseTypes_1.RequirementPayload).BulletId = BigInt(o.BulletRowName), r.SkillId = Number(o.BulletInitParams.SkillId), r.BulletTags = o.Tags ?? [],
+            r.PartId = t.PartId,
+            0 <= r.PartId && (r.PartTag = part.PartTag?.TagId),
+            o = {
+                ...t,
+                DamageData: i,
+                Attacker: t.Attacker.CheckGetComponent(18),
+                SourceType: Protocol_1.Aki.Protocol.VAs.Proto_FromBullet,
+                IsReaction: i.PayloadId !== damageDataPayloadIdDefault,
+                Accumulation: ExtraEffectDamageAccumulation_1.DamageAccumulation.GetAccumulation(e.Id),
+                PartId: t.PartId,
+                RandomSeed: ModelManager_1.ModelManager.PlayerInfoModel.GetRandomSeed()
+            }, this.aqr(o), this.ProcessDamage(r, o, a)) : {
+                DamageResult: 0,
+                ToughResult: 0
+            }
+        } catch {}
+        return res;
     }
     ExecuteBuffDamage(e, t, a) {
         // ModMenu_1.MainMenu.KunLog("DamageCalledHere" + e.toString() + ",," + t.toString() + ",," + a.toString());
