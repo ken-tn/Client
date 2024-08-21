@@ -29,7 +29,6 @@ class MobVacuum extends EntityManager_1.EntityManager {
     if (!ModManager_1.ModManager.Settings.MobVacuum) return;
     
     if (this.isMonster(entity) && this.isIndistance(entity)) {
-        // confirm TP
         let timer = null
         timer = setInterval(() => {
             let monsterPos = null
@@ -51,7 +50,6 @@ class MobVacuum extends EntityManager_1.EntityManager {
             playerpos.Y = playerpos.Y - (fv.Y * 200);
             let ActorComp = entity.Entity.GetComponent(1);
             ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
-            // ActorComp.ActorInternal.SetActorEnableCollision(0); no hit detection ;-;
             this.SyncMonster(entity, playerpos);
         }, 50);
     }

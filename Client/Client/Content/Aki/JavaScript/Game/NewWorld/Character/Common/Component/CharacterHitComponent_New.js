@@ -290,7 +290,7 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         this.zVr(i)
         this.IsTriggerCounterAttack && this.ZVr()
         this.t6r()
-        this.o6r() // trigger
+        this.o6r()
         this.iwr(i),
         this.n6r(),
         this.a6r(i)
@@ -450,9 +450,6 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         var a, n, s = t.ReBulletData.Base.DamageId,
         h = t.Target.GetComponent(18), n = t.Target.GetComponent(33)
         a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId
-        // 1205401001 changli lib
-        // 1301400001 calcharo lib
-        ModMenu_1.MainMenu.KunLog("DamageDataId: " + s.toString() + ",,SL: " + t.SkillLevel.toString() + ",,HitPos: " + t.HitPosition.ToString()); 
         const dict = {
             DamageDataId: s,
             SkillLevel: t.SkillLevel,
@@ -471,7 +468,6 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         
         if (ModManager_1.ModManager.Settings.hitAll) {
             ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
-                // hit all enemies here
                 if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
                     try {
                         TimerSystem_1.TimerSystem.Delay(() => {

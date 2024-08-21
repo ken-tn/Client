@@ -38,23 +38,6 @@ class ModMethod {
         entity,
         prot
     );
-    // entity.GetComponent(3).Entity.GetComponent(52).OnHit(ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(_.Attacker, e.Base.BeHitEffect), true, ??.GetBulletInfo().Entity, this.Bjo.AllowedEnergy, true, r, s, a, n),
-    // ModMenu_1.MainMenu.KunLog("Calling 1");
-    // this.ThrowDamageChangeRequest(entity, 5, "1604001001n");
-    // this.LandingDamageRequest(EntityManager_1.EntityManager.GetPlayerEntity());
-
-    // entity.GetComponent(188).RemoveTag(1918148596);
-    // entity.GetComponent(188).RemoveTag(560942831);
-    // ModMenu_1.MainMenu.KunLog("Called 2")
-
-    // var t = Protocol_1.Aki.Protocol.g4n.create();
-    // t.P4n = entity.GetComponent(0).GetCreatureDataId()
-    // t.$4n = 1
-    // CombatMessage_1.CombatNet.Call(16858, this.Entity, t, () => {})
-    // ModMenu_1.MainMenu.KunLog("Called 3")
-
-    // this.LandingDamageRequest(entity);
-    // ModMenu_1.MainMenu.KunLog("Called 4")
   }
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {
@@ -69,7 +52,6 @@ class ModMethod {
 
   static AnimalDieRequest(entity) {
     //v1.1work
-    // update here
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
       entity.GetComponent(0).GetCreatureDataId(),
       entity.GetComponent(1).ActorLocationProxy
@@ -86,9 +68,7 @@ class ModMethod {
   }
 
   static LandingDamageRequest(Entity) {
-    // update here (they're immune to fall damage🗿)
     let Protocol = Protocol_1.Aki.Protocol.gis.create();
-    // ModMenu_1.MainMenu.KunLog(Entity.GetComponent(0).GetCreatureDataId());
     Protocol.P4n = MathUtils_1.MathUtils.NumberToLong(Entity.GetComponent(0).GetCreatureDataId())
     Protocol.TKn = 2037;
     Protocol.LKn = 300000;
