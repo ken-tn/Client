@@ -60,7 +60,7 @@ class ModManager {
     DebugEntity: false, //(if use entity func need enable)
     AutoDestroy: false,
     killAuranew: false,
-    killAuraRadius: 85,
+    killAuraRadius: 250,
     KillAnimal: false,
     AutoAbsorbnew: false,
     AutoChest: false,
@@ -71,7 +71,7 @@ class ModManager {
     PlotSkip: false,
     MobVacuum: false,
     VacuumCollect: false,
-    VacuumRadius: 85,
+    VacuumRadius: 250,
     AttributeModifier: false,
     Uid: "100000000",
     Language: "English",
