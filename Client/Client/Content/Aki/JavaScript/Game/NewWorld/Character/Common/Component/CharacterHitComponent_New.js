@@ -476,8 +476,8 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
                     try {
                         TimerSystem_1.TimerSystem.Delay(() => {
                             const Entity = entity.Entity;
-                            const entityPos = Entity.GetComponent(3).ActorLocationProxy;
                             if (Entity && EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo()) {
+                                const entityPos = Entity.GetComponent(3).ActorLocationProxy;
                                 if (Entity.GetComponent(18) && Entity.GetComponent(33) && entityPos) {
                                     dict.HitPosition = entityPos.ToUeVector();
                                     if (ModManager_1.ModManager.Settings.killAuraState == 1) {
