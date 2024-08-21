@@ -7,6 +7,7 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
+  ModMenu_1 = require("../../ModMenu"),
   NetDefine_1 = require("../../../Core/Define/Net/NetDefine"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
@@ -25,10 +26,22 @@ class MobVacuum extends EntityManager_1.EntityManager {
     } else return false;
   }
 
+  static origPositions = {}
+
   static MobVacuum(entity) {
     if (!ModManager_1.ModManager.Settings.MobVacuum) return;
     
     if (this.isMonster(entity) && this.isIndistance(entity)) {
+        const entityId = entity.Entity.Id;
+        if (!(entityId in this.origPositions)) {
+            this.origPositions[entityId] = this.GetPosition(entity.Entity);
+        } else {
+            const distToSpawn = ModUtils_1.ModUtils.Getdistance(this.origPositions[entityId], this.GetPosition(entity.Entity))
+            if (distToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
+                return;
+            }
+        }
+        // confirm TP
         let timer = null
         timer = setInterval(() => {
             let monsterPos = null
@@ -38,20 +51,21 @@ class MobVacuum extends EntityManager_1.EntityManager {
                 clearInterval(timer);
                 return;
             }
-            const distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
-            if (distance < 500) {
+            const distToPlayer = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
+            const distToSpawn = ModUtils_1.ModUtils.Getdistance(this.origPositions[entityId], this.GetPosition(entity.Entity))
+            if (distToPlayer < 500 || distToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
                 clearInterval(timer);
                 return;
             }
             let playerpos = this.GetPlayerPos();
-            playerpos.Z += 50;
+            playerpos.Z += 125;
             let fv = this.GetPlayerForwardVector();
             playerpos.X = playerpos.X - (fv.X * 200);
             playerpos.Y = playerpos.Y - (fv.Y * 200);
             let ActorComp = entity.Entity.GetComponent(1);
             ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
             this.SyncMonster(entity, playerpos);
-        }, 50);
+        }, 400);
     }
   }
 

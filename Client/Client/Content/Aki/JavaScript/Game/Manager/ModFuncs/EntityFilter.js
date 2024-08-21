@@ -120,6 +120,10 @@ class EntityFilter {
   ];
 
   static FriendlyMonster = [
+    "Monster163", // ranger
+    "Monster162", // ranger
+    "Monster145", // ranger
+    "Monster144", // ranger
     "Monster143", // ranger
     "Monster142" // ranger
   ]

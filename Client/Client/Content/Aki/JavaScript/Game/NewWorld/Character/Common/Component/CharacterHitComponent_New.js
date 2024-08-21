@@ -486,7 +486,7 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
                                     }
                                 }
                             }
-                        }, Math.floor(Math.random() * 500) + 20)
+                        }, Math.floor(Math.random() * 250) + 20)
                     } catch {
                         
                     }
