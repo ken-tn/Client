@@ -55,12 +55,12 @@ class MobVacuum extends EntityManager_1.EntityManager {
             }
             const distToPlayer = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
             const distToSpawn = ModUtils_1.ModUtils.Getdistance(this.origPositions[entityId], this.GetPosition(entity.Entity))
-            if (distToPlayer < 300 || distToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
+            if (distToPlayer < 500 || distToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
                 clearInterval(timer);
                 return;
             }
             let playerpos = this.GetPlayerPos();
-            playerpos.Z += 150;
+            playerpos.Z += 125;
             let fv = this.GetPlayerForwardVector();
             playerpos.X = playerpos.X - (fv.X * 200);
             playerpos.Y = playerpos.Y - (fv.Y * 200);
