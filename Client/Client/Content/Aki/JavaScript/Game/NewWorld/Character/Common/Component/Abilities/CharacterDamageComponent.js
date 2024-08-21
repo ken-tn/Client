@@ -123,11 +123,13 @@ let CharacterDamageComponent = CharacterDamageComponent_1 = class extends Entity
         //         ToughResult: 0
         //     }
         // }
-        CharacterPartComponent.OnInitData();
-        CharacterPartComponent.OnInit();
-        CharacterPartComponent.OnActivate();
+        if (CharacterPartComponent.Parts.length <= 0) {
+            CharacterPartComponent.OnInitData();
+            CharacterPartComponent.OnInit();
+            CharacterPartComponent.OnActivate();
+        }
         
-        let part = CharacterPartComponent.GetPartByIndex(t.PartId);
+        let part = CharacterPartComponent.GetPartByIndex(0);
         return i?((r = new ExtraEffectBaseTypes_1.RequirementPayload).BulletId = BigInt(o.BulletRowName), r.SkillId = Number(o.BulletInitParams.SkillId), r.BulletTags = o.Tags ?? [], r.PartId = t.PartId, 0 <= r.PartId && (r.PartTag = part.PartTag?.TagId), o = {
             ...t,
             DamageData: i,
