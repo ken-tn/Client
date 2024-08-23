@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
   Log_1 = require("../../../Core/Common/Log"),
   Net_1 = require("../../../Core/Net/Net"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -23,21 +24,72 @@ const puerts_1 = require("puerts"),
   WeatherController_1 = require("../../Module/Weather/WeatherController"),
   TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
   EntityManager_1 = require("./EntityManager"),
+  CreateController_1 = require("../../World/Controller/CreatureController"),
   ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
+    static dictInfo = null;
+
+    static SpawnBullet() {
+        let pos = EntityManager_1.EntityManager.GetPlayerPos();
+        return ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), "1205005011",
+        Transform_1.Transform.Create(EntityManager_1.EntityManager.GetPlayerActor().GetTransform()).ToUeTransform(),
+        new UE.Vector(pos.X + 30, pos.Y + 30, pos.Z + 30));
+        // ModMenu_1.MainMenu.KunLog("KunBullet: " + bul.toString())
+    }
   //怪物淹死
-  static MonsterDrownRequest(entity) {
+  static MonsterDrownRequest(Entity) {
     //v1.20
     // update here
-    let prot = Protocol_1.Aki.Protocol.v4n.create()
-    prot.e8n = entity.GetComponent(3).ActorLocationProxy
+    // let prot = Protocol_1.Aki.Protocol.v4n.create()
+    // prot.e8n = entity.GetComponent(3).ActorLocationProxy
 
-    CombatMessage_1.CombatNet.Call(
-        18989 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
-        entity,
-        prot
-    );
+    // CombatMessage_1.CombatNet.Call(
+    //     18989 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
+    //     entity,
+    //     prot
+    // );
+
+    if (!(this.dictInfo)) {
+        ModMenu_1.MainMenu.KunLog("Not enough info for aurakill"); 
+        return;
+    }
+    // ModMenu_1.MainMenu.KunLog("Got info"); 
+
+    // hit all enemies here
+    for (let i = 0; i < ModManager_1.ModManager.Settings.Hitcount; i++)
+        if (Entity) {
+            const entityPos = Entity.GetComponent(3).ActorLocationProxy;
+            // ModMenu_1.MainMenu.KunLog("Got pos"); 
+            if (Entity.GetComponent(18) && Entity.GetComponent(33) && entityPos) {
+                // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
+                this.dictInfo.HitPosition = entityPos.ToUeVector();
+                this.dictInfo.DamageDataId = 1205401001n;
+                this.dictInfo.BulletId = bul.BulletId;
+                // ModMenu_1.MainMenu.KunLog("Executing bullet damage"); 
+                let bul = this.SpawnBullet();
+                let BulletInfo = bul.GetBulletInfo();
+                Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, this.dictInfo, BulletInfo.ContextId)
+                this.dictInfo.DamageDataId = 1301400001n;
+                bul = this.SpawnBullet();
+                BulletInfo = bul.GetBulletInfo();
+                Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, this.dictInfo, BulletInfo.ContextId)
+            }
+        }
+    }
+
+    // SpawnEntity_1.EntitySpawner.SpawnEntity(983041, 6);
+
+    // let dat = {
+    //     J4n: 983041,
+    //     HHn: Protocol_1.Aki.Protocol.wks.Proto_Custom,
+    //     jHn: null,
+    //     _9n: null,
+    //     pEs: null,
+    //     X8n: null,
+    // }
+    // CreateController_1.CreatureController.CreateEntity(dat);
+
     // entity.GetComponent(3).Entity.GetComponent(52).OnHit(ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(_.Attacker, e.Base.BeHitEffect), true, ??.GetBulletInfo().Entity, this.Bjo.AllowedEnergy, true, r, s, a, n),
     // ModMenu_1.MainMenu.KunLog("Calling 1");
     // this.ThrowDamageChangeRequest(entity, 5, "1604001001n");

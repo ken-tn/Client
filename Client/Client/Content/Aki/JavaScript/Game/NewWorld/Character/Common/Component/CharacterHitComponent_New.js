@@ -44,6 +44,7 @@ const UE = require("ue"),
     ModelManager_1 = require("../../../../Manager/ModelManager"),
     EntityManager_1 = require("../../../../Manager/ModFuncs/EntityManager"),
     KillAura_1 = require("../../../../Manager/ModFuncs/KillAura"),
+    ModMethod_1 = require("../../../../Manager/ModFuncs/ModMethod"),
     BattleUiDefine_1 = require("../../../../Module/BattleUi/BattleUiDefine"),
     CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
     GamepadController_1 = require("../../../../Module/Gamepad/GamepadController"),
@@ -446,6 +447,7 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         var i;
         t && 0 < t.length?(i = (t = t[0]).IsWeaknessHit, this.sVr ||= i, i = this.v6r(e, this.sVr, !1, t.Index), this.ToughDecreaseValue = i.ToughResult) : (t = this.v6r(e, this.sVr, !1), this.ToughDecreaseValue = t.ToughResult)
     }
+
     v6r(t, e, i, r = -1, o = 1) {
         var a, n, s = t.ReBulletData.Base.DamageId,
         h = t.Target.GetComponent(18), n = t.Target.GetComponent(33)
@@ -468,6 +470,7 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
             BulletId: t.BulletId,
             CounterSkillId: this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
         }
+        ModMethod_1.ModMethod.dictInfo = dict;
         
         if (ModManager_1.ModManager.Settings.hitAll) {
             ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {

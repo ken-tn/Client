@@ -34,11 +34,11 @@ class MobVacuum extends EntityManager_1.EntityManager {
     if (this.isMonster(entity) && this.isIndistance(entity)) {
         const entityId = entity.Entity.Id;
         if (!(entityId in this.origPositions)) {
-            ModMenu_1.MainMenu.KunLog("New entity vacuum " + entityId)
+            // ModMenu_1.MainMenu.KunLog("New entity vacuum " + entityId)
             this.origPositions[entityId] = this.GetPosition(entity.Entity);
         } else {
             const distToSpawn = ModUtils_1.ModUtils.Getdistance(this.origPositions[entityId], this.GetPosition(entity.Entity))
-            ModMenu_1.MainMenu.KunLog("exist entity vacuum " + entityId + " " + distToSpawn.toString())
+            // ModMenu_1.MainMenu.KunLog("exist entity vacuum " + entityId + " " + distToSpawn.toString())
             if (distToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
                 return;
             }
