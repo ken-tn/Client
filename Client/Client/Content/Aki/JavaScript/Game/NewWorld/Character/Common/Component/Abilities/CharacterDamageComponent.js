@@ -89,6 +89,10 @@ let CharacterDamageComponent = CharacterDamageComponent_1 = class extends Entity
             i = DamageById_1.configDamageById.GetConfig(t.DamageDataId); // Damage.js
         
         // ModMenu_1.MainMenu.KunLog("PartId: " + t.PartId + ",, Damage: " + i.toString()); 
+        if (!this.Entity) {
+            ModMenu_1.MainMenu.KunLog("Missing entity.");
+            return; 
+        }
         let CharacterPartComponent = this.Entity.GetComponent(60); // 60 = CharacterPartComponent
         if (!CharacterPartComponent) {
             ModMenu_1.MainMenu.KunLog("failed here"); 

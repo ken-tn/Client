@@ -57,26 +57,35 @@ class ModMethod {
     // ModMenu_1.MainMenu.KunLog("Got info"); 
 
     // hit all enemies here
-    for (let i = 0; i < ModManager_1.ModManager.Settings.Hitcount; i++)
+    let timer = null;
+    timer = setInterval(() => {
         if (Entity) {
             const entityPos = Entity.GetComponent(3).ActorLocationProxy;
             // ModMenu_1.MainMenu.KunLog("Got pos"); 
             if (Entity.GetComponent(18) && Entity.GetComponent(33) && entityPos) {
                 // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
+                let bul = this.SpawnBullet();
+                let BulletInfo = bul.GetBulletInfo();
                 this.dictInfo.HitPosition = entityPos.ToUeVector();
                 this.dictInfo.DamageDataId = 1205401001n;
                 this.dictInfo.BulletId = bul.BulletId;
                 // ModMenu_1.MainMenu.KunLog("Executing bullet damage"); 
-                let bul = this.SpawnBullet();
-                let BulletInfo = bul.GetBulletInfo();
-                Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, this.dictInfo, BulletInfo.ContextId)
-                this.dictInfo.DamageDataId = 1301400001n;
-                bul = this.SpawnBullet();
-                BulletInfo = bul.GetBulletInfo();
-                Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, this.dictInfo, BulletInfo.ContextId)
+                Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, this.dictInfo, BulletInfo.ContextId);
+
+                setTimeout(() => {
+                    bul = this.SpawnBullet();
+                    BulletInfo = bul.GetBulletInfo();
+                    this.dictInfo.DamageDataId = 1301400001n;
+                    this.dictInfo.BulletId = bul.BulletId;
+                    Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, this.dictInfo, BulletInfo.ContextId);
+                }, 50);
+            } else {
+                clearInterval(timer);
             }
+        } else {
+            clearInterval(timer);
         }
-    }
+    }, 100);
 
     // SpawnEntity_1.EntitySpawner.SpawnEntity(983041, 6);
 
