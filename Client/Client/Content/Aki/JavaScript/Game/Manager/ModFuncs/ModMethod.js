@@ -75,7 +75,7 @@ class ModMethod {
     }
     
   //怪物淹死
-  static MonsterDrownRequest(Entity) {
+  static MonsterKillRequest(Entity) {
     //v1.20
     // update here
     // let prot = Protocol_1.Aki.Protocol.v4n.create()
@@ -126,7 +126,7 @@ class ModMethod {
             }
             let BulletInfo = bul.GetBulletInfo();
             let dict = {
-                DamageDataId: 1205401001n,
+                DamageDataId: bul.Data.Base.DamageId,
                 SkillLevel: bul.SkillLevel,
                 Attacker: BulletInfo.Attacker,
                 HitPosition: entityPos.ToUeVector(),
@@ -141,16 +141,20 @@ class ModMethod {
                 BulletId: bul.BulletId,
                 CounterSkillId: void 0, //this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
             }
+            if (ModManager_1.ModManager.Settings.killAuraState == 1) {
+                // ModMenu_1.MainMenu.KunLog("Executing bullet damage attacker: " + BulletInfo.Attacker);
+                dict.DamageDataId = 1205401001n;
+                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+                // ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
 
-            // ModMenu_1.MainMenu.KunLog("Executing bullet damage attacker: " + BulletInfo.Attacker); 
-            CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
-            // ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
-
-            bul = this.SpawnBullet();
-            BulletInfo = bul.GetBulletInfo();
-            dict.DamageDataId = 1301400001n;
-            dict.BulletId = bul.BulletId;
-            CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+                bul = this.SpawnBullet();
+                BulletInfo = bul.GetBulletInfo();
+                dict.DamageDataId = 1301400001n;
+                dict.BulletId = bul.BulletId;
+                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+            } else {
+                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+            }
         }
     }, 100);
 
