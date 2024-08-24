@@ -28,8 +28,6 @@ const puerts_1 = require("puerts"),
   ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
-    static dictInfo = null;
-
     static SpawnBullet() {
         let pos = EntityManager_1.EntityManager.GetPlayerPos();
         return ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), "1205005011",
@@ -50,42 +48,51 @@ class ModMethod {
     //     prot
     // );
 
-    if (!(this.dictInfo)) {
-        ModMenu_1.MainMenu.KunLog("Not enough info for aurakill"); 
-        return;
-    }
-    // ModMenu_1.MainMenu.KunLog("Got info"); 
-
     // hit all enemies here
-    let timer = null;
-    timer = setInterval(() => {
-        if (Entity) {
-            const entityPos = Entity.GetComponent(3).ActorLocationProxy;
-            // ModMenu_1.MainMenu.KunLog("Got pos"); 
-            if (Entity.GetComponent(18) && Entity.GetComponent(33) && entityPos) {
-                // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
-                let bul = this.SpawnBullet();
-                let BulletInfo = bul.GetBulletInfo();
-                this.dictInfo.HitPosition = entityPos.ToUeVector();
-                this.dictInfo.DamageDataId = 1205401001n;
-                this.dictInfo.BulletId = bul.BulletId;
-                // ModMenu_1.MainMenu.KunLog("Executing bullet damage"); 
-                Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, this.dictInfo, BulletInfo.ContextId);
-
-                setTimeout(() => {
-                    bul = this.SpawnBullet();
-                    BulletInfo = bul.GetBulletInfo();
-                    this.dictInfo.DamageDataId = 1301400001n;
-                    this.dictInfo.BulletId = bul.BulletId;
-                    Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, this.dictInfo, BulletInfo.ContextId);
-                }, 50);
-            } else {
-                clearInterval(timer);
+    // let timer = null;
+    // timer = setInterval(() => {
+    if (Entity) {
+        const entityPos = Entity.GetComponent(3).ActorLocationProxy;
+        // ModMenu_1.MainMenu.KunLog("Got pos"); 
+        if (Entity.GetComponent(18) && Entity.GetComponent(33) && entityPos) {
+            // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
+            let bul = this.SpawnBullet();
+            let BulletInfo = bul.GetBulletInfo();
+            let dict = {
+                DamageDataId: 1205401001n,
+                SkillLevel: bul.SkillLevel,
+                Attacker: BulletInfo.Attacker,
+                HitPosition: entityPos.ToUeVector(),
+                IsAddEnergy: !1,
+                IsCounterAttack: !1,
+                ForceCritical: ModManager_1.ModManager.Settings.AlwaysCrit,
+                IsBlocked: !1,
+                IsReaction: !1,
+                PartId: -1,
+                ExtraRate: 0,
+                CounterSkillMessageId: void 0, // this.IsTriggerCounterAttack?n.CurrentSkill?.CombatMessageId : void 0,
+                BulletId: bul.BulletId,
+                CounterSkillId: void 0, //this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
             }
-        } else {
-            clearInterval(timer);
+
+            ModMenu_1.MainMenu.KunLog("Executing bullet damage attacker: " + BulletInfo.Attacker); 
+            Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+            ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
+
+            bul = this.SpawnBullet();
+            BulletInfo = bul.GetBulletInfo();
+            dict.DamageDataId = 1301400001n;
+            dict.BulletId = bul.BulletId;
+            Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
         }
-    }, 100);
+    }
+    //         } else {
+    //             clearInterval(timer);
+    //         }
+    //     } else {
+    //         clearInterval(timer);
+    //     }
+    // }, 100);
 
     // SpawnEntity_1.EntitySpawner.SpawnEntity(983041, 6);
 

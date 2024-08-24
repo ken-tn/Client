@@ -454,7 +454,7 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo().ContextId
         // 1205401001 changli lib
         // 1301400001 calcharo lib
-        ModMenu_1.MainMenu.KunLog("DamageDataId: " + s.toString() + ",,SL: " + t.SkillLevel.toString() + ",,HitPos: " + t.HitPosition.ToString()); 
+        // ModMenu_1.MainMenu.KunLog("DamageDataId: " + s.toString() + ",,SL: " + t.SkillLevel.toString() + ",,HitPos: " + t.HitPosition.ToString() + ",, Attacker: " + t.Attacker); 
         const dict = {
             DamageDataId: s,
             SkillLevel: t.SkillLevel,
@@ -470,7 +470,6 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
             BulletId: t.BulletId,
             CounterSkillId: this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
         }
-        ModMethod_1.ModMethod.dictInfo = dict;
         
         if (ModManager_1.ModManager.Settings.hitAll) {
             ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
