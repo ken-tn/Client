@@ -14,6 +14,8 @@ const puerts_1 = require("puerts"),
   ModelManager_1 = require("../ModelManager"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   BulletConfig_1 = require("../../NewWorld/Bullet/BulletConfig"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  DamageById_1 = require("../../../Core/Define/ConfigQuery/DamageById"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
@@ -44,11 +46,78 @@ class ModMethod {
             }
         });
 
+        let firstDmg = null;
+        let highest = 0;
         let BulletDataMap = BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
-        // BulletDataMap.forEach((value, key, map) => {
-        //     ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}`);
-        // });
-        const [firstDmg] = BulletDataMap.keys()
+        BulletDataMap.forEach((value, key, map) => {
+            try {
+                let dam = ConfigManager_1.ConfigManager.RoleConfig.GetDamageConfig(key)
+                // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
+                let rateLv = dam.RateLv;
+                // for (let x of dam.RateLv) {
+                //     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
+                // }
+                // for (let x of dam.HardnessLv) {
+                //     ModMenu_1.MainMenu.KunLog(`Hardness ${x}`);
+                // }
+                // for (let x of dam.ToughLv) {
+                //     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
+                // }
+                // for (let x of dam.Energy) {
+                //     ModMenu_1.MainMenu.KunLog(`Energy ${x}`);
+                // }
+                // for (let x of dam.Percent0) {
+                //     ModMenu_1.MainMenu.KunLog(`Percent0 ${x}`);
+                // }
+                // for (let x of dam.Percent1) {
+                //     ModMenu_1.MainMenu.KunLog(`Percent1 ${x}`);
+                // }
+                if (rateLv) {
+                    let maxRate = rateLv[rateLv.length - 1]
+                    if (maxRate > highest) {
+                        highest = maxRate;
+                        firstDmg = key;
+                        //ModMenu_1.MainMenu.KunLog(`new maxrate: ${highest} key: ${key}`);
+                    }
+                }
+            } catch {}
+            // DamageById_1.configDamageById.GetConfig(BigInt(key));
+            // for (let propertyName in dam) {
+            //     ModMenu_1.MainMenu.KunLog(propertyName);
+            //     ModMenu_1.MainMenu.KunLog(dam[propertyName]);
+            // }
+//             [KUNMOD:]J7
+// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:][object Object]
+// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]z7
+// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]84
+            // for (let i = 0; i < 32; i += 2) {
+            //     var t = dam.J7.__offset(dam.z7, i);
+            //     ModMenu_1.MainMenu.KunLog("i: " + i + " data: " + dam.J7.readInt32(dam.z7 + t).toString())
+            // }
+
+            // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
+            // ModMenu_1.MainMenu.KunLog(`DamageData [${dam.Element}]`);
+            // for (let x of dam.RateLv) {
+            //     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
+            // }
+            // for (let x of dam.HardnessLv) {
+            //     ModMenu_1.MainMenu.KunLog(`Hardness ${x}`);
+            // }
+            // for (let x of dam.ToughLv) {
+            //     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
+            // }
+            // for (let x of dam.CureBaseValue) {
+            //     ModMenu_1.MainMenu.KunLog(`CureBase ${x}`);
+            // }
+            // for (let x of dam.FluctuationLower) {
+            //     ModMenu_1.MainMenu.KunLog(`Lower ${x}`);
+            // }
+            // for (let x of dam.FluctuationUpper) {
+            //     ModMenu_1.MainMenu.KunLog(`Upper ${x}`);
+            // }
+            // BulletDataMap m[1502002001] = [object Object] constructor: BulletDataMain damage: [object Object]damage constructor: Damage
+        });
+        // const [firstDmg] = BulletDataMap.keys()
 
         // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
         // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
