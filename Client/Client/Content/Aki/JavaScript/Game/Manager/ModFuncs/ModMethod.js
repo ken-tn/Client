@@ -29,12 +29,19 @@ const puerts_1 = require("puerts"),
 
 class ModMethod {
     static SpawnBullet() {
+        let PlayerActor = EntityManager_1.EntityManager.GetPlayerActor();
+        if (!PlayerActor) {
+            return null;
+        }
+
         let pos = EntityManager_1.EntityManager.GetPlayerPos();
+        // ModelManager_1.ModelManager.BulletModel.CreateBullet(Owner, BulletRowName, InitialTransform, InitTargetLocation)
         return ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), "1205005011",
-        Transform_1.Transform.Create(EntityManager_1.EntityManager.GetPlayerActor().GetTransform()).ToUeTransform(),
+        Transform_1.Transform.Create(PlayerActor.GetTransform()).ToUeTransform(),
         new UE.Vector(pos.X + 30, pos.Y + 30, pos.Z + 30));
         // ModMenu_1.MainMenu.KunLog("KunBullet: " + bul.toString())
     }
+    
   //怪物淹死
   static MonsterDrownRequest(Entity) {
     //v1.20
@@ -49,14 +56,42 @@ class ModMethod {
     // );
 
     // hit all enemies here
-    // let timer = null;
-    // timer = setInterval(() => {
-    if (Entity) {
-        const entityPos = Entity.GetComponent(3).ActorLocationProxy;
+    let timer = null;
+    let its = 0;
+    let itsLimit = 10;
+    
+    if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(33) && Entity.GetComponent(60)) {
+        return;
+    }
+    const entityPos = Entity.GetComponent(3).ActorLocationProxy;
+    const CharacterPartComponent = Entity.GetComponent(60);
+    const CharacterDamageComponent = Entity.GetComponent(18);
+    timer = setInterval(() => {
+        if (!CharacterDamageComponent.Entity || its > itsLimit) {
+            ModMenu_1.MainMenu.KunLog(its > itsLimit ? "Hits over limit" : "Dead, clearing timer"); 
+            clearInterval(timer);
+            return;
+        }
+
+        its++;
         // ModMenu_1.MainMenu.KunLog("Got pos"); 
-        if (Entity.GetComponent(18) && Entity.GetComponent(33) && entityPos) {
+        if (CharacterDamageComponent && Entity.GetComponent(33) && entityPos) {
+            if (!CharacterPartComponent) {
+                ModMenu_1.MainMenu.KunLog("Failed to find CharacterPartComponent"); 
+                clearInterval(timer);
+                return;
+            }
+            CharacterPartComponent.OnInitData();
+            CharacterPartComponent.OnInit();
+            CharacterPartComponent.OnActivate();
+
             // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
             let bul = this.SpawnBullet();
+            if (!bul) {
+                ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer"); 
+                clearInterval(timer);
+                return;
+            }
             let BulletInfo = bul.GetBulletInfo();
             let dict = {
                 DamageDataId: 1205401001n,
@@ -69,30 +104,23 @@ class ModMethod {
                 IsBlocked: !1,
                 IsReaction: !1,
                 PartId: -1,
-                ExtraRate: 0,
+                ExtraRate: 1,
                 CounterSkillMessageId: void 0, // this.IsTriggerCounterAttack?n.CurrentSkill?.CombatMessageId : void 0,
                 BulletId: bul.BulletId,
                 CounterSkillId: void 0, //this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
             }
 
-            ModMenu_1.MainMenu.KunLog("Executing bullet damage attacker: " + BulletInfo.Attacker); 
-            Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
-            ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
+            // ModMenu_1.MainMenu.KunLog("Executing bullet damage attacker: " + BulletInfo.Attacker); 
+            CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+            // ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
 
             bul = this.SpawnBullet();
             BulletInfo = bul.GetBulletInfo();
             dict.DamageDataId = 1301400001n;
             dict.BulletId = bul.BulletId;
-            Entity.GetComponent(18)?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+            CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
         }
-    }
-    //         } else {
-    //             clearInterval(timer);
-    //         }
-    //     } else {
-    //         clearInterval(timer);
-    //     }
-    // }, 100);
+    }, 100);
 
     // SpawnEntity_1.EntitySpawner.SpawnEntity(983041, 6);
 

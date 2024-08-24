@@ -280,7 +280,7 @@ class MainMenu {
       });
 
       this.Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(1);
+        value = value.toFixed();
         this.Menu.HitMultiplierValue.SetText(value);
         ModManager_1.ModManager.Settings.Hitcount = value;
         this.KunLog("Hit Multiplier Count: " + value);
@@ -414,7 +414,6 @@ class MainMenu {
         value = value.toFixed(1);
         this.Menu.NewKillAuraValue.SetText(value);
         ModManager_1.ModManager.Settings.killAuraRadius = value;
-        ModManager_1.ModManager.Settings.VacuumRadius = value;
         this.KunLog("Hit Multiplier Count: " + value);
       });
 

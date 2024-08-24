@@ -56,9 +56,6 @@ class EntityManager {
   static GetPosition(Entity) {
     let a = Entity.GetComponent(1);
     let actor = a.ActorInternal;
-    if (!actor) {
-        return;
-    }
     let pos = actor.K2_GetActorLocation();
 
     return pos;
