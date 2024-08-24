@@ -44,13 +44,16 @@ class MobVacuum extends EntityManager_1.EntityManager {
 
         // confirm TP
         let timer = null
+        let its = 0;
+        let itsLimit = 5;
         timer = setInterval(() => {
-            if (!entity.Entity) {
-                ModMenu_1.MainMenu.KunLog("Failed to find vacuum entity " + entityId)
+            if (!entity.Entity || its > itsLimit) {
+                ModMenu_1.MainMenu.KunLog("Vacuum entity failed " + entityId)
                 clearInterval(timer);
                 return;
             }
 
+            its++;
             let distToPlayer = ModUtils_1.ModUtils.Getdistance2Player(this.GetPosition(entity.Entity));
             if (distToPlayer < 500) {
                 ModMenu_1.MainMenu.KunLog("Too close" + entityId + ",, " + distToPlayer)
@@ -71,28 +74,18 @@ class MobVacuum extends EntityManager_1.EntityManager {
                 clearInterval(timer);
                 return;
             }
-
-            // const CharacterPartComponent = entity.Entity.GetComponent(60);
-            // if (!CharacterPartComponent) {
-            //     ModMenu_1.MainMenu.KunLog("Vacuum failed to find CharacterPartComponent"); 
-            //     clearInterval(timer);
-            //     return;
-            // }
-            // CharacterPartComponent.OnInitData();
-            // CharacterPartComponent.OnInit();
-            // CharacterPartComponent.OnActivate();
             
-            playerpos.Z += 250;
+            playerpos.Z += 100;
             let fv = this.GetPlayerForwardVector();
-            playerpos.X = playerpos.X - (fv.X * 300);
-            playerpos.Y = playerpos.Y - (fv.Y * 300);
+            playerpos.X = playerpos.X - (fv.X * 200);
+            playerpos.Y = playerpos.Y - (fv.Y * 200);
 
             let ActorComp = entity.Entity.GetComponent(1);
             ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
             // ActorComp.ActorInternal.SetActorEnableCollision(0); no hit detection ;-;
             ModMenu_1.MainMenu.KunLog("Syncing" + entityId + " " + playerDistToSpawn)
             this.SyncMonster(entity, playerpos);
-        }, 500);
+        }, 333);
     }
   }
 
@@ -113,6 +106,11 @@ class MobVacuum extends EntityManager_1.EntityManager {
   static SyncMonster(entity, pos) {
     // update here CombatMessageController.js AfterTick
     let t = entity.Entity.GetComponent(58);
+    if (!t.EnableMovementSync) {
+        t.SetEnableMovementSync(true, "MonsterBehaviorComponent InFight");
+        t.EnableMovementSync = true;
+    }
+
     let i = t.GetCurrentMoveSample();
     i.Location = pos;
     t.PendingMoveInfos.push(i);

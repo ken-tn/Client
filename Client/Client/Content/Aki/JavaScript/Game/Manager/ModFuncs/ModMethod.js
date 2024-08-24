@@ -13,6 +13,8 @@ const puerts_1 = require("puerts"),
   ModManager_1 = require("../ModManager"),
   ModelManager_1 = require("../ModelManager"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
+  BulletConfig_1 = require("../../NewWorld/Bullet/BulletConfig"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
@@ -34,9 +36,41 @@ class ModMethod {
             return null;
         }
 
+        let firstValue = null;
+        ModMenu_1.MainMenu.KunLog("pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
+        BulletConfig_1.BulletConfig.N9o.forEach((value, key, map) => {
+            ModMenu_1.MainMenu.KunLog(`BulletConfig m[${key}] = ${value}` + " pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
+            if (key == EntityManager_1.EntityManager.GetPlayerEntity().Id) {
+                firstValue = value;
+            }
+        });
+        ModMenu_1.MainMenu.KunLog("Logged");
+
+        let BulletDataMap = BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
+        BulletDataMap.forEach((value, key, map) => {
+            ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}`);
+        });
+        const [firstDmg] = BulletDataMap.keys()
+
+        // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
+        // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
+        // let dmgKey = null;
+        
+        // function logMapElements(value, key, map) {
+        //     // ModMenu_1.MainMenu.KunLog(`m[${key}] = ${value}`);
+        //     dmgKey = key+"001"
+        //     return;
+        // }
+        // EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).GetSkillMap().forEach(logMapElements)
+
+        // ModMenu_1.MainMenu.KunLog("got skillmap"); 
+        // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
+        // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
         let pos = EntityManager_1.EntityManager.GetPlayerPos();
         // ModelManager_1.ModelManager.BulletModel.CreateBullet(Owner, BulletRowName, InitialTransform, InitTargetLocation)
-        return ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), "1205005011",
+        // 1205005011 changli hit
+        // 70119003001 prism hit
+        return ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), firstDmg.toString(),
         Transform_1.Transform.Create(PlayerActor.GetTransform()).ToUeTransform(),
         new UE.Vector(pos.X + 30, pos.Y + 30, pos.Z + 30));
         // ModMenu_1.MainMenu.KunLog("KunBullet: " + bul.toString())
@@ -98,7 +132,7 @@ class ModMethod {
                 SkillLevel: bul.SkillLevel,
                 Attacker: BulletInfo.Attacker,
                 HitPosition: entityPos.ToUeVector(),
-                IsAddEnergy: !1,
+                IsAddEnergy: 1,
                 IsCounterAttack: !1,
                 ForceCritical: ModManager_1.ModManager.Settings.AlwaysCrit,
                 IsBlocked: !1,
