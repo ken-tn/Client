@@ -14,6 +14,8 @@ const puerts_1 = require("puerts"),
   ModelManager_1 = require("../ModelManager"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   BulletConfig_1 = require("../../NewWorld/Bullet/BulletConfig"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  DamageById_1 = require("../../../Core/Define/ConfigQuery/DamageById"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
@@ -42,8 +44,23 @@ class ModMethod {
             }
         });
 
+        let firstDmg = null;
+        let highest = 0;
         let BulletDataMap = BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
-        const [firstDmg] = BulletDataMap.keys()
+        BulletDataMap.forEach((value, key, map) => {
+            try {
+                let dam = ConfigManager_1.ConfigManager.RoleConfig.GetDamageConfig(key)
+                let rateLv = dam.RateLv;
+                if (rateLv) {
+                    let maxRate = rateLv[rateLv.length - 1]
+                    if (maxRate > highest) {
+                        highest = maxRate;
+                        firstDmg = key;
+                    }
+                }
+            } catch {}
+        });
+        
         let pos = EntityManager_1.EntityManager.GetPlayerPos();
         return ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), firstDmg.toString(),
         Transform_1.Transform.Create(PlayerActor.GetTransform()).ToUeTransform(),
@@ -51,7 +68,7 @@ class ModMethod {
     }
     
   //怪物淹死
-  static MonsterDrownRequest(Entity) {
+  static MonsterKillRequest(Entity) {
     //v1.20
     // update here
     // let prot = Protocol_1.Aki.Protocol.v4n.create()
@@ -96,7 +113,7 @@ class ModMethod {
             }
             let BulletInfo = bul.GetBulletInfo();
             let dict = {
-                DamageDataId: 1205401001n,
+                DamageDataId: bul.Data.Base.DamageId,
                 SkillLevel: bul.SkillLevel,
                 Attacker: BulletInfo.Attacker,
                 HitPosition: entityPos.ToUeVector(),
@@ -111,14 +128,18 @@ class ModMethod {
                 BulletId: bul.BulletId,
                 CounterSkillId: void 0,
             }
+            if (ModManager_1.ModManager.Settings.killAuraState == 1) {
+                dict.DamageDataId = 1205401001n;
+                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
 
-            CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
-
-            bul = this.SpawnBullet();
-            BulletInfo = bul.GetBulletInfo();
-            dict.DamageDataId = 1301400001n;
-            dict.BulletId = bul.BulletId;
-            CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+                bul = this.SpawnBullet();
+                BulletInfo = bul.GetBulletInfo();
+                dict.DamageDataId = 1301400001n;
+                dict.BulletId = bul.BulletId;
+                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+            } else {
+                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+            }
         }
     }, 100);
   }
