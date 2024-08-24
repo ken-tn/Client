@@ -71,7 +71,7 @@ class ModManager {
     PlotSkip: false,
     MobVacuum: false,
     VacuumCollect: false,
-    VacuumRadius: 300,
+    VacuumRadius: 200,
     AttributeModifier: false,
     Uid: "100000000",
     Language: "English",
