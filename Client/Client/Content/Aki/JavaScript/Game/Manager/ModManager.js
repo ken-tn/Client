@@ -60,7 +60,7 @@ class ModManager {
     DebugEntity: false, //(if use entity func need enable)
     AutoDestroy: false,
     killAuranew: false,
-    killAuraRadius: 150,
+    killAuraRadius: 100,
     KillAnimal: false,
     AutoAbsorbnew: false,
     AutoChest: false,
@@ -71,7 +71,7 @@ class ModManager {
     PlotSkip: false,
     MobVacuum: false,
     VacuumCollect: false,
-    VacuumRadius: 150,
+    VacuumRadius: 300,
     AttributeModifier: false,
     Uid: "100000000",
     Language: "English",
@@ -146,6 +146,7 @@ class ModManager {
         Config[Diff[i]] = ModManager.Settings[Diff[i]];
       }
     }
+    Config.VacuumRadius !== this.Settings.VacuumRadius ? (Config.VacuumRadius = this.Settings.VacuumRadius) : {}
     this.Settings = Config;
     if (!ModLanguage_1.ModLanguage.Langs.includes(this.Settings.Language)) {
       this.Settings.Language = "English";

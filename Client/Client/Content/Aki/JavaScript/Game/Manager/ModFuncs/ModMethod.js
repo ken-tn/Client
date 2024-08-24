@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
   Log_1 = require("../../../Core/Common/Log"),
   Net_1 = require("../../../Core/Net/Net"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -12,6 +13,7 @@ const puerts_1 = require("puerts"),
   ModManager_1 = require("../ModManager"),
   ModelManager_1 = require("../ModelManager"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  BulletConfig_1 = require("../../NewWorld/Bullet/BulletConfig"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
@@ -23,21 +25,104 @@ const puerts_1 = require("puerts"),
   WeatherController_1 = require("../../Module/Weather/WeatherController"),
   TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
   EntityManager_1 = require("./EntityManager"),
+  CreateController_1 = require("../../World/Controller/CreatureController"),
   ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
+    static SpawnBullet() {
+        let PlayerActor = EntityManager_1.EntityManager.GetPlayerActor();
+        if (!PlayerActor) {
+            return null;
+        }
+
+        let firstValue = null;
+        BulletConfig_1.BulletConfig.N9o.forEach((value, key, map) => {
+            if (key == EntityManager_1.EntityManager.GetPlayerEntity().Id) {
+                firstValue = value;
+            }
+        });
+
+        let BulletDataMap = BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
+        const [firstDmg] = BulletDataMap.keys()
+        let pos = EntityManager_1.EntityManager.GetPlayerPos();
+        return ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), firstDmg.toString(),
+        Transform_1.Transform.Create(PlayerActor.GetTransform()).ToUeTransform(),
+        new UE.Vector(pos.X + 30, pos.Y + 30, pos.Z + 30));
+    }
+    
   //怪物淹死
-  static MonsterDrownRequest(entity) {
+  static MonsterDrownRequest(Entity) {
     //v1.20
     // update here
-    let prot = Protocol_1.Aki.Protocol.v4n.create()
-    prot.e8n = entity.GetComponent(3).ActorLocationProxy
+    // let prot = Protocol_1.Aki.Protocol.v4n.create()
+    // prot.e8n = entity.GetComponent(3).ActorLocationProxy
 
-    CombatMessage_1.CombatNet.Call(
-        18989 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
-        entity,
-        prot
-    );
+    // CombatMessage_1.CombatNet.Call(
+    //     18989 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
+    //     entity,
+    //     prot
+    // );
+
+    // hit all enemies here
+    let timer = null;
+    let its = 0;
+    let itsLimit = 10;
+    
+    if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(33) && Entity.GetComponent(60)) {
+        return;
+    }
+    const entityPos = Entity.GetComponent(3).ActorLocationProxy;
+    const CharacterPartComponent = Entity.GetComponent(60);
+    const CharacterDamageComponent = Entity.GetComponent(18);
+    timer = setInterval(() => {
+        if (!CharacterDamageComponent.Entity || its > itsLimit) {
+            clearInterval(timer);
+            return;
+        }
+
+        its++;
+        // ModMenu_1.MainMenu.KunLog("Got pos"); 
+        if (CharacterDamageComponent && Entity.GetComponent(33) && entityPos) {
+            if (!CharacterPartComponent) {
+                clearInterval(timer);
+                return;
+            }
+            CharacterPartComponent.OnInitData();
+            CharacterPartComponent.OnInit();
+            CharacterPartComponent.OnActivate();
+
+            let bul = this.SpawnBullet();
+            if (!bul) {
+                clearInterval(timer);
+                return;
+            }
+            let BulletInfo = bul.GetBulletInfo();
+            let dict = {
+                DamageDataId: 1205401001n,
+                SkillLevel: bul.SkillLevel,
+                Attacker: BulletInfo.Attacker,
+                HitPosition: entityPos.ToUeVector(),
+                IsAddEnergy: 1,
+                IsCounterAttack: !1,
+                ForceCritical: ModManager_1.ModManager.Settings.AlwaysCrit,
+                IsBlocked: !1,
+                IsReaction: !1,
+                PartId: -1,
+                ExtraRate: 1,
+                CounterSkillMessageId: void 0,
+                BulletId: bul.BulletId,
+                CounterSkillId: void 0,
+            }
+
+            CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+
+            bul = this.SpawnBullet();
+            BulletInfo = bul.GetBulletInfo();
+            dict.DamageDataId = 1301400001n;
+            dict.BulletId = bul.BulletId;
+            CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
+        }
+    }, 100);
   }
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {

@@ -23,49 +23,67 @@ class MobVacuum extends EntityManager_1.EntityManager {
     let distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
     if (distance < ModManager_1.ModManager.Settings.VacuumRadius * 100) {
       return true;
-    } else return false;
+    } return false;
   }
 
   static origPositions = {}
-
   static MobVacuum(entity) {
     if (!ModManager_1.ModManager.Settings.MobVacuum) return;
+    if (!(entity.Entity.GetComponent(1).ActorInternal)) return;
     
     if (this.isMonster(entity) && this.isIndistance(entity)) {
         const entityId = entity.Entity.Id;
         if (!(entityId in this.origPositions)) {
-            this.origPositions[entityId] = this.GetPosition(entity.Entity);
-        } else {
-            const distToSpawn = ModUtils_1.ModUtils.Getdistance(this.origPositions[entityId], this.GetPosition(entity.Entity))
-            if (distToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
+            let monsterPos = this.GetPosition(entity.Entity);
+            if (!(monsterPos.X)) {
                 return;
             }
+            ModMenu_1.MainMenu.KunLog("New entity vacuum " + entityId + "X: " + monsterPos.X + "Y: " + monsterPos.Y + "Z: " + monsterPos.Z);
+            this.origPositions[entityId] = monsterPos;
         }
+
         // confirm TP
         let timer = null
+        let its = 0;
+        let itsLimit = 5;
         timer = setInterval(() => {
-            let monsterPos = null
-            try {
-                monsterPos = this.GetPosition(entity.Entity);
-            } catch {
+            if (!entity.Entity || its > itsLimit) {
+                ModMenu_1.MainMenu.KunLog("Vacuum entity failed " + entityId)
                 clearInterval(timer);
                 return;
             }
-            const distToPlayer = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
-            const distToSpawn = ModUtils_1.ModUtils.Getdistance(this.origPositions[entityId], this.GetPosition(entity.Entity))
-            if (distToPlayer < 500 || distToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
+
+            its++;
+            let distToPlayer = ModUtils_1.ModUtils.Getdistance2Player(this.GetPosition(entity.Entity));
+            if (distToPlayer < 500) {
+                ModMenu_1.MainMenu.KunLog("Too close" + entityId + ",, " + distToPlayer)
                 clearInterval(timer);
                 return;
             }
+            
             let playerpos = this.GetPlayerPos();
-            playerpos.Z += 125;
+            let playerDistToSpawn = ModUtils_1.ModUtils.Getdistance(this.origPositions[entityId], playerpos)
+            if (playerDistToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
+                ModMenu_1.MainMenu.KunLog("Too far from spawn" + entityId + ",, " + playerDistToSpawn);
+                clearInterval(timer);
+                return;
+            }
+
+            if (!this.isIndistance(entity)) {
+                ModMenu_1.MainMenu.KunLog("Too far away" + entityId);
+                clearInterval(timer);
+                return;
+            }
+            
+            playerpos.Z += 100;
             let fv = this.GetPlayerForwardVector();
             playerpos.X = playerpos.X - (fv.X * 200);
             playerpos.Y = playerpos.Y - (fv.Y * 200);
+
             let ActorComp = entity.Entity.GetComponent(1);
             ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
             this.SyncMonster(entity, playerpos);
-        }, 100);
+        }, 333);
     }
   }
 
@@ -84,14 +102,16 @@ class MobVacuum extends EntityManager_1.EntityManager {
   }
 
   static SyncMonster(entity, pos) {
-    var t = entity.Entity.GetComponent(58);
-    if (!t) {
-        return;
+    let t = entity.Entity.GetComponent(58);
+    if (!t.EnableMovementSync) {
+        t.SetEnableMovementSync(true, "MonsterBehaviorComponent InFight");
+        t.EnableMovementSync = true;
     }
-    var i = t.GetCurrentMoveSample();
+
+    let i = t.GetCurrentMoveSample();
     i.Location = pos;
     t.PendingMoveInfos.push(i);
-    var s = Protocol_1.Aki.Protocol.$us.create();
+    let s = Protocol_1.Aki.Protocol.$us.create();
     s.kRs.push(t.CollectPendingMoveInfos());
     Net_1.Net.Send(28674 /*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
   }

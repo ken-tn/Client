@@ -88,6 +88,9 @@ let CharacterDamageComponent = CharacterDamageComponent_1 = class extends Entity
         var r, o = (e = EntitySystem_1.EntitySystem.Get(e)).GetBulletInfo(),
             i = DamageById_1.configDamageById.GetConfig(t.DamageDataId);
         
+        if (!this.Entity) {
+            return; 
+        }
         let CharacterPartComponent = this.Entity.GetComponent(60);
         if (!CharacterPartComponent) {
             return {
