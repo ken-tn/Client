@@ -63,7 +63,6 @@ class ModMethod {
     //     prot
     // );
 
-    // hit all enemies here
     let timer = null;
     let its = 0;
     let itsLimit = 10;
@@ -81,7 +80,6 @@ class ModMethod {
         }
 
         its++;
-        // ModMenu_1.MainMenu.KunLog("Got pos"); 
         if (CharacterDamageComponent && Entity.GetComponent(33) && entityPos) {
             if (!CharacterPartComponent) {
                 clearInterval(timer);
