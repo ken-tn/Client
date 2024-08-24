@@ -13,7 +13,6 @@ const puerts_1 = require("puerts"),
   ModManager_1 = require("../ModManager"),
   ModelManager_1 = require("../ModelManager"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
-  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
   BulletConfig_1 = require("../../NewWorld/Bullet/BulletConfig"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Global_1 = require("../../Global"),
@@ -37,19 +36,18 @@ class ModMethod {
         }
 
         let firstValue = null;
-        ModMenu_1.MainMenu.KunLog("pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
+        // ModMenu_1.MainMenu.KunLog("pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
         BulletConfig_1.BulletConfig.N9o.forEach((value, key, map) => {
-            ModMenu_1.MainMenu.KunLog(`BulletConfig m[${key}] = ${value}` + " pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
+            // ModMenu_1.MainMenu.KunLog(`BulletConfig m[${key}] = ${value}` + " pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
             if (key == EntityManager_1.EntityManager.GetPlayerEntity().Id) {
                 firstValue = value;
             }
         });
-        ModMenu_1.MainMenu.KunLog("Logged");
 
         let BulletDataMap = BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
-        BulletDataMap.forEach((value, key, map) => {
-            ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}`);
-        });
+        // BulletDataMap.forEach((value, key, map) => {
+        //     ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}`);
+        // });
         const [firstDmg] = BulletDataMap.keys()
 
         // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
