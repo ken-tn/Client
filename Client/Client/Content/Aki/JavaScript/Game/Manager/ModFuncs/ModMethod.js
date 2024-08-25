@@ -107,6 +107,11 @@ class ModMethod {
     static best = {}
 
     static GenerateBest() {
+        const damageBlacklist = [
+            "110360200", // baizhi :middle_finger: 
+            "110360210",
+            "110360310"
+        ];
         BulletConfig_1.BulletConfig.N9o.forEach((firstValue, PID, map) => {
             // ModMenu_1.MainMenu.KunLog(`BulletConfig m[${key}] = ${value}` + " pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
             if (!this.best[PID]) {
@@ -130,18 +135,19 @@ class ModMethod {
                             ModMenu_1.MainMenu.KunLog(`${value.BulletName}: ${key} | BulletRowName: ${value.BulletRowName} BaseDamageId: ${value.Base.DamageId}`);
                             
                             if (!value.Base.EnablePartHitAudio) {
-                                ModMenu_1.MainMenu.KunLog(`Quiet Damage key: ${key}`);
-                                quietDmg = key;
+                                // ModMenu_1.MainMenu.KunLog(`Quiet Damage key: ${key}`);
+                                quietDmg = {'key': key, 'BaseDamageId': BigInt(value.Base.DamageId)};
                             }
 
                             let rateLv = dam.RateLv;
                             if (rateLv) {
                                 let maxRate = rateLv[rateLv.length - 1]
-                                if (maxRate > highest) {
+                                if (maxRate > highest && !damageBlacklist.includes(key)) {
                                     highest = maxRate;
-                                    bestDmg = key;
+                                    bestDmg = {'key': key, 'BaseDamageId': BigInt(value.Base.DamageId)};
+                                    // fallback
                                     if (!quietDmg) {
-                                        quietDmg = key
+                                        quietDmg = {'key': key, 'BaseDamageId': BigInt(value.Base.DamageId)}
                                     }
                                     //ModMenu_1.MainMenu.KunLog(`new maxrate: ${highest} key: ${key}`);
                                 }
@@ -150,7 +156,7 @@ class ModMethod {
                     } catch {}
                 });
                 if (bestDmg && quietDmg) {
-                    ModMenu_1.MainMenu.KunLog(`Scan finished for ${PID} bestDmg: ${bestDmg} quietDmg: ${quietDmg}`);
+                    ModMenu_1.MainMenu.KunLog(`Scan finished for ${PID} bestDmg: ${bestDmg.key} quietDmg: ${quietDmg.key}`);
                     this.best[PID] = [quietDmg, bestDmg]
                 } else {
                     ModMenu_1.MainMenu.KunLog("Failed scan for: " + PID);
@@ -160,6 +166,7 @@ class ModMethod {
     }
 
     static SpawnBullet(InitialTransform) {
+        InitialTransform = InitialTransform || Transform_1.Transform.Create().ToUeTransform();
         let PlayerActor = EntityManager_1.EntityManager.GetPlayerActor();
         if (!PlayerActor) {
             return null;
@@ -169,13 +176,13 @@ class ModMethod {
             this.GenerateBest()
         }
 
-        let bul = ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), this.best[PID][0].toString(), PlayerActor.GetTransform(), InitialTransform.GetLocation());
+        let transformLoc = InitialTransform.GetLocation();
+        let bul = ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), (this.best[PID][0].key).toString(), InitialTransform, transformLoc);
         if (!bul) {
-            ModMenu_1.MainMenu.KunLog(`Bullet failed for id ${this.best[PID][0].toString()}`);
+            ModMenu_1.MainMenu.KunLog(`Bullet failed for id ${(this.best[PID][0].key).toString()}`);
             return;
         }
-        bul.GetBulletInfo().ActorComponent.ActorInternal.SetActorEnableCollision(0);
-        bul.GetBulletInfo().ActorComponent.SetActorTransform(InitialTransform);
+        bul.GetBulletInfo().ActorComponent.SetActorLocation(transformLoc);
         return bul;
     }
     
@@ -224,7 +231,7 @@ class ModMethod {
             CharacterPartComponent.OnActivate();
 
             // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
-            let bul = this.SpawnBullet(Entity.GetComponent(3).Actor.GetTransform());
+            let bul = this.SpawnBullet(ModManager_1.ModManager.Settings.HideDmgUi ? Entity.GetComponent(3).Actor.GetTransform() : null);
             if (!bul) {
                 ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer"); 
                 clearInterval(timer);
@@ -253,13 +260,13 @@ class ModMethod {
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
                 // ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
 
-                bul = this.SpawnBullet(Entity.GetComponent(3).Actor.GetTransform());
+                bul = this.SpawnBullet(ModManager_1.ModManager.Settings.HideDmgUi ? Entity.GetComponent(3).Actor.GetTransform() : null);
                 BulletInfo = bul.GetBulletInfo();
                 dict.DamageDataId = 1301400001n;
                 dict.BulletId = bul.BulletId;
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
             } else {
-                dict.DamageDataId = BigInt(this.best[PID][1]);
+                dict.DamageDataId = (this.best[PID][1].BaseDamageId);
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
             }
         }
