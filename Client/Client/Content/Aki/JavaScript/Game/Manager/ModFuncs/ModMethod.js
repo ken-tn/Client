@@ -30,30 +30,41 @@ const puerts_1 = require("puerts"),
   CreateController_1 = require("../../World/Controller/CreatureController"),
   ModDebuger_1 = require("./ModDebuger");
 
-class ModMethod {
-    static SpawnBullet(InitialTransform) {
-        let PlayerActor = EntityManager_1.EntityManager.GetPlayerActor();
-        if (!PlayerActor) {
-            return null;
-        }
+// for (let x of dam.RateLv) {
+//     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
+// }
+// for (let x of dam.HardnessLv) {
+//     ModMenu_1.MainMenu.KunLog(`Hardness ${x}`);
+// }
+// for (let x of dam.ToughLv) {
+//     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
+// }
+// for (let x of dam.Energy) {
+//     ModMenu_1.MainMenu.KunLog(`Energy ${x}`);
+// }
+// for (let x of dam.Percent0) {
+//     ModMenu_1.MainMenu.KunLog(`Percent0 ${x}`);
+// }
+// for (let x of dam.Percent1) {
+//     ModMenu_1.MainMenu.KunLog(`Percent1 ${x}`);
+// }
 
-        let firstValue = null;
-        // ModMenu_1.MainMenu.KunLog("pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
-        BulletConfig_1.BulletConfig.N9o.forEach((value, key, map) => {
-            // ModMenu_1.MainMenu.KunLog(`BulletConfig m[${key}] = ${value}` + " pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
-            if (key == EntityManager_1.EntityManager.GetPlayerEntity().Id) {
-                firstValue = value;
-            }
-        });
-
-        let firstDmg = null;
-        let highest = 0;
-        let BulletDataMap = BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
-        BulletDataMap.forEach((value, key, map) => {
-            try {
-                let dam = ConfigManager_1.ConfigManager.RoleConfig.GetDamageConfig(key)
+// DamageById_1.configDamageById.GetConfig(BigInt(key));
+                // for (let propertyName in dam) {
+                //     ModMenu_1.MainMenu.KunLog(propertyName);
+                //     ModMenu_1.MainMenu.KunLog(dam[propertyName]);
+                // }
+    //             [KUNMOD:]J7
+    // [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:][object Object]
+    // [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]z7
+    // [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]84
+                // for (let i = 0; i < 32; i += 2) {
+                //     var t = dam.J7.__offset(dam.z7, i);
+                //     ModMenu_1.MainMenu.KunLog("i: " + i + " data: " + dam.J7.readInt32(dam.z7 + t).toString())
+                // }
+    
                 // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
-                let rateLv = dam.RateLv;
+                // ModMenu_1.MainMenu.KunLog(`DamageData [${dam.Element}]`);
                 // for (let x of dam.RateLv) {
                 //     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
                 // }
@@ -63,63 +74,18 @@ class ModMethod {
                 // for (let x of dam.ToughLv) {
                 //     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
                 // }
-                // for (let x of dam.Energy) {
-                //     ModMenu_1.MainMenu.KunLog(`Energy ${x}`);
+                // for (let x of dam.CureBaseValue) {
+                //     ModMenu_1.MainMenu.KunLog(`CureBase ${x}`);
                 // }
-                // for (let x of dam.Percent0) {
-                //     ModMenu_1.MainMenu.KunLog(`Percent0 ${x}`);
+                // for (let x of dam.FluctuationLower) {
+                //     ModMenu_1.MainMenu.KunLog(`Lower ${x}`);
                 // }
-                // for (let x of dam.Percent1) {
-                //     ModMenu_1.MainMenu.KunLog(`Percent1 ${x}`);
+                // for (let x of dam.FluctuationUpper) {
+                //     ModMenu_1.MainMenu.KunLog(`Upper ${x}`);
                 // }
-                if (rateLv) {
-                    let maxRate = rateLv[rateLv.length - 1]
-                    if (maxRate > highest) {
-                        highest = maxRate;
-                        firstDmg = key;
-                        //ModMenu_1.MainMenu.KunLog(`new maxrate: ${highest} key: ${key}`);
-                    }
-                }
-            } catch {}
-            // DamageById_1.configDamageById.GetConfig(BigInt(key));
-            // for (let propertyName in dam) {
-            //     ModMenu_1.MainMenu.KunLog(propertyName);
-            //     ModMenu_1.MainMenu.KunLog(dam[propertyName]);
-            // }
-//             [KUNMOD:]J7
-// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:][object Object]
-// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]z7
-// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]84
-            // for (let i = 0; i < 32; i += 2) {
-            //     var t = dam.J7.__offset(dam.z7, i);
-            //     ModMenu_1.MainMenu.KunLog("i: " + i + " data: " + dam.J7.readInt32(dam.z7 + t).toString())
-            // }
+                // BulletDataMap m[1502002001] = [object Object] constructor: BulletDataMain damage: [object Object]damage constructor: Damage
 
-            // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
-            // ModMenu_1.MainMenu.KunLog(`DamageData [${dam.Element}]`);
-            // for (let x of dam.RateLv) {
-            //     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
-            // }
-            // for (let x of dam.HardnessLv) {
-            //     ModMenu_1.MainMenu.KunLog(`Hardness ${x}`);
-            // }
-            // for (let x of dam.ToughLv) {
-            //     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
-            // }
-            // for (let x of dam.CureBaseValue) {
-            //     ModMenu_1.MainMenu.KunLog(`CureBase ${x}`);
-            // }
-            // for (let x of dam.FluctuationLower) {
-            //     ModMenu_1.MainMenu.KunLog(`Lower ${x}`);
-            // }
-            // for (let x of dam.FluctuationUpper) {
-            //     ModMenu_1.MainMenu.KunLog(`Upper ${x}`);
-            // }
-            // BulletDataMap m[1502002001] = [object Object] constructor: BulletDataMain damage: [object Object]damage constructor: Damage
-        });
-        // const [firstDmg] = BulletDataMap.keys()
-
-        // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
+                // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
         // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
         // let dmgKey = null;
         
@@ -133,13 +99,82 @@ class ModMethod {
         // ModMenu_1.MainMenu.KunLog("got skillmap"); 
         // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
         // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
-        let pos = EntityManager_1.EntityManager.GetPlayerPos();
         // ModelManager_1.ModelManager.BulletModel.CreateBullet(Owner, BulletRowName, InitialTransform, InitTargetLocation)
         // 1205005011 changli hit
         // 70119003001 prism hit
-        let bul = ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), firstDmg.toString(),
-        PlayerActor.GetTransform(),
-        new UE.Vector(pos.X + 30, pos.Y + 30, pos.Z + 30))
+
+class ModMethod {
+    static best = {}
+
+    static GenerateBest() {
+        BulletConfig_1.BulletConfig.N9o.forEach((firstValue, PID, map) => {
+            // ModMenu_1.MainMenu.KunLog(`BulletConfig m[${key}] = ${value}` + " pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
+            if (!this.best[PID]) {
+                ModMenu_1.MainMenu.KunLog("Scanning for: " + PID);
+                let bestDmg = null;
+                let quietDmg = null;
+                let highest = 0;
+                let BulletDataMap = BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
+                BulletDataMap.forEach((value, key, map) => {
+                    try {
+                        // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
+                        // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value} constructor: ${value.constructor.name} data: ${value.Data} dataconstructor: ` + value.Data.constructor.name);
+                        // intermediary bullets
+                        if (value.Base.DamageId > 1) {
+                            let dam = ConfigManager_1.ConfigManager.RoleConfig.GetDamageConfig(value.Base.DamageId)
+                        
+                            // for (let propertyName in value.Data) {
+                            //     ModMenu_1.MainMenu.KunLog(propertyName);
+                            //     ModMenu_1.MainMenu.KunLog(value.Data[propertyName]);
+                            // }
+                            ModMenu_1.MainMenu.KunLog(`${value.BulletName}: ${key} | BulletRowName: ${value.BulletRowName} BaseDamageId: ${value.Base.DamageId}`);
+                            
+                            if (!value.Base.EnablePartHitAudio) {
+                                ModMenu_1.MainMenu.KunLog(`Quiet Damage key: ${key}`);
+                                quietDmg = key;
+                            }
+
+                            let rateLv = dam.RateLv;
+                            if (rateLv) {
+                                let maxRate = rateLv[rateLv.length - 1]
+                                if (maxRate > highest) {
+                                    highest = maxRate;
+                                    bestDmg = key;
+                                    if (!quietDmg) {
+                                        quietDmg = key
+                                    }
+                                    //ModMenu_1.MainMenu.KunLog(`new maxrate: ${highest} key: ${key}`);
+                                }
+                            }
+                        }
+                    } catch {}
+                });
+                if (bestDmg && quietDmg) {
+                    ModMenu_1.MainMenu.KunLog(`Scan finished for ${PID} bestDmg: ${bestDmg} quietDmg: ${quietDmg}`);
+                    this.best[PID] = [quietDmg, bestDmg]
+                } else {
+                    ModMenu_1.MainMenu.KunLog("Failed scan for: " + PID);
+                }
+            }
+        });
+    }
+
+    static SpawnBullet(InitialTransform) {
+        let PlayerActor = EntityManager_1.EntityManager.GetPlayerActor();
+        if (!PlayerActor) {
+            return null;
+        }
+        const PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
+        if (!this.best[PID]) {
+            this.GenerateBest()
+        }
+
+        let bul = ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), this.best[PID][0].toString(), PlayerActor.GetTransform(), InitialTransform.GetLocation());
+        if (!bul) {
+            ModMenu_1.MainMenu.KunLog(`Bullet failed for id ${this.best[PID][0].toString()}`);
+            return;
+        }
+        bul.GetBulletInfo().ActorComponent.ActorInternal.SetActorEnableCollision(0);
         bul.GetBulletInfo().ActorComponent.SetActorTransform(InitialTransform);
         return bul;
     }
@@ -168,6 +203,7 @@ class ModMethod {
     const entityPos = Entity.GetComponent(3).ActorLocationProxy;
     const CharacterPartComponent = Entity.GetComponent(60);
     const CharacterDamageComponent = Entity.GetComponent(18);
+    const PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
     timer = setInterval(() => {
         if (!CharacterDamageComponent.Entity || its > itsLimit) {
             ModMenu_1.MainMenu.KunLog(its > itsLimit ? "Hits over limit" : "Dead, clearing timer"); 
@@ -223,6 +259,7 @@ class ModMethod {
                 dict.BulletId = bul.BulletId;
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
             } else {
+                dict.DamageDataId = this.best[PID][1];
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
             }
         }
