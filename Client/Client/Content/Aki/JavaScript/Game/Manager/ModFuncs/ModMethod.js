@@ -134,6 +134,9 @@ class ModMethod {
         // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
         // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
         let pos = EntityManager_1.EntityManager.GetPlayerPos();
+        // ModelManager_1.ModelManager.BulletModel.CreateBullet(Owner, BulletRowName, InitialTransform, InitTargetLocation)
+        // 1205005011 changli hit
+        // 70119003001 prism hit
         let bul = ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), firstDmg.toString(),
         PlayerActor.GetTransform(),
         new UE.Vector(pos.X + 30, pos.Y + 30, pos.Z + 30))
@@ -184,6 +187,7 @@ class ModMethod {
             CharacterPartComponent.OnInit();
             CharacterPartComponent.OnActivate();
 
+            // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
             let bul = this.SpawnBullet(Entity.GetComponent(3).Actor.GetTransform());
             if (!bul) {
                 ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer"); 
