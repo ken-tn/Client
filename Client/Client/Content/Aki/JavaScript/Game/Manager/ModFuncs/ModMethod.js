@@ -35,7 +35,7 @@ class ModMethod {
 
     static GenerateBest() {
         const damageBlacklist = [
-            "110360200", // baizhi :middle_finger: 
+            "110360200",
             "110360210",
             "110360310"
         ];
