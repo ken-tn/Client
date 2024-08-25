@@ -231,7 +231,7 @@ class ModMethod {
             CharacterPartComponent.OnActivate();
 
             // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
-            let bul = this.SpawnBullet(ModManager_1.ModManager.Settings.HideDmgUi ? Entity.GetComponent(3).Actor.GetTransform() : null);
+            let bul = this.SpawnBullet(); // ModManager_1.ModManager.Settings.HideDmgUi ? null : Entity.GetComponent(3).Actor.GetTransform()
             if (!bul) {
                 ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer"); 
                 clearInterval(timer);
@@ -260,7 +260,7 @@ class ModMethod {
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
                 // ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
 
-                bul = this.SpawnBullet(ModManager_1.ModManager.Settings.HideDmgUi ? Entity.GetComponent(3).Actor.GetTransform() : null);
+                bul = this.SpawnBullet();
                 BulletInfo = bul.GetBulletInfo();
                 dict.DamageDataId = 1301400001n;
                 dict.BulletId = bul.BulletId;
