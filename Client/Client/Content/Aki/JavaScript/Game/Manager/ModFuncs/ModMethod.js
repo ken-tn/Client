@@ -31,7 +31,7 @@ const puerts_1 = require("puerts"),
   ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
-    static SpawnBullet() {
+    static SpawnBullet(InitialTransform) {
         let PlayerActor = EntityManager_1.EntityManager.GetPlayerActor();
         if (!PlayerActor) {
             return null;
@@ -134,13 +134,11 @@ class ModMethod {
         // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
         // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
         let pos = EntityManager_1.EntityManager.GetPlayerPos();
-        // ModelManager_1.ModelManager.BulletModel.CreateBullet(Owner, BulletRowName, InitialTransform, InitTargetLocation)
-        // 1205005011 changli hit
-        // 70119003001 prism hit
-        return ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), firstDmg.toString(),
-        Transform_1.Transform.Create(PlayerActor.GetTransform()).ToUeTransform(),
-        new UE.Vector(pos.X + 30, pos.Y + 30, pos.Z + 30));
-        // ModMenu_1.MainMenu.KunLog("KunBullet: " + bul.toString())
+        let bul = ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), firstDmg.toString(),
+        PlayerActor.GetTransform(),
+        new UE.Vector(pos.X + 30, pos.Y + 30, pos.Z + 30))
+        bul.GetBulletInfo().ActorComponent.SetActorTransform(InitialTransform);
+        return bul;
     }
     
   //怪物淹死
@@ -186,8 +184,7 @@ class ModMethod {
             CharacterPartComponent.OnInit();
             CharacterPartComponent.OnActivate();
 
-            // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
-            let bul = this.SpawnBullet();
+            let bul = this.SpawnBullet(Entity.GetComponent(3).Actor.GetTransform());
             if (!bul) {
                 ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer"); 
                 clearInterval(timer);
@@ -216,7 +213,7 @@ class ModMethod {
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
                 // ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
 
-                bul = this.SpawnBullet();
+                bul = this.SpawnBullet(Entity.GetComponent(3).Actor.GetTransform());
                 BulletInfo = bul.GetBulletInfo();
                 dict.DamageDataId = 1301400001n;
                 dict.BulletId = bul.BulletId;
