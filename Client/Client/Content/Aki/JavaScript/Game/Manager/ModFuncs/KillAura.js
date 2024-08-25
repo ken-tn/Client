@@ -14,6 +14,7 @@ const AnimalList = [
   "Animal003", //蓝冠鸽
   "Animal004", //灰冠鸥
   "Animal012", //青杂兔
+  "Animal032" // blobfly :(
 ];
 const BigAnimalList = [
   "Animal013", //岩角羊
