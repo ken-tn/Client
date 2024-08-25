@@ -259,7 +259,7 @@ class ModMethod {
                 dict.BulletId = bul.BulletId;
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
             } else {
-                dict.DamageDataId = this.best[PID][1];
+                dict.DamageDataId = BigInt(this.best[PID][1]);
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
             }
         }
