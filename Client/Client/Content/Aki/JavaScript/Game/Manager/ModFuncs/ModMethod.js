@@ -174,6 +174,7 @@ class ModMethod {
         const PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
         if (!this.best[PID]) {
             this.GenerateBest()
+            return;
         }
 
         let transformLoc = InitialTransform.GetLocation();
