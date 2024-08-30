@@ -472,8 +472,8 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         }
         
         if (ModManager_1.ModManager.Settings.hitAll) {
-            let l = Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity,
-            m = EntitySystem_1.EntitySystem.Get(t.Attacker.Id);
+            let l = Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.Id,
+            m = t.Attacker.Id;
             if (m == l) {
                 ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
                     // hit all enemies here
@@ -501,7 +501,7 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
                                         }
                                     }
                                 }
-                            }, Math.floor(Math.random() * 250) + 20)
+                            }, Math.floor(Math.random() * 100) + 20)
                         } catch {
                             
                         }
