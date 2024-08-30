@@ -116,10 +116,10 @@ class ModMethod {
     if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(33) && Entity.GetComponent(60)) {
         return;
     }
-    const entityPos = Entity.GetComponent(3).ActorLocationProxy;
-    const CharacterPartComponent = Entity.GetComponent(60);
-    const CharacterDamageComponent = Entity.GetComponent(18);
-    const PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
+    let entityPos = Entity.GetComponent(3).ActorLocationProxy;
+    let CharacterPartComponent = Entity.GetComponent(60);
+    let CharacterDamageComponent = Entity.GetComponent(18);
+    let PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
     timer = setInterval(() => {
         if (!CharacterDamageComponent.Entity || its > itsLimit) {
             clearInterval(timer);
