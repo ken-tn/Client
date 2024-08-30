@@ -212,10 +212,10 @@ class ModMethod {
     let CharacterPartComponent = Entity.GetComponent(60);
     let CharacterDamageComponent = Entity.GetComponent(18);
     let PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
-    timer = setInterval(() => {
+    timer = TimerSystem_1.TimerSystem.Forever(() => {
         if (!CharacterDamageComponent.Entity || its > itsLimit) {
             ModMenu_1.MainMenu.KunLog(its > itsLimit ? "Hits over limit" : "Dead, clearing timer"); 
-            clearInterval(timer);
+            TimerSystem_1.TimerSystem.Remove(timer);
             return;
         }
 
@@ -224,7 +224,7 @@ class ModMethod {
         if (CharacterDamageComponent && Entity.GetComponent(33) && entityPos) {
             if (!CharacterPartComponent) {
                 ModMenu_1.MainMenu.KunLog("Failed to find CharacterPartComponent"); 
-                clearInterval(timer);
+                TimerSystem_1.TimerSystem.Remove(timer);
                 return;
             }
             CharacterPartComponent.OnInitData();
@@ -235,7 +235,7 @@ class ModMethod {
             let bul = this.SpawnBullet(); // ModManager_1.ModManager.Settings.HideDmgUi ? null : Entity.GetComponent(3).Actor.GetTransform()
             if (!bul) {
                 ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer"); 
-                clearInterval(timer);
+                TimerSystem_1.TimerSystem.Remove(timer);
                 return;
             }
             let BulletInfo = bul.GetBulletInfo();

@@ -472,38 +472,42 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
         }
         
         if (ModManager_1.ModManager.Settings.hitAll) {
-            ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
-                // hit all enemies here
-                if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
-                    try {
-                        TimerSystem_1.TimerSystem.Delay(() => {
-                            const Entity = entity.Entity;
-                            if (Entity && EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo()) {
-                                const entityPos = Entity.GetComponent(3).ActorLocationProxy;
-                                let CharacterPartComponent = Entity.GetComponent(60);
-                                if (Entity.GetComponent(18) && Entity.GetComponent(33) && CharacterPartComponent && entityPos) {
-                                    CharacterPartComponent.OnInitData();
-                                    CharacterPartComponent.OnInit();
-                                    CharacterPartComponent.OnActivate();
-                                    dict.HitPosition = entityPos.ToUeVector();
-                                    if (ModManager_1.ModManager.Settings.killAuraState == 1) {
-                                        dict.DamageDataId = 1205401001n
-                                        Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
-                                        dict.DamageDataId = 1301400001n
-                                        Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
-                                    } else {
-                                        if (s >= 1) {
+            let l = Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity,
+            m = EntitySystem_1.EntitySystem.Get(t.Attacker.Id);
+            if (m == l) {
+                ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(entity => {
+                    // hit all enemies here
+                    if (EntityManager_1.EntityManager.isMonster(entity) && KillAura_1.KillAura.isIndistance(entity)) {
+                        try {
+                            TimerSystem_1.TimerSystem.Delay(() => {
+                                const Entity = entity.Entity;
+                                if (Entity && EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo()) {
+                                    const entityPos = Entity.GetComponent(3).ActorLocationProxy;
+                                    let CharacterPartComponent = Entity.GetComponent(60);
+                                    if (Entity.GetComponent(18) && Entity.GetComponent(33) && CharacterPartComponent && entityPos) {
+                                        CharacterPartComponent.OnInitData();
+                                        CharacterPartComponent.OnInit();
+                                        CharacterPartComponent.OnActivate();
+                                        dict.HitPosition = entityPos.ToUeVector();
+                                        if (ModManager_1.ModManager.Settings.killAuraState == 1) {
+                                            dict.DamageDataId = 1205401001n
                                             Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                                            dict.DamageDataId = 1301400001n
+                                            Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                                        } else {
+                                            if (s >= 1) {
+                                                Entity.GetComponent(18)?.ExecuteBulletDamage(t.BulletEntityId, dict, a)
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        }, Math.floor(Math.random() * 250) + 20)
-                    } catch {
-                        
+                            }, Math.floor(Math.random() * 250) + 20)
+                        } catch {
+                            
+                        }
                     }
-                }
-            })
+                });
+            }
         };
         
         return s < 1 || !h?{
