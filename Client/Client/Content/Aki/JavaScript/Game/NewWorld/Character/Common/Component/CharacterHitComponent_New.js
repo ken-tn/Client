@@ -480,7 +480,11 @@ let CharacterHitComponent = CharacterHitComponent_1 = class extends EntityCompon
                             const Entity = entity.Entity;
                             if (Entity && EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo()) {
                                 const entityPos = Entity.GetComponent(3).ActorLocationProxy;
-                                if (Entity.GetComponent(18) && Entity.GetComponent(33) && entityPos) {
+                                let CharacterPartComponent = Entity.GetComponent(60);
+                                if (Entity.GetComponent(18) && Entity.GetComponent(33) && CharacterPartComponent && entityPos) {
+                                    CharacterPartComponent.OnInitData();
+                                    CharacterPartComponent.OnInit();
+                                    CharacterPartComponent.OnActivate();
                                     dict.HitPosition = entityPos.ToUeVector();
                                     if (ModManager_1.ModManager.Settings.killAuraState == 1) {
                                         dict.DamageDataId = 1205401001n

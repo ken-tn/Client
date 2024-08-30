@@ -85,76 +85,22 @@ let CharacterDamageComponent = CharacterDamageComponent_1 = class extends Entity
         -this.ActorComponent.ActorVelocityProxy.Z >= this.eqr?0 === this.tqr && (this.tqr = Time_1.Time.WorldTimeSeconds) : this.tqr = 0
     }
     ExecuteBulletDamage(e, t, a) {
-        var r, o = (e = EntitySystem_1.EntitySystem.Get(e)).GetBulletInfo(),
-            i = DamageById_1.configDamageById.GetConfig(t.DamageDataId); // Damage.js
-        
-        // ModMenu_1.MainMenu.KunLog("PartId: " + t.PartId + ",, Damage: " + i.toString()); 
-        if (!this.Entity) {
-            ModMenu_1.MainMenu.KunLog("Missing entity.");
-            return; 
+        var r, e = EntitySystem_1.EntitySystem.Get(e),
+            i = e.GetBulletInfo(),
+            o = DamageById_1.configDamageById.GetConfig(t.DamageDataId);
+        return o?((r = new ExtraEffectBaseTypes_1.RequirementPayload).BulletId = BigInt(i.BulletRowName), r.SkillId = Number(i.BulletInitParams.SkillId), r.BulletTags = i.Tags?? [], r.PartId = t.PartId, 0 <= r.PartId && (r.PartTag = this.Entity.GetComponent(60).GetPartByIndex(r.PartId).PartTag?.TagId), i = {
+            ...t,
+            DamageData: o,
+            Attacker: t.Attacker.CheckGetComponent(18),
+            SourceType: Protocol_1.Aki.Protocol.VAs.Proto_FromBullet,
+            IsReaction: o.PayloadId !== damageDataPayloadIdDefault,
+            Accumulation: ExtraEffectDamageAccumulation_1.DamageAccumulation.GetAccumulation(e.Id),
+            PartId: t.PartId,
+            RandomSeed: ModelManager_1.ModelManager.PlayerInfoModel.GetRandomSeed()
+        }, this.aqr(i), this.ProcessDamage(r, i, a)) : {
+            DamageResult: 0,
+            ToughResult: 0
         }
-        let CharacterPartComponent = this.Entity.GetComponent(60); // 60 = CharacterPartComponent
-        if (!CharacterPartComponent) {
-            ModMenu_1.MainMenu.KunLog("failed here"); 
-            return {
-                DamageResult: 0,
-                ToughResult: 0
-            }
-        }
-        // CharacterPartComponent.ajr = true;
-        // CharacterPartComponent.OnActivate();
-
-        // let ActorComp = this.Entity.GetComponent(3);
-        // let BaseChar = ActorComp.Actor;
-        // let DtCharacterPart = BaseChar.DtCharacterPart;
-        // let partinfo = DataTableUtil_1.DataTableUtil.GetAllDataTableRowFromTable(DtCharacterPart);
-        // ModMenu_1.MainMenu.KunLog("obtained partinfo"); 
-        // for (const idk of partinfo) {
-        //     ModMenu_1.MainMenu.KunLog("partinfo " + idk.toString()); 
-        // }
-        // if (partinfo.length > 0) {
-        //     let part = new CharacterPartComponent_1.CharacterPart(
-        //         this.Entity,
-        //         CharacterPartComponent.Parts.length,
-        //         partinfo[0]);
-        //     CharacterPartComponent.Parts.push(part);
-        // }
-        
-        // if (CharacterPartComponent.Parts.length === 0) {
-        //     ModMenu_1.MainMenu.KunLog("failed here 1"); 
-        //     return {
-        //         DamageResult: 0,
-        //         ToughResult: 0
-        //     }
-        // }
-        CharacterPartComponent.OnInitData();
-        CharacterPartComponent.OnInit();
-        CharacterPartComponent.OnActivate();
-        
-        let part = null;
-        if (CharacterPartComponent.Parts.length > 0) {
-            part = CharacterPartComponent.GetPartByIndex(0)
-        }
-        let res = null;
-        try {
-            res = i?((r = new ExtraEffectBaseTypes_1.RequirementPayload).BulletId = BigInt(o.BulletRowName), r.SkillId = Number(o.BulletInitParams.SkillId), r.BulletTags = o.Tags ?? [],
-            r.PartId = t.PartId,
-            0 <= r.PartId && (r.PartTag = part.PartTag?.TagId),
-            o = {
-                ...t,
-                DamageData: i,
-                Attacker: t.Attacker.CheckGetComponent(18),
-                SourceType: Protocol_1.Aki.Protocol.VAs.Proto_FromBullet,
-                IsReaction: i.PayloadId !== damageDataPayloadIdDefault,
-                Accumulation: ExtraEffectDamageAccumulation_1.DamageAccumulation.GetAccumulation(e.Id),
-                PartId: t.PartId,
-                RandomSeed: ModelManager_1.ModelManager.PlayerInfoModel.GetRandomSeed()
-            }, this.aqr(o), this.ProcessDamage(r, o, a)) : {
-                DamageResult: 0,
-                ToughResult: 0
-            }
-        } catch {}
-        return res;
     }
     ExecuteBuffDamage(e, t, a) {
         // ModMenu_1.MainMenu.KunLog("DamageCalledHere" + e.toString() + ",," + t.toString() + ",," + a.toString());
