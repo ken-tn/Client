@@ -120,16 +120,16 @@ class ModMethod {
     let CharacterPartComponent = Entity.GetComponent(60);
     let CharacterDamageComponent = Entity.GetComponent(18);
     let PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
-    timer = setInterval(() => {
+    timer = TimerSystem_1.TimerSystem.Forever(() => {
         if (!CharacterDamageComponent.Entity || its > itsLimit) {
-            clearInterval(timer);
+            TimerSystem_1.TimerSystem.Remove(timer);
             return;
         }
 
         its++;
         if (CharacterDamageComponent && Entity.GetComponent(33) && entityPos) {
             if (!CharacterPartComponent) {
-                clearInterval(timer);
+                TimerSystem_1.TimerSystem.Remove(timer);
                 return;
             }
             CharacterPartComponent.OnInitData();
@@ -138,7 +138,7 @@ class ModMethod {
 
             let bul = this.SpawnBullet();
             if (!bul) {
-                clearInterval(timer);
+                TimerSystem_1.TimerSystem.Remove(timer);
                 return;
             }
             let BulletInfo = bul.GetBulletInfo();

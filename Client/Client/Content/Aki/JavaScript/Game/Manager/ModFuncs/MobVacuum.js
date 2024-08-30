@@ -5,6 +5,7 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
   ModMenu_1 = require("../../ModMenu"),
@@ -45,28 +46,28 @@ class MobVacuum extends EntityManager_1.EntityManager {
         let timer = null
         let its = 0;
         let itsLimit = 5;
-        timer = setInterval(() => {
+        timer = TimerSystem_1.TimerSystem.Forever(() => {
             if (!entity.Entity || its > itsLimit) {
-                clearInterval(timer);
+                TimerSystem_1.TimerSystem.Remove(timer);
                 return;
             }
 
             its++;
             let distToPlayer = ModUtils_1.ModUtils.Getdistance2Player(this.GetPosition(entity.Entity));
             if (distToPlayer < 500) {
-                clearInterval(timer);
+                TimerSystem_1.TimerSystem.Remove(timer);
                 return;
             }
             
             let playerpos = this.GetPlayerPos();
             let playerDistToSpawn = ModUtils_1.ModUtils.Getdistance(this.origPositions[entityId], playerpos)
             if (playerDistToSpawn > ModManager_1.ModManager.Settings.VacuumRadius * 100) {
-                clearInterval(timer);
+                TimerSystem_1.TimerSystem.Remove(timer);
                 return;
             }
 
             if (!this.isIndistance(entity)) {
-                clearInterval(timer);
+                TimerSystem_1.TimerSystem.Remove(timer);
                 return;
             }
             
