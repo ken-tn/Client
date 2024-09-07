@@ -20,12 +20,14 @@ class ThinkingAnalyticsReporter {
     }
     static Report(e, r) {
         // WARNING!
-        // ThinkDataLaunchReporter_1.ENABLE_THINKING_ANALYTICS && cpp_1.FThinkingAnalyticsForPuerts.Track(e, r)
+        r = r.replace(ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString(), "0").replace(ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid.toString(), "0");
+        ThinkDataLaunchReporter_1.ENABLE_THINKING_ANALYTICS && cpp_1.FThinkingAnalyticsForPuerts.Track(e, r)
     }
 }
 exports.ThinkingAnalyticsReporter = ThinkingAnalyticsReporter, (_a = ThinkingAnalyticsReporter).h9 = void 0, ThinkingAnalyticsReporter.Wvi = () => {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    UE.ThinkingAnalytics.Login(e.toString())
+    // UE.ThinkingAnalytics.Login(e.toString())
+    UE.ThinkingAnalytics.Login("0")
 }, ThinkingAnalyticsReporter.Kvi = () => {
     UE.ThinkingAnalytics.Logout()
 }, ThinkingAnalyticsReporter.Qvi = () => {
