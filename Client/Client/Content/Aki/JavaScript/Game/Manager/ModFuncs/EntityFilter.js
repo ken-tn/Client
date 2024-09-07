@@ -125,7 +125,8 @@ class EntityFilter {
     "Monster145", // ranger
     "Monster144", // ranger
     "Monster143", // ranger
-    "Monster142" // ranger
+    "Monster142", // ranger
+    "Floater_1.2"
   ]
 
   static isFilter(list, blueprint) {
