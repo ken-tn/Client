@@ -50,11 +50,11 @@ class ThirdPartySdkManager {
     "" !== e && ThirdPartySdkManager.qBe(e);
   }
   static qBe(e) {
-    cpp_1.FCrashSightProxy.SetUserId(e);
+    cpp_1.FCrashSightProxy.SetUserId(0);
   }
   static SetUserInfoForTpSafe(e, r) {
     var t;
-    cpp_1.FCrashSightProxy.SetCustomData("PlayerId", r.toString()),
+    cpp_1.FCrashSightProxy.SetCustomData("PlayerId", "0"),
       UE.KuroStaticLibrary.IsModuleLoaded("TpSafe") &&
         ((t = ThirdPartySdkManager.GBe()),
         ue_1.TpSafeProxy.SetUserInfo(t, 0, e, r));
@@ -67,13 +67,7 @@ class ThirdPartySdkManager {
         ThirdPartySdkManager.NBe();
       }, e));
   }
-  static NBe() {
-    // var e, r;
-    // Net_1.Net.IsServerConnected() &&
-    //   0 < (e = ue_1.TpSafeProxy.GetAntiData()).byteLength &&
-    //   (((r = Protocol_1.Aki.Protocol.e$n.create())._6n = new Uint8Array(e)),
-    //   Net_1.Net.Send(4213, r));
-  }
+  static NBe() {}
   static GBe() {
     return "Windows" === UE.GameplayStatics.GetPlatformName() ? 601 : 99;
   }

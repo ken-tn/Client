@@ -54,6 +54,7 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
       e
     ),
       AntiCheatController.xje();
+      UE.TpSafeProxy.SetUserInfo(ThirdPartySdkManager_1.ThirdPartySdkManager.GBe(), 0, "0", 0);
   }),
   (AntiCheatController.Pje = () => {
     var e = TimeUtil_1.TimeUtil.GetServerTimeStamp(),
