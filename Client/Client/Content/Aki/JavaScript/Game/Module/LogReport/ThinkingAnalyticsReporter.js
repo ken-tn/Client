@@ -23,7 +23,6 @@ class ThinkingAnalyticsReporter {
 }
 exports.ThinkingAnalyticsReporter = ThinkingAnalyticsReporter, (_a = ThinkingAnalyticsReporter).h9 = void 0, ThinkingAnalyticsReporter.Wvi = () => {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    // UE.ThinkingAnalytics.Login(e.toString())
     UE.ThinkingAnalytics.Login("0")
 }, ThinkingAnalyticsReporter.Kvi = () => {
     UE.ThinkingAnalytics.Logout()
