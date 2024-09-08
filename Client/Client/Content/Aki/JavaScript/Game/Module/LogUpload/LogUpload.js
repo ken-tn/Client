@@ -33,8 +33,6 @@ class LogUpload {
         return "" === this.tMi?e + o + ".zip" : `${this.tMi}-${e}${o}.zip`
     }
     static SendLog(e) {
-        // WARNING!
-        // UE.KuroTencentCOSLibrary.SendLogToTencentCOS(e)
     }
     static eMi() {
         let e = "";
