@@ -19,9 +19,6 @@ class ThinkingAnalyticsReporter {
         ThinkDataLaunchReporter_1.ENABLE_THINKING_ANALYTICS && (EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OnGetPlayerBasicInfo, ThinkingAnalyticsReporter.Wvi), EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.LogOut, ThinkingAnalyticsReporter.Kvi), EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.LoginSuccess, ThinkingAnalyticsReporter.Qvi))
     }
     static Report(e, r) {
-        // WARNING!
-        r = r.replace(ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString(), "0").replace(ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid.toString(), "0");
-        ThinkDataLaunchReporter_1.ENABLE_THINKING_ANALYTICS && cpp_1.FThinkingAnalyticsForPuerts.Track(e, "", 0)
     }
 }
 exports.ThinkingAnalyticsReporter = ThinkingAnalyticsReporter, (_a = ThinkingAnalyticsReporter).h9 = void 0, ThinkingAnalyticsReporter.Wvi = () => {
