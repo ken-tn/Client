@@ -48,7 +48,7 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
 ((exports.AntiCheatController = AntiCheatController).Bje = 0),
   (AntiCheatController.bje = 0),
   (AntiCheatController.Aje = () => {
-    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId(); // trigger bad
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe(
       e.toString(),
       e
