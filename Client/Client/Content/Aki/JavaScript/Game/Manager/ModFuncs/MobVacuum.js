@@ -106,7 +106,7 @@ class MobVacuum extends EntityManager_1.EntityManager {
 
   static SyncMonster(entity, pos) {
     // update here CombatMessageController.js AfterTick
-    let t = entity.Entity.GetComponent(58);
+    let t = entity.Entity.GetComponent(60);
     if (!t.EnableMovementSync) {
         t.SetEnableMovementSync(true, "MonsterBehaviorComponent InFight");
         t.EnableMovementSync = true;
@@ -115,9 +115,9 @@ class MobVacuum extends EntityManager_1.EntityManager {
     let i = t.GetCurrentMoveSample();
     i.Location = pos;
     t.PendingMoveInfos.push(i);
-    let s = Protocol_1.Aki.Protocol.$us.create();
-    s.kRs.push(t.CollectPendingMoveInfos());
-    Net_1.Net.Send(28674 /*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
+    let s = Protocol_1.Aki.Protocol.Yus.create();
+    s.WRs.push(t.CollectPendingMoveInfos());
+    Net_1.Net.Send(28450 /*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
   }
 }
 //puerts.logger.info(debug)

@@ -56,13 +56,18 @@ class AutoPuzzle extends EntityManager_1.EntityManager {
 
   static Gameplay004(entity) {
     if (this.GetBlueprintType2(entity) == "Gameplay004") {
-      ModMethod_1.ModMethod.ThrowDamageChangeRequest(entity.Entity, 3, 210002001n); //爆裂鸣晶demageid Gameplay018
+      ModMethod_1.ModMethod.ThrowDamageChangeRequest(
+        entity.Entity,
+        3,
+        210002001n
+      ); //爆裂鸣晶demageid Gameplay018
     }
   }
 
   static SetGuideRange(entity) {
     if (this.isneed(entity, SetGuidelist)) {
-      let PawnPerceptionComponent = entity.Entity.GetComponent(106);
+      // here update
+      let PawnPerceptionComponent = entity.Entity.GetComponent(107);
       try {
         PawnPerceptionComponent.SetGuideRange(1e9);
       } catch (error) {}

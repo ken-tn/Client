@@ -9,74 +9,73 @@ const cpp_1 = require("cpp"),
   Net_1 = require("../../Core/Net/Net"),
   TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
   BaseConfigController_1 = require("../../Launcher/BaseConfig/BaseConfigController"),
+  Platform_1 = require("../../Launcher/Platform/Platform"),
   ACE_DATA_TRANSFER_INTERVAL_PC = 100,
   ACE_DATA_TRANSFER_INTERVAL_MOBILE = 4e3;
 class ThirdPartySdkManager {
   static Init() {
-    var e =
+    var r =
         BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
-          "Stream"
+          "Stream",
         ),
-      r = BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
+      e = BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
         "Changelist",
-        ""
+        "",
       ),
-      e =
-        (cpp_1.FCrashSightProxy.SetBranchInfo(e, r),
-        UE.KuroStaticLibrary.IsModuleLoaded("TpSafe")),
       r =
-        (e &&
-          (void 0 !== ThirdPartySdkManager.BBe &&
-            (TimerSystem_1.TimerSystem.Remove(ThirdPartySdkManager.BBe),
-            (ThirdPartySdkManager.BBe = void 0)),
-          ThirdPartySdkManager.InitDataTransferTimerForTpSafe(),
-          Net_1.Net.Register(3514, ThirdPartySdkManager.bBe)),
-        UE.GameplayStatics.GetPlatformName());
-    "Android" === r &&
-      ((e = UE.KuroAudioStatics.IsAndroidApiUsingOpenSL()),
-      cpp_1.FCrashSightProxy.SetCustomData(
-        "AudioAPI",
-        e ? "OpenSL" : "AAudio"
-      )),
+        (cpp_1.FCrashSightProxy.SetBranchInfo(r, e),
+        UE.KuroStaticLibrary.IsModuleLoaded("TpSafe"));
+    r &&
+      (void 0 !== ThirdPartySdkManager.BBe &&
+        (TimerSystem_1.TimerSystem.Remove(ThirdPartySdkManager.BBe),
+        (ThirdPartySdkManager.BBe = void 0)),
+      ThirdPartySdkManager.InitDataTransferTimerForTpSafe(),
+      Net_1.Net.Register(22729, ThirdPartySdkManager.bBe)),
+      Platform_1.Platform.IsAndroidPlatform() &&
+        ((e = UE.KuroAudioStatics.IsAndroidApiUsingOpenSL()),
+        cpp_1.FCrashSightProxy.SetCustomData(
+          "AudioAPI",
+          e ? "OpenSL" : "AAudio",
+        )),
       this.rPn();
   }
   static rPn() {
-    var e = UE.BlueprintPathsLibrary.ProjectSavedDir() + "crashes/trigger";
-    UE.BlueprintPathsLibrary.FileExists(e) &&
+    var r = UE.BlueprintPathsLibrary.ProjectSavedDir() + "crashes/trigger";
+    UE.BlueprintPathsLibrary.FileExists(r) &&
       (Log_1.Log.CheckError() && Log_1.Log.Error("Login", 22, "崩溃测试！"),
       cpp_1.FCrashSightProxy.Test());
   }
-  static SetUserInfo(e) {
-    "" !== e && ThirdPartySdkManager.qBe(e);
+  static SetUserInfo(r) {
+    "" !== r && ThirdPartySdkManager.qBe(r);
   }
-  static qBe(e) {
+  static qBe(r) {
     cpp_1.FCrashSightProxy.SetUserId(0);
   }
-  static SetUserInfoForTpSafe(e, r) {
-    var t;
-    cpp_1.FCrashSightProxy.SetCustomData("PlayerId", "0"),
+  static SetUserInfoForTpSafe(r, e) {
+    var a;
+    cpp_1.FCrashSightProxy.SetCustomData("PlayerId", e.toString()),
       UE.KuroStaticLibrary.IsModuleLoaded("TpSafe") &&
-        ((t = ThirdPartySdkManager.GBe()),
-        ue_1.TpSafeProxy.SetUserInfo(t, 0, e, r));
+        ((a = ThirdPartySdkManager.GBe()),
+        ue_1.TpSafeProxy.SetUserInfo(a, 0, r, e));
   }
   static InitDataTransferTimerForTpSafe() {
-    let e = ACE_DATA_TRANSFER_INTERVAL_MOBILE;
-    "Windows" === UE.GameplayStatics.GetPlatformName() &&
-      (e = ACE_DATA_TRANSFER_INTERVAL_PC),
+    let r = ACE_DATA_TRANSFER_INTERVAL_MOBILE;
+    Platform_1.Platform.IsWindowsPlatform() &&
+      (r = ACE_DATA_TRANSFER_INTERVAL_PC),
       (ThirdPartySdkManager.BBe = TimerSystem_1.TimerSystem.Forever(() => {
         ThirdPartySdkManager.NBe();
-      }, e));
+      }, r));
   }
   static NBe() {}
   static GBe() {
-    return "Windows" === UE.GameplayStatics.GetPlatformName() ? 601 : 99;
+    return Platform_1.Platform.IsWindowsPlatform() ? 601 : 99;
   }
   static Logout() {
     ue_1.TpSafeProxy.Logout();
   }
 }
 ((exports.ThirdPartySdkManager = ThirdPartySdkManager).BBe = void 0),
-  (ThirdPartySdkManager.bBe = (e) => {
-    ue_1.TpSafeProxy.RecvAntiData(e._6n);
+  (ThirdPartySdkManager.bBe = (r) => {
+    ue_1.TpSafeProxy.RecvAntiData(r.v6n);
   });
 //# sourceMappingURL=ThirdPartySdkManager.js.map
