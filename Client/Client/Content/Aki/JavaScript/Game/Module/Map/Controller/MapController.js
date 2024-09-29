@@ -52,7 +52,7 @@ class LineTraceSaver {
         (r = Vector_1.Vector.Create(e, t, a))),
       (ModManager_1.ModManager.Settings.MarkX = e),
       (ModManager_1.ModManager.Settings.MarkY = t),
-      (ModManager_1.ModManager.Settings.MarkZ = r),
+      (ModManager_1.ModManager.Settings.MarkZ = a),
       r
     );
   }

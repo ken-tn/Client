@@ -205,11 +205,11 @@ class ModMethod {
     let its = 0;
     let itsLimit = 10;
     
-    if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(33) && Entity.GetComponent(60)) {
+    if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(34) && Entity.GetComponent(61)) {
         return;
     }
     let entityPos = Entity.GetComponent(3).ActorLocationProxy;
-    let CharacterPartComponent = Entity.GetComponent(60);
+    let CharacterPartComponent = Entity.GetComponent(61);
     let CharacterDamageComponent = Entity.GetComponent(18);
     let PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
     timer = TimerSystem_1.TimerSystem.Forever(() => {
@@ -221,7 +221,7 @@ class ModMethod {
 
         its++;
         // ModMenu_1.MainMenu.KunLog("Got pos"); 
-        if (CharacterDamageComponent && Entity.GetComponent(33) && entityPos) {
+        if (CharacterDamageComponent && Entity.GetComponent(34) && entityPos) {
             if (!CharacterPartComponent) {
                 ModMenu_1.MainMenu.KunLog("Failed to find CharacterPartComponent"); 
                 TimerSystem_1.TimerSystem.Remove(timer);

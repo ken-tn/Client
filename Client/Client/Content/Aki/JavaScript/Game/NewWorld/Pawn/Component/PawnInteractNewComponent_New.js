@@ -600,8 +600,7 @@ let PawnInteractNewComponent = class PawnInteractNewComponent extends PawnIntera
       )
         return !1;
     }
-    return (
-      (2 !== this.Qsn && !!(0 !== this.Qsn || (this.H4r && this.Dan))));
+    return 2 !== this.Qsn && !!(0 !== this.Qsn || (this.H4r && this.Dan));
   }
   IsPawnInteractive() {
     return !(
@@ -741,7 +740,7 @@ let PawnInteractNewComponent = class PawnInteractNewComponent extends PawnIntera
           i &&
             (((this.t4a = i).ForceExitStateStop = !0),
             (i.CanMoveFromInput = !1),
-            i.CharacterMovement) &&
+            i.CharacterMovement),
             // here
             this.kan();
         } else (this.qan = !0), this.Fan(), this.Han();

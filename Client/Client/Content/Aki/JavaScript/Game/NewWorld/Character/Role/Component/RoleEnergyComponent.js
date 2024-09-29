@@ -39,10 +39,10 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
       });
   }
   OnStart() {
-    var e = this.$te.GetCurrentValue.bind(this.$te);
+    (this.n$t = this.Entity.CheckGetComponent(3)),
+      (this.$te = this.Entity.CheckGetComponent(159));
+    let e = this.$te.GetCurrentValue.bind(this.$te);
     return (
-      (this.n$t = this.Entity.CheckGetComponent(3)),
-      (this.$te = this.Entity.CheckGetComponent(159)),
       (this.$te.GetCurrentValue = (t) =>
         t === EAttributeId.Proto_Energy && ModManager_1.ModManager.Settings.NoCD
           ? e(EAttributeId.Proto_EnergyMax)

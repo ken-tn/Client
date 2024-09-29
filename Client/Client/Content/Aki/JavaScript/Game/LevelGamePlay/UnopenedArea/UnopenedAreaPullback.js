@@ -42,7 +42,7 @@ class UnopenedAreaPullback {
         this.hBe &&
           (this.CBe(t), this.sBe) &&
           (e?.Valid &&
-            (e.Entity.GetComponent(161).StopMoveToLocation(), this.gBe(e, !1)),
+            (e.Entity.GetComponent(164).StopMoveToLocation(), this.gBe(e, !1)),
           this.gBe(t, !0),
           this.fBe(t));
       });
@@ -59,12 +59,12 @@ class UnopenedAreaPullback {
         SceneEffectStateManager_1.default.SetSceneEffectState(0, i)),
       !this.sBe && e > this.rBe
         ? (this.pBe(), this.vBe())
-        : this.sBe && e < END_DISTANCE && this.MBe() && this.SBe());
+        : this.sBe && e < END_DISTANCE && this.MBe() && this.EBe());
   }
   MBe() {
     return (
       !!ModelManager_1.ModelManager.MapModel.IsInMapPolygon(
-        this.Hte.ActorLocationProxy
+        this.Hte.ActorLocationProxy,
       ) ||
       (this.jye.DeepCopy(this.Hte.ActorLocationProxy),
       this.jye.Subtraction(this._Be, this.jye),
@@ -77,28 +77,28 @@ class UnopenedAreaPullback {
   pBe() {
     var t =
       ControllerHolder_1.ControllerHolder.GenericPromptController.GetViewNameByPromptId(
-        TIPS_NAME
+        TIPS_NAME,
       );
     t &&
       !UiManager_1.UiManager.IsViewOpen(t) &&
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-        TIPS_NAME
+        TIPS_NAME,
       );
   }
   vBe() {
     (this.sBe = !0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Map", 43, "开始执行拉回移动操作,禁用玩家输入"),
-      this.EBe(!0),
+      this.SBe(!0),
       this.yBe(!1),
       this.IBe(),
       this.fBe(this.dBe);
   }
-  SBe() {
+  EBe() {
     (this.sBe = !1),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Map", 43, "退出拉回移动操作,恢复玩家控制"),
-      this.EBe(!1),
+      this.SBe(!1),
       this.yBe(!0),
       this.TBe(this.dBe);
   }
@@ -106,31 +106,32 @@ class UnopenedAreaPullback {
     return (
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnChangeRole,
-        this.xie
+        this.xie,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnChangeRole,
-          this.xie
+          this.xie,
         ),
       !0
     );
   }
   OnEnterUnopenedArea() {
     // this.hBe ||
+    //   (this._Be.DeepCopy(
+    //     ModelManager_1.ModelManager.MapModel.GetLastSafeLocation(),
+    //   ),
+    //   this._Be.IsNearlyZero()) ||
     //   (EventSystem_1.EventSystem.Has(
     //     EventDefine_1.EEventName.OnChangeRole,
-    //     this.xie
+    //     this.xie,
     //   ) ||
     //     EventSystem_1.EventSystem.Add(
     //       EventDefine_1.EEventName.OnChangeRole,
-    //       this.xie
+    //       this.xie,
     //     ),
     //   (this.hBe = !0),
     //   (this.lBe = void 0),
     //   this.CBe(),
-    //   this._Be.DeepCopy(
-    //     ModelManager_1.ModelManager.MapModel.GetLastSafeLocation()
-    //   ),
     //   this.LBe(!0),
     //   Log_1.Log.CheckInfo() &&
     //     Log_1.Log.Info("Map", 43, "--------进入了未开放区域--------", [
@@ -142,22 +143,22 @@ class UnopenedAreaPullback {
     this.hBe &&
       (EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnChangeRole,
-        this.xie
+        this.xie,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnChangeRole,
-          this.xie
+          this.xie,
         ),
       (this.hBe = !1),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Map", 43, "- - - - 离开了未开放区域- - - - "),
       this.LBe(!1),
       this.sBe) &&
-      this.SBe();
+      this.EBe();
   }
   fBe(t) {
     this.DBe(t);
-    var t = t.Entity.GetComponent(161),
+    var t = t.Entity.GetComponent(164),
       e = { Index: 0, Position: this._Be };
     t.MoveAlongPath({
       Points: e,
@@ -165,38 +166,39 @@ class UnopenedAreaPullback {
       IsFly: !1,
       DebugMode: !0,
       Loop: !1,
+      Distance: 0,
       Callback: (t) => {
-        this.sBe && this.SBe();
+        this.sBe && this.EBe();
       },
       ReturnFalseWhenNavigationFailed: !1,
     });
   }
   DBe(t) {
-    t.Entity?.CheckGetComponent(158)?.PositionState ===
+    t.Entity?.CheckGetComponent(161)?.PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Climb &&
       t.Entity?.GetComponent(31)?.ClimbPress(!0);
   }
   RBe() {
     // ModelManager_1.ModelManager.SceneTeamModel.IsAllDid() ||
-    //   (this.sBe && this.SBe(),
+    //   (this.sBe && this.EBe(),
     //   Log_1.Log.CheckInfo() &&
     //     Log_1.Log.Info("Map", 43, "在未开放区域待太久，开始传送"),
     //   this.UBe());
   }
   UBe() {
-    // Net_1.Net.Call(14379, Protocol_1.Aki.Protocol.Mus.create(), (t) => {
-    //   t.lkn !==
-    //     Protocol_1.Aki.Protocol.lkn.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
-    //     t.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+    // Net_1.Net.Call(25547, Protocol_1.Aki.Protocol.ECs.create(), (t) => {
+    //   t.Q4n !==
+    //     Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
+    //     t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
     //     ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-    //       t.lkn,
-    //       19586
+    //       t.Q4n,
+    //       15573,
     //     );
     // });
   }
   TBe(t) {
-    var e = t.Entity.GetComponent(161),
-      e = (e.StopMove(!1), e.MoveToLocationEnd(1), t.Entity.GetComponent(52));
+    var e = t.Entity.GetComponent(164),
+      e = (e.StopMove(!1), e.MoveToLocationEnd(1), t.Entity.GetComponent(54));
     e.ClearMoveVectorCache(),
       e.SetActive(!0),
       this.gBe(t, !1),
@@ -205,7 +207,7 @@ class UnopenedAreaPullback {
   IBe() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.ForceReleaseInput,
-      this.pLe
+      this.pLe,
     ),
       this.mBe.DirectionState ===
       CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
@@ -214,9 +216,9 @@ class UnopenedAreaPullback {
       this.cBe &&
         this.cBe.CurrentSkill &&
         (this.cBe.EndOwnerAndFollowSkills(),
-        this.ABe(this.dBe.Entity.GetComponent(36), 0, 0)),
+        this.ABe(this.dBe.Entity.GetComponent(38), 0, 0)),
       this.Hte.ClearInput();
-    var t = this.dBe.Entity.GetComponent(52);
+    var t = this.dBe.Entity.GetComponent(54);
     t.ClearMoveVectorCache(),
       t.SetActive(!1),
       this.gBe(this.dBe, !0),
@@ -226,15 +228,15 @@ class UnopenedAreaPullback {
     t && t.Valid
       ? (this.dBe = t)
       : (this.dBe = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
-          Global_1.Global.BaseCharacter.EntityId
+          Global_1.Global.BaseCharacter.EntityId,
         )),
       (this.Hte = this.dBe.Entity.GetComponent(3)),
-      (this.cBe = this.dBe.Entity.GetComponent(33)),
-      (this.mBe = this.dBe.Entity.GetComponent(158));
+      (this.cBe = this.dBe.Entity.GetComponent(34)),
+      (this.mBe = this.dBe.Entity.GetComponent(161));
   }
   ABe(t, e, i) {
-    var r = t.Entity.GetComponent(185);
-    0 === e || r?.HasTag(-2100129479)
+    var s = t.Entity.GetComponent(190);
+    0 === e || s?.HasTag(-2100129479)
       ? t.CharacterMovement.SetMovementMode(1, i)
       : t.CharacterMovement.SetMovementMode(e, i);
   }
@@ -242,14 +244,14 @@ class UnopenedAreaPullback {
     t &&
       this.nBe &&
       (ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(
-        11
+        11,
       ),
       (this.nBe = !1)),
       t ||
         this.nBe ||
         (ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(
           11,
-          [18]
+          [18],
         ),
         (this.nBe = !0));
   }
@@ -257,7 +259,7 @@ class UnopenedAreaPullback {
     (this.aBe = t) ||
       SceneEffectStateManager_1.default.SetSceneEffectState(0, 0);
   }
-  EBe(t) {
+  SBe(t) {
     t
       ? this.lBe ||
         (Log_1.Log.CheckInfo() &&
@@ -279,11 +281,11 @@ class UnopenedAreaPullback {
     t &&
       t.Valid &&
       (e &&
-        ((i = t.Entity.GetComponent(185))?.AddTag(-1697149502),
+        ((i = t.Entity.GetComponent(190))?.AddTag(-1697149502),
         i?.AddTag(-541178966),
         i?.AddTag(-542518289)),
       e ||
-        ((i = t.Entity.GetComponent(185))?.RemoveTag(-1697149502),
+        ((i = t.Entity.GetComponent(190))?.RemoveTag(-1697149502),
         i?.RemoveTag(-541178966),
         i?.RemoveTag(-542518289)));
   }

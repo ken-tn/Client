@@ -30,7 +30,11 @@ class MobVacuum extends EntityManager_1.EntityManager {
   static origPositions = {}
   static MobVacuum(entity) {
     if (!ModManager_1.ModManager.Settings.MobVacuum) return;
-    if (!(entity.Entity.GetComponent(1).ActorInternal)) return;
+    let comp = entity.Entity.GetComponent(1);
+    if (!comp) {
+        return;
+    }
+    if (!(comp.ActorInternal)) return;
     
     if (this.isMonster(entity) && this.isIndistance(entity)) {
         const entityId = entity.Entity.Id;

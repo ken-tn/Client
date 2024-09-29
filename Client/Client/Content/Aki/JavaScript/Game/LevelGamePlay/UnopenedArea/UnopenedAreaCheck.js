@@ -19,7 +19,7 @@ class UnopenedAreaCheck {
       (this.Ywe = new Map());
   }
   AreaInit(t) {
-    for (const e of t) this.Jwe(e.wFn, e.ckn ?? !1);
+    for (const e of t) this.Jwe(e.p6n, e.Y4n ?? !1);
     0 === t.length &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Map", 43, "初始化区域数量为零"),
@@ -27,111 +27,65 @@ class UnopenedAreaCheck {
       (this.IsSplineInit = !0);
   }
   AreaStatesChange(t) {
-    this.Jwe(t.uys.wFn, t.uys.ckn ?? !1),
+    this.Jwe(t.GRs.p6n, t.GRs.Y4n ?? !1),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Map",
           43,
           "AreaStatesChange更新区域边界状态",
-          ["AreaState.Proto_AreaId", t.uys.wFn],
-          ["AreaState.Proto_State", t.uys.ckn ?? !1]
+          ["AreaState.Proto_AreaId", t.GRs.p6n],
+          ["AreaState.Proto_State", t.GRs.Y4n ?? !1],
         );
   }
   Jwe(t, e) {
-    const r =
-      AreaByAreaId_1.configAreaByAreaId.GetConfigList(t)[0].EdgeWallName + "_C";
-
-    if (this.Ywe.get(r).has(t)) {
-      this.Ywe.get(r).delete(t),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Map",
-            43,
-            "AreaPathMap区域删除",
-            ["AreaId", t],
-            ["Path", r]
-          );
-    }
-
-    if (0 === this.Ywe.get(r).size && this.$we.has(r)) {
-      this.$we.delete(r),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Map", 43, "BinMap移除边界", ["Path", r]);
-    }
-
-    if (e) {
-      this.Ywe.has(r) || this.Ywe.set(r, new Set());
-      if (!this.Ywe.get(r).has(t)) {
-        this.Ywe.get(r).add(t),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Map",
-              43,
-              "AreaPathMap区域添加",
-              ["AreaId", t],
-              ["Path", r]
-            );
-      }
-
-      if (!this.$we.has(r)) {
-        const i = new BinItem();
-        i.InitCallback = () => {
-          if (i && i.BinSet && i.TestPoints) {
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Map", 43, "BinMap添加边界", ["Path", r]);
-          }
-        };
-        i.Init(r);
-      }
-    }
-
-    // if (AreaByAreaId_1.configAreaByAreaId.GetConfigList(t)[0].EdgeWallName) {
-    //   const r =
-    //     AreaByAreaId_1.configAreaByAreaId.GetConfigList(t)[0].EdgeWallName +
-    //     "_C";
+    // var r = AreaByAreaId_1.configAreaByAreaId.GetConfigList(t);
+    // if (r && r[0].EdgeWallName) {
+    //   const i = r[0].EdgeWallName + "_C";
+    //   r = r[0].MapConfigId;
     //   if (
     //     (e ||
-    //       (this.Ywe.get(r).has(t) &&
-    //         (this.Ywe.get(r).delete(t), Log_1.Log.CheckInfo()) &&
+    //       (this.Ywe.get(i).has(t) &&
+    //         (this.Ywe.get(i).delete(t), Log_1.Log.CheckInfo()) &&
     //         Log_1.Log.Info(
     //           "Map",
     //           43,
     //           "AreaPathMap区域删除",
     //           ["AreaId", t],
-    //           ["Path", r]
+    //           ["Path", i],
     //         ),
-    //       0 === this.Ywe.get(r).size &&
-    //         this.$we.has(r) &&
-    //         (this.$we.delete(r), Log_1.Log.CheckInfo()) &&
-    //         Log_1.Log.Info("Map", 43, "BinMap移除边界", ["Path", r])),
+    //       0 === this.Ywe.get(i).size &&
+    //         this.$we.has(i) &&
+    //         (this.$we.delete(i), Log_1.Log.CheckInfo()) &&
+    //         Log_1.Log.Info("Map", 43, "BinMap移除边界", ["Path", i])),
     //     e &&
-    //       (this.Ywe.has(r) || this.Ywe.set(r, new Set()),
-    //       this.Ywe.get(r).has(t) ||
-    //         (this.Ywe.get(r).add(t),
+    //       (this.Ywe.has(i) || this.Ywe.set(i, new Set()),
+    //       this.Ywe.get(i).has(t) ||
+    //         (this.Ywe.get(i).add(t),
     //         Log_1.Log.CheckInfo() &&
     //           Log_1.Log.Info(
     //             "Map",
     //             43,
     //             "AreaPathMap区域添加",
     //             ["AreaId", t],
-    //             ["Path", r]
+    //             ["Path", i],
     //           )),
-    //       !this.$we.has(r)))
+    //       !this.$we.has(i)))
     //   ) {
-    //     const i = new BinItem();
-    //     (i.InitCallback = () => {
-    //       i && i.BinSet && i.TestPoints
-    //         ? (this.$we.set(r, i),
-    //           Log_1.Log.CheckInfo() &&
-    //             Log_1.Log.Info("Map", 43, "BinMap添加边界", ["Path", r]))
-    //         : Log_1.Log.CheckInfo() &&
-    //           Log_1.Log.Info("Map", 43, "BinMap添加边界出错", ["Path", r]);
-    //     }),
-    //       i.Init(r);
+    //     const s = new BinItem();
+    //     (s.MapId = r),
+    //       (s.InitCallback = () => {
+    //         s && s.BinSet && s.TestPoints
+    //           ? (this.$we.set(i, s),
+    //             Log_1.Log.CheckInfo() &&
+    //               Log_1.Log.Info("Map", 43, "BinMap添加边界", ["Path", i]))
+    //           : Log_1.Log.CheckInfo() &&
+    //             Log_1.Log.Info("Map", 43, "BinMap添加边界出错", ["Path", i]);
+    //       }),
+    //       s.Init(i);
     //   }
     // }
   }
-  BinTest(t) {
+  BinTest(t, e) {
     // if (!this.IsSplineInit || 0 === this.$we.size)
     //   return (
     //     this.Xwe <= FAILURE_COUNT &&
@@ -142,23 +96,23 @@ class UnopenedAreaCheck {
     //           43,
     //           "检测是否进入未开放区域，检测失败",
     //           ["IsSplineInit", this.IsSplineInit],
-    //           ["BinMap.size", this.$we.size]
+    //           ["BinMap.size", this.$we.size],
     //         ),
     //       this.Xwe === FAILURE_COUNT) &&
     //       Log_1.Log.CheckInfo() &&
     //       Log_1.Log.Info(
     //         "Map",
     //         43,
-    //         "检测是否进入未开放区域一直失败，不报Log了"
+    //         "检测是否进入未开放区域一直失败，不报Log了",
     //       ),
     //     !0
     //   );
     // 0 !== this.Xwe &&
     //   ((this.Xwe = 0), Log_1.Log.CheckInfo()) &&
     //   Log_1.Log.Info("Map", 43, "检测是否进入未开放区域，恢复正常检测");
-    // for (const e of this.$we) if (e[1].BinTest(t)) return !0;
-    // return !1;
-    return false;
+    // for (const r of this.$we)
+    //   if (e === r[1].MapId && r[1].BinTest(t)) return !0;
+    return !1;
   }
   Clear() {
     (this.IsSplineInit = !1), this.$we.clear();
@@ -167,7 +121,8 @@ class UnopenedAreaCheck {
 exports.UnopenedAreaCheck = UnopenedAreaCheck;
 class BinItem {
   constructor() {
-    (this.BinSet = new BinSet()),
+    (this.MapId = -1),
+      (this.BinSet = new BinSet()),
       (this.TestPoints = new Array()),
       (this.InitCallback = void 0);
   }
@@ -181,14 +136,14 @@ class BinItem {
             "Map",
             43,
             "样条Asset资源加载错误，或选中的目标样条非BP_BasePathLine_Edgewall类",
-            ["Path", e]
+            ["Path", e],
           );
     });
   }
   zwe(t) {
     t = ActorSystem_1.ActorSystem.Get(
       t,
-      MathUtils_1.MathUtils.DefaultTransform
+      MathUtils_1.MathUtils.DefaultTransform,
     );
     let e = void 0;
     if (!t.IsA(UE.BP_BasePathLine_Edgewall_C.StaticClass())) return !1;
@@ -199,7 +154,7 @@ class BinItem {
           Rotator_1.Rotator.ZeroRotator,
           !1,
           void 0,
-          !1
+          !1,
         ),
         e.Spline),
       r = i.GetNumberOfSplinePoints();
@@ -220,39 +175,39 @@ class BinItem {
       (s.Bins[t].EdgeSet[e].MaxX = a);
   }
   BinTest(t) {
-    var e = new Vector2D_1.Vector2D(t.X, t.Y),
-      t = this.BinSet,
-      r = this.TestPoints;
-    if (e.Y < t.MinY || e.Y >= t.MaxY || e.X < t.MinX || e.X >= t.MaxX)
-      return !1;
-    var i = Math.floor((e.Y - t.MinY) * t.ReciprocalDeltaY),
-      t = t.Bins[i];
-    if (e.X < t.MinX || e.X > t.MaxX) return !1;
-    var s,
-      o,
-      a,
-      h = t.EdgeSet,
-      n = t.Count;
-    let _ = 0,
-      l = !1;
-    for (let t = 0; t < n; t++, _++) {
-      if (e.X < h[_].MinX) {
-        do {
-          (!h[_].FullCross &&
-            ((s = h[_].Id), e.Y <= r[s].Y == e.Y <= r[(s + 1) % r.length].Y)) ||
-            (l = !l),
-            (_ += 1);
-        } while (++t < n);
-        return l;
-      }
-      e.X < h[_].MaxX &&
-        ((o = r[(a = h[_].Id)]),
-        (a = r[(a + 1) % r.length]),
-        h[_].FullCross || e.Y <= o.Y != e.Y <= a.Y) &&
-        o.X - ((o.Y - e.Y) * (a.X - o.X)) / (a.Y - o.Y) >= e.X &&
-        (l = !l);
-    }
-    return l;
+    // var e = new Vector2D_1.Vector2D(t.X, t.Y),
+    //   t = this.BinSet,
+    //   r = this.TestPoints;
+    // if (e.Y < t.MinY || e.Y >= t.MaxY || e.X < t.MinX || e.X >= t.MaxX)
+    //   return !1;
+    // var i = Math.floor((e.Y - t.MinY) * t.ReciprocalDeltaY),
+    //   t = t.Bins[i];
+    // if (e.X < t.MinX || e.X > t.MaxX) return !1;
+    // var s,
+    //   o,
+    //   a,
+    //   h = t.EdgeSet,
+    //   n = t.Count;
+    // let _ = 0,
+    //   l = !1;
+    // for (let t = 0; t < n; t++, _++) {
+    //   if (e.X < h[_].MinX) {
+    //     do {
+    //       (!h[_].FullCross &&
+    //         ((s = h[_].Id), e.Y <= r[s].Y == e.Y <= r[(s + 1) % r.length].Y)) ||
+    //         (l = !l),
+    //         (_ += 1);
+    //     } while (++t < n);
+    //     return l;
+    //   }
+    //   e.X < h[_].MaxX &&
+    //     ((o = r[(a = h[_].Id)]),
+    //     (a = r[(a + 1) % r.length]),
+    //     h[_].FullCross || e.Y <= o.Y != e.Y <= a.Y) &&
+    //     o.X - ((o.Y - e.Y) * (a.X - o.X)) / (a.Y - o.Y) >= e.X &&
+    //     (l = !l);
+    // }
+    return false;
   }
   Zwe(e, t, o) {
     var r = new Array(t);
@@ -286,15 +241,15 @@ class BinItem {
     }
     for (let e = 0; e < t; e++) {
       o.Bins[e] = new Bin();
-      var A = new Array(r[e]);
-      for (let t = 0; t < r[e]; t++) A[t] = new Edge();
-      (o.Bins[e].EdgeSet = A),
+      var c = new Array(r[e]);
+      for (let t = 0; t < r[e]; t++) c[t] = new Edge();
+      (o.Bins[e].EdgeSet = c),
         (o.Bins[e].MinX = o.MaxX),
         (o.Bins[e].MaxX = o.MinX),
         (o.Bins[e].Count = 0);
     }
     a = e[e.length - 1];
-    let c = e.length - 1;
+    let A = e.length - 1;
     for (let t = 0; t < e.length; t++) {
       if (((h = e[t]), a.Y !== h.Y)) {
         var p =
@@ -311,22 +266,22 @@ class BinItem {
           i = _.X + (t + 1 - p) * g;
           var L = o.Bins[t].Count;
           o.Bins[t].Count++,
-            (o.Bins[t].EdgeSet[L].Id = c),
+            (o.Bins[t].EdgeSet[L].Id = A),
             (o.Bins[t].EdgeSet[L].FullCross = s),
             this.eBe(t, L, r, i, o),
             (s = !0);
         }
         (r = i), (i = n.X);
         M = o.Bins[e].Count++;
-        (o.Bins[e].EdgeSet[M].Id = c),
+        (o.Bins[e].EdgeSet[M].Id = A),
           (o.Bins[e].EdgeSet[M].FullCross = !1),
           this.eBe(e, M, r, i, o);
       }
-      (a = h), (c = t);
+      (a = h), (A = t);
     }
     for (let t = 0; t < o.BinNum; t++)
       o.Bins[t].EdgeSet.sort((t, e) =>
-        t.MinX === e.MinX ? 0 : t.MinX < e.MinX ? -1 : 1
+        t.MinX === e.MinX ? 0 : t.MinX < e.MinX ? -1 : 1,
       );
   }
 }
