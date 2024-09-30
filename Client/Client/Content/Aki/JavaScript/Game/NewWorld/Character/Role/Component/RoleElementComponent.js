@@ -188,7 +188,6 @@ let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.
   set kin(t) {
     ModManager_1.ModManager.Settings.NoCD
       ? ((this.Oin = !0),
-      // here should probably separate this
         this.m1t.AddBuff(CharacterBuffIds_1.buffId.ActivateQte, {
           InstigatorId: this.m1t.CreatureDataId,
           Reason: "RoleElementComponent激活QTE的Tag",

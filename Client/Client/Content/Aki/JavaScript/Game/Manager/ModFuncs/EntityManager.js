@@ -1,5 +1,3 @@
-// check this!
-
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EntityManager = void 0;
@@ -17,8 +15,6 @@ const puerts_1 = require("puerts"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
 
-  // here obfuscated variable here! gXr
-  // see CreateDataComponent EntityPbModelConfigId
 class EntityManager {
   static GetEntitybyId(entityId) {
     return EntitySystem_1.EntitySystem.Get(entityId);
@@ -46,7 +42,6 @@ class EntityManager {
 
   static GetEntityType(entity) {
     let type = entity.Entity.GetComponent(0).GetEntityType();
-    // here obfuscated variable here
     if (type == Protocol_1.Aki.Protocol.kks.Proto_Player) return "Player";
     if (type == Protocol_1.Aki.Protocol.kks.Proto_Npc) return "Npc";
     if (type == Protocol_1.Aki.Protocol.kks.Proto_Monster) return "Monster";
@@ -132,7 +127,6 @@ class EntityManager {
     }
     let monster = false;
     try {
-        // CreatureDataComponent
         monster = entity.Entity.GetComponent(0).IsRealMonster();
     } catch {
 

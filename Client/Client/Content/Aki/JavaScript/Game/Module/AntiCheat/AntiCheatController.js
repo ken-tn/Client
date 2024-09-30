@@ -1,5 +1,3 @@
-// 1.3
-
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AntiCheatController = void 0);

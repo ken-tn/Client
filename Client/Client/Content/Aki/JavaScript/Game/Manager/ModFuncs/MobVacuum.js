@@ -87,7 +87,6 @@ class MobVacuum extends EntityManager_1.EntityManager {
 
             let ActorComp = entity.Entity.GetComponent(1);
             ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
-            // ActorComp.ActorInternal.SetActorEnableCollision(0); no hit detection ;-;
             ModMenu_1.MainMenu.KunLog("Syncing" + entityId + " " + playerDistToSpawn)
             this.SyncMonster(entity, playerpos);
         }, 333);
@@ -109,7 +108,6 @@ class MobVacuum extends EntityManager_1.EntityManager {
   }
 
   static SyncMonster(entity, pos) {
-    // update here CombatMessageController.js AfterTick
     let t = entity.Entity.GetComponent(60);
     if (!t.EnableMovementSync) {
         t.SetEnableMovementSync(true, "MonsterBehaviorComponent InFight");

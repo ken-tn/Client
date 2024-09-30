@@ -1,5 +1,3 @@
-// 1.3
-
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: !0
@@ -29,10 +27,6 @@ class AntiCheatModel extends ModelBase_1.ModelBase {
     }
     static GetBundleData() {
         return {}
-        // var e = new AntiCheatData_1.AntiCheatBundleData;
-        // e.event_id = BUNDLE_DATA_EVENT_ID;
-        // let t = ModelManager_1.ModelManager.LoginModel.GetAccount();
-        // return ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() && (t = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig().Uid), e.unique_id = t, e.s_bundle_id = ModelManager_1.ModelManager.AntiCheatModel.GetBundleId(), e.s_version = ModelManager_1.ModelManager.AntiCheatModel.GetVersion(), e
     }
     ResetHeartbeatException() {
         this.Gje = 0
@@ -48,10 +42,6 @@ class AntiCheatModel extends ModelBase_1.ModelBase {
     }
     GetHeartbeatData() {
         return {}
-        // var e = new AntiCheatData_1.AntiCheatHeartbeatData;
-        // e.event_id = HEARTBEAT_DATA_EVENT_ID;
-        // let t = ModelManager_1.ModelManager.LoginModel.GetAccount();
-        // return ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() && (t = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig().Uid), e.unique_id = t, e.i_exception_count = this.Gje, e
     }
 }
 exports.AntiCheatModel = AntiCheatModel;

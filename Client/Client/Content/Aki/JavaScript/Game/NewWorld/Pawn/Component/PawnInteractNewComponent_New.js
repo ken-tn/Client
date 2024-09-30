@@ -741,7 +741,6 @@ let PawnInteractNewComponent = class PawnInteractNewComponent extends PawnIntera
             (((this.t4a = i).ForceExitStateStop = !0),
             (i.CanMoveFromInput = !1),
             i.CharacterMovement),
-            // here
             this.kan();
         } else (this.qan = !0), this.Fan(), this.Han();
         (this.CanRestartAi = !1),

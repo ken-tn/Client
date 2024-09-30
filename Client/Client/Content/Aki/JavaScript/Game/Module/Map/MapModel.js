@@ -375,15 +375,6 @@ class MapModel extends ModelBase_1.ModelBase {
     return this.LastSafeLocation;
   }
   IsInUnopenedAreaPullback() {
-    // var e;
-    // return (
-    //   !!ModelManager_1.ModelManager.GameModeModel.WorldDone &&
-    //   !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
-    //   ((e =
-    //     ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.MapConfigId),
-    //   !!MapUtil_1.MapUtil.IsInBigWorld(e)) &&
-    //   UnopenedAreaController_1.UnopenedAreaController.CheckInPullback()
-    // );
   }
   SetMarkExtraShowState(e, t, r, i) {
     return (

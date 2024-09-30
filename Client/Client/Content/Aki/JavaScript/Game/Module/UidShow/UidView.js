@@ -13,7 +13,6 @@ class UidView extends UiViewBase_1.UiViewBase {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   OnStart() {
-    // here
     ModManager_1.ModManager.ModStart();
     let e = "";
     FeatureRestrictionTemplate_1.FeatureRestrictionTemplate.TemplateForPioneerClient.Check() &&

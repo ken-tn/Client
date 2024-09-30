@@ -1117,9 +1117,6 @@ let CharacterHitComponent =
         n = t.Target.GetComponent(34);
       a = EntitySystem_1.EntitySystem.Get(t.BulletEntityId)?.GetBulletInfo()
         .ContextId;
-      // 1205401001 changli lib
-      // 1301400001 calcharo lib
-      // ModMenu_1.MainMenu.KunLog("DamageDataId: " + s.toString() + ",,SL: " + t.SkillLevel.toString() + ",,HitPos: " + t.HitPosition.ToString() + ",, Attacker: " + t.Attacker);
       const dict = {
         DamageDataId: s,
         SkillLevel: t.SkillLevel,
@@ -1147,7 +1144,6 @@ let CharacterHitComponent =
         if (m == l) {
           ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(
             (entity) => {
-              // hit all enemies here
               if (
                 EntityManager_1.EntityManager.isMonster(entity) &&
                 KillAura_1.KillAura.isIndistance(entity)
@@ -2066,18 +2062,6 @@ let CharacterHitComponent =
     }
   });
 (CharacterHitComponent.GVr = void 0),
-//   (CharacterHitComponent.$Vr = Stats_1.Stat.Create("OnHit")),
-//   (CharacterHitComponent.YVr = Stats_1.Stat.Create("OnHit0")),
-//   (CharacterHitComponent.e6r = Stats_1.Stat.Create("OnHit1")),
-//   (CharacterHitComponent.i6r = Stats_1.Stat.Create("OnHit2")),
-//   (CharacterHitComponent.r6r = Stats_1.Stat.Create("OnHit3")),
-//   (CharacterHitComponent.s6r = Stats_1.Stat.Create("OnHit4")),
-//   (CharacterHitComponent.h6r = Stats_1.Stat.Create("OnHit5")),
-//   (CharacterHitComponent.DSa = Stats_1.Stat.Create("OnHit6")),
-//   (CharacterHitComponent.rHo = Stats_1.Stat.Create("PlayHitEffect")),
-//   (CharacterHitComponent.E6r = Stats_1.Stat.Create("ProcessMain1")),
-//   (CharacterHitComponent.S6r = Stats_1.Stat.Create("ProcessMain2")),
-//   (CharacterHitComponent.T6r = Stats_1.Stat.Create("ProcessMain3")),
   (CharacterHitComponent.$Vr = void 0),
   (CharacterHitComponent.YVr = void 0),
   (CharacterHitComponent.e6r = void 0),

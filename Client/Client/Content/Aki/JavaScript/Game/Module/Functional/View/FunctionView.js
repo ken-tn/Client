@@ -64,7 +64,6 @@ class FunctionView extends UiViewBase_1.UiViewBase {
           "CopiedMyUid",
         ),
           UE.LGUIBPLibrary.ClipBoardCopy(
-            // here
             ModManager_1.ModManager.Settings.Uid
           );
       }),
@@ -392,7 +391,6 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(1),
           "UserId",
-          // here
           ModManager_1.ModManager.Settings.Uid,
         ),
         PlayerExpByPlayerLevel_1.configPlayerExpByPlayerLevel.GetConfig(e));

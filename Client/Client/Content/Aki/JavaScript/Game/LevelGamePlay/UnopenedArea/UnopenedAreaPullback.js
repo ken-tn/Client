@@ -116,28 +116,6 @@ class UnopenedAreaPullback {
     );
   }
   OnEnterUnopenedArea() {
-    // this.hBe ||
-    //   (this._Be.DeepCopy(
-    //     ModelManager_1.ModelManager.MapModel.GetLastSafeLocation(),
-    //   ),
-    //   this._Be.IsNearlyZero()) ||
-    //   (EventSystem_1.EventSystem.Has(
-    //     EventDefine_1.EEventName.OnChangeRole,
-    //     this.xie,
-    //   ) ||
-    //     EventSystem_1.EventSystem.Add(
-    //       EventDefine_1.EEventName.OnChangeRole,
-    //       this.xie,
-    //     ),
-    //   (this.hBe = !0),
-    //   (this.lBe = void 0),
-    //   this.CBe(),
-    //   this.LBe(!0),
-    //   Log_1.Log.CheckInfo() &&
-    //     Log_1.Log.Info("Map", 43, "--------进入了未开放区域--------", [
-    //       "EnterLoc",
-    //       this._Be,
-    //     ]));
   }
   OnExitUnopenedArea() {
     this.hBe &&
@@ -179,22 +157,8 @@ class UnopenedAreaPullback {
       t.Entity?.GetComponent(31)?.ClimbPress(!0);
   }
   RBe() {
-    // ModelManager_1.ModelManager.SceneTeamModel.IsAllDid() ||
-    //   (this.sBe && this.EBe(),
-    //   Log_1.Log.CheckInfo() &&
-    //     Log_1.Log.Info("Map", 43, "在未开放区域待太久，开始传送"),
-    //   this.UBe());
   }
   UBe() {
-    // Net_1.Net.Call(25547, Protocol_1.Aki.Protocol.ECs.create(), (t) => {
-    //   t.Q4n !==
-    //     Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
-    //     t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
-    //     ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-    //       t.Q4n,
-    //       15573,
-    //     );
-    // });
   }
   TBe(t) {
     var e = t.Entity.GetComponent(164),

@@ -52,7 +52,6 @@ class PerceptionRange extends EntityManager_1.EntityManager {
   }
 
   static SetInteractRange(entity, range) {
-    // update here
     let PawnPerceptionComponent = entity.Entity.GetComponent(107);
     try {
       PawnPerceptionComponent.SetInteractRange(range, 0);

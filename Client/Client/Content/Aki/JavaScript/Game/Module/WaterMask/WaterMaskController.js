@@ -75,7 +75,6 @@ class WaterMaskView extends UiControllerBase_1.UiControllerBase {
       _ = e.widget.height / 2,
       s = Math.ceil(e.widget.width / _a.yOo),
       o = Math.ceil(e.widget.height / _a.IOo),
-      // v = ModelManager_1.ModelManager.FunctionModel.PlayerId.toString();
       v = "";
     for (let a = 0; a < s; a++)
       for (let e = 0; e < o; e++) {

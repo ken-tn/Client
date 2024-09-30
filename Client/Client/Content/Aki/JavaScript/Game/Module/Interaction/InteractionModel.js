@@ -247,7 +247,6 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return false;
   }
   InteractPawn(t) {
-    // check this
     const e = t.GetComponent(182),
       i =
         ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
@@ -257,7 +256,6 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
     if (n) {
-      // auto interact
       const Entity = n.GetEntity();
       const BlueprintType =
         EntityManager_1.EntityManager.GetBlueprintType3(Entity);

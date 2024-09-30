@@ -105,7 +105,7 @@ class MainMenu {
 
   static KunLog(string) {
     var info = string.toString();
-    puerts_1.logger.info("[KUNMOD:]" + info);
+    // puerts_1.logger.info("[KUNMOD:]" + info);
   }
 
   static async Start() {

@@ -37,81 +37,8 @@ class UnopenedAreaCheck {
           ["AreaState.Proto_State", t.GRs.Y4n ?? !1],
         );
   }
-  Jwe(t, e) {
-    // var r = AreaByAreaId_1.configAreaByAreaId.GetConfigList(t);
-    // if (r && r[0].EdgeWallName) {
-    //   const i = r[0].EdgeWallName + "_C";
-    //   r = r[0].MapConfigId;
-    //   if (
-    //     (e ||
-    //       (this.Ywe.get(i).has(t) &&
-    //         (this.Ywe.get(i).delete(t), Log_1.Log.CheckInfo()) &&
-    //         Log_1.Log.Info(
-    //           "Map",
-    //           43,
-    //           "AreaPathMap区域删除",
-    //           ["AreaId", t],
-    //           ["Path", i],
-    //         ),
-    //       0 === this.Ywe.get(i).size &&
-    //         this.$we.has(i) &&
-    //         (this.$we.delete(i), Log_1.Log.CheckInfo()) &&
-    //         Log_1.Log.Info("Map", 43, "BinMap移除边界", ["Path", i])),
-    //     e &&
-    //       (this.Ywe.has(i) || this.Ywe.set(i, new Set()),
-    //       this.Ywe.get(i).has(t) ||
-    //         (this.Ywe.get(i).add(t),
-    //         Log_1.Log.CheckInfo() &&
-    //           Log_1.Log.Info(
-    //             "Map",
-    //             43,
-    //             "AreaPathMap区域添加",
-    //             ["AreaId", t],
-    //             ["Path", i],
-    //           )),
-    //       !this.$we.has(i)))
-    //   ) {
-    //     const s = new BinItem();
-    //     (s.MapId = r),
-    //       (s.InitCallback = () => {
-    //         s && s.BinSet && s.TestPoints
-    //           ? (this.$we.set(i, s),
-    //             Log_1.Log.CheckInfo() &&
-    //               Log_1.Log.Info("Map", 43, "BinMap添加边界", ["Path", i]))
-    //           : Log_1.Log.CheckInfo() &&
-    //             Log_1.Log.Info("Map", 43, "BinMap添加边界出错", ["Path", i]);
-    //       }),
-    //       s.Init(i);
-    //   }
-    // }
-  }
+  Jwe(t, e) {}
   BinTest(t, e) {
-    // if (!this.IsSplineInit || 0 === this.$we.size)
-    //   return (
-    //     this.Xwe <= FAILURE_COUNT &&
-    //       (this.Xwe++,
-    //       Log_1.Log.CheckInfo() &&
-    //         Log_1.Log.Info(
-    //           "Map",
-    //           43,
-    //           "检测是否进入未开放区域，检测失败",
-    //           ["IsSplineInit", this.IsSplineInit],
-    //           ["BinMap.size", this.$we.size],
-    //         ),
-    //       this.Xwe === FAILURE_COUNT) &&
-    //       Log_1.Log.CheckInfo() &&
-    //       Log_1.Log.Info(
-    //         "Map",
-    //         43,
-    //         "检测是否进入未开放区域一直失败，不报Log了",
-    //       ),
-    //     !0
-    //   );
-    // 0 !== this.Xwe &&
-    //   ((this.Xwe = 0), Log_1.Log.CheckInfo()) &&
-    //   Log_1.Log.Info("Map", 43, "检测是否进入未开放区域，恢复正常检测");
-    // for (const r of this.$we)
-    //   if (e === r[1].MapId && r[1].BinTest(t)) return !0;
     return !1;
   }
   Clear() {
@@ -175,38 +102,6 @@ class BinItem {
       (s.Bins[t].EdgeSet[e].MaxX = a);
   }
   BinTest(t) {
-    // var e = new Vector2D_1.Vector2D(t.X, t.Y),
-    //   t = this.BinSet,
-    //   r = this.TestPoints;
-    // if (e.Y < t.MinY || e.Y >= t.MaxY || e.X < t.MinX || e.X >= t.MaxX)
-    //   return !1;
-    // var i = Math.floor((e.Y - t.MinY) * t.ReciprocalDeltaY),
-    //   t = t.Bins[i];
-    // if (e.X < t.MinX || e.X > t.MaxX) return !1;
-    // var s,
-    //   o,
-    //   a,
-    //   h = t.EdgeSet,
-    //   n = t.Count;
-    // let _ = 0,
-    //   l = !1;
-    // for (let t = 0; t < n; t++, _++) {
-    //   if (e.X < h[_].MinX) {
-    //     do {
-    //       (!h[_].FullCross &&
-    //         ((s = h[_].Id), e.Y <= r[s].Y == e.Y <= r[(s + 1) % r.length].Y)) ||
-    //         (l = !l),
-    //         (_ += 1);
-    //     } while (++t < n);
-    //     return l;
-    //   }
-    //   e.X < h[_].MaxX &&
-    //     ((o = r[(a = h[_].Id)]),
-    //     (a = r[(a + 1) % r.length]),
-    //     h[_].FullCross || e.Y <= o.Y != e.Y <= a.Y) &&
-    //     o.X - ((o.Y - e.Y) * (a.X - o.X)) / (a.Y - o.Y) >= e.X &&
-    //     (l = !l);
-    // }
     return false;
   }
   Zwe(e, t, o) {
