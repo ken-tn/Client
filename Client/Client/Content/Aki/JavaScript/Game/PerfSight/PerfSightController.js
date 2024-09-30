@@ -195,11 +195,11 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
     //   );
   }),
   (PerfSightController.Wvi = () => {
-    var e = "0"; // ModelManager_1.ModelManager.FunctionModel.PlayerId.toString();
-    PerfSight_1.PerfSight.SetUserId(e),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 55, "SetUserId", ["playerId", e]),
-      PerfSightController.Zua();
+    // var e = ModelManager_1.ModelManager.FunctionModel.PlayerId.toString();
+    // PerfSight_1.PerfSight.SetUserId(e),
+    //   Log_1.Log.CheckInfo() &&
+    //     Log_1.Log.Info("Performance", 55, "SetUserId", ["playerId", e]),
+    //   PerfSightController.Zua();
   }),
   (PerfSightController.Zpe = (e) => {
     e
