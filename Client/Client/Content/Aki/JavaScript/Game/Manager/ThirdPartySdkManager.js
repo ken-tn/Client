@@ -39,21 +39,13 @@ class ThirdPartySdkManager {
         )),
       this.rPn();
   }
-  static rPn() {
-    // var r = UE.BlueprintPathsLibrary.ProjectSavedDir() + "crashes/trigger";
-    // UE.BlueprintPathsLibrary.FileExists(r) &&
-    //   (Log_1.Log.CheckError() && Log_1.Log.Error("Login", 22, "崩溃测试！"),
-    //   cpp_1.FCrashSightProxy.Test());
-  }
+  static rPn() {}
   static SetUserInfo(r) {
     "" !== r && ThirdPartySdkManager.qBe(r);
   }
-  static qBe(r) {
-    // cpp_1.FCrashSightProxy.SetUserId(0);
-  }
+  static qBe(r) {}
   static SetUserInfoForTpSafe(r, e) {
     var a;
-    // cpp_1.FCrashSightProxy.SetCustomData("PlayerId", "0"),
       UE.KuroStaticLibrary.IsModuleLoaded("TpSafe") &&
         ((a = ThirdPartySdkManager.GBe()),
         ue_1.TpSafeProxy.SetUserInfo(a, 0, r, e));

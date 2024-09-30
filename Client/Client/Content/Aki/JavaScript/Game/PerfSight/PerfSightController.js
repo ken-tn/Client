@@ -44,11 +44,6 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
         if (!Info_1.Info.IsMobilePlatform()) return !0;
         PerfSight_1.PerfSight.SetVersionIden(e);
       }
-    //   cpp_1.FKuroPerfSightHelper.EnableTimedReport(),
-    //     PerfSight_1.PerfSight.MarkLevelLoad("BeforeLogin"),
-    //     Log_1.Log.CheckInfo() &&
-    //       Log_1.Log.Info("Performance", 55, "MarkLevelLoad BeforeLogin"),
-    //     PerfSightController.sCe();
     }
     return !0;
   }
@@ -87,24 +82,7 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
       (TimerSystem_1.RealTimeTimerSystem.Remove(PerfSightController.eca),
       (PerfSightController.eca = void 0));
   }
-  static sCe() {
-    // EventSystem_1.EventSystem.Add(
-    //   EventDefine_1.EEventName.OnGetPlayerBasicInfo,
-    //   PerfSightController.Wvi,
-    // ),
-    //   EventSystem_1.EventSystem.Add(
-    //     EventDefine_1.EEventName.OnBattleStateChanged,
-    //     PerfSightController.Zpe,
-    //   ),
-    //   EventSystem_1.EventSystem.Add(
-    //     EventDefine_1.EEventName.OnAggroAdd,
-    //     this.lWe,
-    //   ),
-    //   EventSystem_1.EventSystem.Add(
-    //     EventDefine_1.EEventName.OnAggroRemoved,
-    //     this.cWe,
-    //   );
-  }
+  static sCe() {}
   static aCe() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnGetPlayerBasicInfo,
@@ -168,12 +146,7 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
           ),
           this.oWe.delete(e)));
   }
-  static OnTick(e) {
-    // PerfSight_1.PerfSight.IsEnable &&
-    //   (PerfSightController.MJ.Start(),
-    //   cpp_1.FKuroPerfSightHelper.PostFrame(e),
-    //   PerfSightController.MJ.Stop());
-  }
+  static OnTick(e) {}
 }
 (exports.PerfSightController = PerfSightController),
   ((_a = PerfSightController).IsTickEvenPausedInternal = !0),
@@ -182,24 +155,8 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
   (PerfSightController.oWe = new Set()),
   (PerfSightController.MJ = void 0),
   (PerfSightController.tca = () => {
-    // var e =
-    //   Global_1.Global.BaseCharacter?.CharacterActorComponent
-    //     ?.ActorLocationProxy;
-    // e &&
-    //   cpp_1.FKuroPerfSightHelper.PostValueFloat3(
-    //     "PositionAnalysis",
-    //     "position",
-    //     e.X,
-    //     e.Y,
-    //     e.Z,
-    //   );
   }),
   (PerfSightController.Wvi = () => {
-    // var e = ModelManager_1.ModelManager.FunctionModel.PlayerId.toString();
-    // PerfSight_1.PerfSight.SetUserId(e),
-    //   Log_1.Log.CheckInfo() &&
-    //     Log_1.Log.Info("Performance", 55, "SetUserId", ["playerId", e]),
-    //   PerfSightController.Zua();
   }),
   (PerfSightController.Zpe = (e) => {
     e
