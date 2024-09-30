@@ -1,0 +1,7 @@
+Client\Client\Content\Aki\JavaScript\Game\Module\LogUpload\LogUpload.js
+Client\Client\Content\Aki\JavaScript\Game\Module\LogReport\ThinkingAnalyticsReporter.js
+Client\Client\Content\Aki\JavaScript\Game\PerfSight\PerfSightController.js
+Client\Client\Content\Aki\JavaScript\Game\Module\LogUpload\LogUpload.js
+Client\Client\Content\Aki\JavaScript\Game\Manager\ThirdPartySdkManager.js
+Client\Client\Content\Aki\JavaScript\Game\Module\AntiCheat\AntiCheatController.js
+Client\Client\Content\Aki\JavaScript\Game\Module\AntiCheat\AntiCheatModel.js
