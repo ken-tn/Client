@@ -928,17 +928,17 @@ let CharacterSkillComponent =
             this.VZr(t, i)));
     }
     VZr(t, i) {
-        CombatLog_1.CombatLog.Info(
-          "Skill",
-          this.Entity,
-          "CharacterSkillComponent.RequestEndSkill",
-          ["结束技能ID", t.SkillId],
-          ["结束技能名称", t.SkillName],
-          ["Reason", i],
-          ["CanInterrupt", this.vZr],
-          ["ReadyEnd", this.IsMainSkillReadyEnd],
-          ["InterruptLevel", t.SkillInfo.InterruptLevel]
-        ),
+      CombatLog_1.CombatLog.Info(
+        "Skill",
+        this.Entity,
+        "CharacterSkillComponent.RequestEndSkill",
+        ["结束技能ID", t.SkillId],
+        ["结束技能名称", t.SkillName],
+        ["Reason", i],
+        ["CanInterrupt", this.vZr],
+        ["ReadyEnd", this.IsMainSkillReadyEnd],
+        ["InterruptLevel", t.SkillInfo.InterruptLevel]
+      ),
         this.dZr?.ResetMultiSkills(t.SkillId),
         this.dZr?.ResetCdDelayTime(t.SkillId);
       i = t.SkillInfo.SkillMode;
@@ -983,43 +983,43 @@ let CharacterSkillComponent =
       return !1;
     }
     WZr(t, i) {
-      var e,
-        s = t.SkillInfo;
-      return this.Hte.IsAutonomousProxy || s.AutonomouslyBySimulate
-        ? this.Lie.HasTag(-1388400236)
-          ? "角色处于不可控制状态"
-          : this.Lie.HasTag(1008164187)
-          ? "角色处于死亡状态"
-          : this.uZr?.IsFrozen()
-          ? "角色处于冰冻状态"
-          : this.IsSkillGenreForbidden(s)
-          ? "该类别技能被临时禁止"
-          : 8 === s.SkillGenre
-          ? "不能主动调用被动技能"
-          : t.AbilityClass &&
-            t.AbilityClass.IsChildOf(UE.Ga_Passive_C.StaticClass())
-          ? "策划可能误把被动GA放在普攻0技能组里"
-          : this.IsSkillInCd(t.SkillId)
-          ? "技能处于CD中"
-          : 0 !== s.StrengthCost &&
-            FormationAttributeController_1.FormationAttributeController.GetValue(
-              1
-            ) <= 1
-          ? "体力不足"
-          : this.dZr?.IsMultiSkill(t.SkillInfo) &&
-            !this.dZr.CanStartMultiSkill(t)
-          ? "多段技能启动失败"
-          : ((s = this.EIe.GetEntityType()),
-            (e = this.bre?.AiController?.IsWaitingSwitchControl()),
-            s === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
-            !t.SkillInfo.AutonomouslyBySimulate &&
-            e
-              ? "在等待切换控制权期间，不允许释放普通技能"
-              : this.HZr(t, i, (s = []))
-              ? ""
-              : "技能打断失败[" + s.join(",") + "]")
-        : "非主控无权限释放技能";
-    }
+        var e,
+          s = t.SkillInfo;
+        return this.Hte.IsAutonomousProxy || s.AutonomouslyBySimulate
+          ? this.Lie.HasTag(-1388400236)
+            ? "角色处于不可控制状态"
+            : this.Lie.HasTag(1008164187)
+            ? "角色处于死亡状态"
+            : this.uZr?.IsFrozen()
+            ? "角色处于冰冻状态"
+            : this.IsSkillGenreForbidden(s)
+            ? "该类别技能被临时禁止"
+            : 8 === s.SkillGenre
+            ? "不能主动调用被动技能"
+            : t.AbilityClass &&
+              t.AbilityClass.IsChildOf(UE.Ga_Passive_C.StaticClass())
+            ? "策划可能误把被动GA放在普攻0技能组里"
+            : this.IsSkillInCd(t.SkillId)
+            ? "技能处于CD中"
+            : 0 !== s.StrengthCost &&
+              FormationAttributeController_1.FormationAttributeController.GetValue(
+                1
+              ) <= 1
+            ? "体力不足"
+            : this.dZr?.IsMultiSkill(t.SkillInfo) &&
+              !this.dZr.CanStartMultiSkill(t)
+            ? "多段技能启动失败"
+            : ((s = this.EIe.GetEntityType()),
+              (e = this.bre?.AiController?.IsWaitingSwitchControl()),
+              s === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
+              !t.SkillInfo.AutonomouslyBySimulate &&
+              e
+                ? "在等待切换控制权期间，不允许释放普通技能"
+                : this.HZr(t, i, (s = []))
+                ? ""
+                : "技能打断失败[" + s.join(",") + "]")
+          : "非主控无权限释放技能";
+      }
     KZr(t) {
       if (
         !this.LoadedSkills.has(t) &&
@@ -1077,16 +1077,15 @@ let CharacterSkillComponent =
           ),
           !1
         );
-        h.forEach((t) => {
-          this.FZr(t, "开始新技能");
-        });
+      h.forEach((t) => {
+        this.FZr(t, "开始新技能");
+      });
       r = this.GetSkillInfo(t);
       if (NEXT_BEGIN_SKILL_SWITCH && !e && 1 === r.SkillMode)
         this.BeginSkillNextFrame(t, i);
       else {
         if (
-          (
-          (h = this.Hte?.IsAutonomousProxy ?? !1),
+          ((h = this.Hte?.IsAutonomousProxy ?? !1),
           (e = this.StateMachineComp?.StateMachineGroup?.IsCurrentTaskSkill(t)),
           this.FightStateComp && r.GroupId === exports.SKILL_GROUP_MAIN && !e)
         ) {
@@ -1105,8 +1104,7 @@ let CharacterSkillComponent =
           s.FightStateHandle = e;
         } else s.FightStateHandle = 0;
         if (
-          (
-          this.QZr(i.Target, i.SocketName, r.SkillTarget),
+          (this.QZr(i.Target, i.SocketName, r.SkillTarget),
           (s.PreContextId = i.ContextId),
           EventSystem_1.EventSystem.EmitWithTarget(
             this.Entity,
@@ -1114,7 +1112,6 @@ let CharacterSkillComponent =
             t,
             h
           ),
-          
           1 === (e = r.SkillMode))
         ) {
           if (
@@ -1153,7 +1150,6 @@ let CharacterSkillComponent =
                 this.DoSkillEnd(s)));
         r.AutonomouslyBySimulate &&
           this.Hte.SetMoveControlled(!0, r.MoveControllerTime, "特殊技能"),
-        
           (i = this.Entity.Id),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.CharUseSkill,
@@ -1417,7 +1413,7 @@ let CharacterSkillComponent =
             (this.SkillTargetSocket = this.cZr.GetCurrentTargetSocketName())));
     }
     XZr(t) {
-      if ((!this.hZr.has(t.SkillId))) {
+      if (!this.hZr.has(t.SkillId)) {
         this.hZr.add(t.SkillId);
         var i = this.GetSkillInfo(t.SkillId),
           e =
@@ -1489,52 +1485,48 @@ let CharacterSkillComponent =
     }
     DoSkillEnd(t) {
       var i;
-        this.hZr.has(t.SkillId) ||
-          (this.hZr.add(t.SkillId),
-          CombatLog_1.CombatLog.Info(
-            "Skill",
-            this.Entity,
-            "CharacterSkillComponent.DoSkillEnd",
-            ["技能Id", t.SkillId],
-            ["技能名", t.SkillName]
-          ),
-          (i = t.SkillInfo),
-          this.ien(t),
-          i.GroupId === exports.SKILL_GROUP_MAIN &&
-            ((this.vZr = !1), (this.IsMainSkillReadyEnd = !0), (this.UZr = 0)),
-          i.WalkOffLedge && this.Gce.SetWalkOffLedgeRecord(!0),
-          i.SkillStepUp && this.Gce.SetStepUpParamsRecord(!0),
-          (this.Gce.CharacterMovement.OverrideTerminalVelocity = 0),
-          this.Gce.ClearFallingHorizontalMaxSpeed(),
-          this.JZr(i.GroupId, t),
-          t.EndSkill(),
-          this.$zo.HasBuffAuthority() &&
-            this.$zo.RemoveBuff(
-              CharacterBuffIds_1.buffId.GoDown,
-              -1,
-              "技能结束"
-            ),
-          this.Lie.HasTag(interruptTag) && this.Lie.RemoveTag(interruptTag),
-          SkillMessageController_1.SkillMessageController.EndSkillRequest(
-            this.Entity,
-            t.SkillId
-          ),
-          SceneTeamController_1.SceneTeamController.EmitEvent(
-            this.Entity,
-            EventDefine_1.EEventName.OnSkillEnd,
-            this.Entity.Id,
-            t.SkillId
-          ),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.OnSkillEnd,
-            this.Entity.Id,
-            t.SkillId
-          ),
-          this.$zo?.TriggerEvents(3, this.$zo, {
-            SkillId: Number(t.SkillId),
-            SkillGenre: i.SkillGenre,
-          }),
-          this.hZr.delete(t.SkillId));
+      this.hZr.has(t.SkillId) ||
+        (this.hZr.add(t.SkillId),
+        CombatLog_1.CombatLog.Info(
+          "Skill",
+          this.Entity,
+          "CharacterSkillComponent.DoSkillEnd",
+          ["技能Id", t.SkillId],
+          ["技能名", t.SkillName]
+        ),
+        (i = t.SkillInfo),
+        this.ien(t),
+        i.GroupId === exports.SKILL_GROUP_MAIN &&
+          ((this.vZr = !1), (this.IsMainSkillReadyEnd = !0), (this.UZr = 0)),
+        i.WalkOffLedge && this.Gce.SetWalkOffLedgeRecord(!0),
+        i.SkillStepUp && this.Gce.SetStepUpParamsRecord(!0),
+        (this.Gce.CharacterMovement.OverrideTerminalVelocity = 0),
+        this.Gce.ClearFallingHorizontalMaxSpeed(),
+        this.JZr(i.GroupId, t),
+        t.EndSkill(),
+        this.$zo.HasBuffAuthority() &&
+          this.$zo.RemoveBuff(CharacterBuffIds_1.buffId.GoDown, -1, "技能结束"),
+        this.Lie.HasTag(interruptTag) && this.Lie.RemoveTag(interruptTag),
+        SkillMessageController_1.SkillMessageController.EndSkillRequest(
+          this.Entity,
+          t.SkillId
+        ),
+        SceneTeamController_1.SceneTeamController.EmitEvent(
+          this.Entity,
+          EventDefine_1.EEventName.OnSkillEnd,
+          this.Entity.Id,
+          t.SkillId
+        ),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnSkillEnd,
+          this.Entity.Id,
+          t.SkillId
+        ),
+        this.$zo?.TriggerEvents(3, this.$zo, {
+          SkillId: Number(t.SkillId),
+          SkillGenre: i.SkillGenre,
+        }),
+        this.hZr.delete(t.SkillId));
     }
     PlaySkillMontage2Server(t, i, e, s, h) {
       var r = this.LoadedSkills.get(t);
@@ -1948,17 +1940,16 @@ let CharacterSkillComponent =
       }
     }
     IsCanUseSkill(t) {
-      return (
-        !!ModManager_1.ModManager.Settings.NoCD ||
-        (!!this.CheckIsLoaded() &&
-          !(
-            !(i = this.GetSkillInfo(t)) ||
-            this.IsSkillInCd(t) ||
-            !this.jZr(i.GroupId, i.InterruptLevel) ||
-            this.IsSkillGenreForbidden(i)
-          ))
-      );
       var i;
+      return ModManager_1.ModManager.Settings.NoCD
+        ? true
+        : !!this.CheckIsLoaded() &&
+            !(
+              !(i = this.GetSkillInfo(t)) ||
+              this.IsSkillInCd(t) ||
+              !this.jZr(i.GroupId, i.InterruptLevel) ||
+              this.IsSkillGenreForbidden(i)
+            );
     }
     ResetRoleGrowComponent(t) {
       this.mZr || (this.mZr = t);
