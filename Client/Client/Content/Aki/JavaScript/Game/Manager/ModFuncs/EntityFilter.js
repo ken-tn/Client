@@ -62,6 +62,8 @@ class EntityFilter {
     "Collect_CXS06", //雀翎果
     "Collect_CXS08", //龙吐珠
     "Collect_CXS09", //龙吐珠
+    "Collect605", // Nova
+    "CollectHHA3", // Sea Flytrap
   ];
   static CollectAnimal = [
     "Animal016", //霄凤蝶

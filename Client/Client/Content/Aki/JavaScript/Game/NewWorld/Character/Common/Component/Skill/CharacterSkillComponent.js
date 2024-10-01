@@ -983,43 +983,43 @@ let CharacterSkillComponent =
       return !1;
     }
     WZr(t, i) {
-      var e,
-        s = t.SkillInfo;
-      return this.Hte.IsAutonomousProxy || s.AutonomouslyBySimulate
-        ? this.Lie.HasTag(-1388400236)
-          ? "角色处于不可控制状态"
-          : this.Lie.HasTag(1008164187)
-          ? "角色处于死亡状态"
-          : this.uZr?.IsFrozen()
-          ? "角色处于冰冻状态"
-          : this.IsSkillGenreForbidden(s)
-          ? "该类别技能被临时禁止"
-          : 8 === s.SkillGenre
-          ? "不能主动调用被动技能"
-          : t.AbilityClass &&
-            t.AbilityClass.IsChildOf(UE.Ga_Passive_C.StaticClass())
-          ? "策划可能误把被动GA放在普攻0技能组里"
-          : this.IsSkillInCd(t.SkillId)
-          ? "技能处于CD中"
-          : 0 !== s.StrengthCost &&
-            FormationAttributeController_1.FormationAttributeController.GetValue(
-              1
-            ) <= 1
-          ? "体力不足"
-          : this.dZr?.IsMultiSkill(t.SkillInfo) &&
-            !this.dZr.CanStartMultiSkill(t)
-          ? "多段技能启动失败"
-          : ((s = this.EIe.GetEntityType()),
-            (e = this.bre?.AiController?.IsWaitingSwitchControl()),
-            s === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
-            !t.SkillInfo.AutonomouslyBySimulate &&
-            e
-              ? "在等待切换控制权期间，不允许释放普通技能"
-              : this.HZr(t, i, (s = []))
-              ? ""
-              : "技能打断失败[" + s.join(",") + "]")
-        : "非主控无权限释放技能";
-    }
+        var e,
+          s = t.SkillInfo;
+        return this.Hte.IsAutonomousProxy || s.AutonomouslyBySimulate
+          ? this.Lie.HasTag(-1388400236)
+            ? "角色处于不可控制状态"
+            : this.Lie.HasTag(1008164187)
+            ? "角色处于死亡状态"
+            : this.uZr?.IsFrozen()
+            ? "角色处于冰冻状态"
+            : this.IsSkillGenreForbidden(s)
+            ? "该类别技能被临时禁止"
+            : 8 === s.SkillGenre
+            ? "不能主动调用被动技能"
+            : t.AbilityClass &&
+              t.AbilityClass.IsChildOf(UE.Ga_Passive_C.StaticClass())
+            ? "策划可能误把被动GA放在普攻0技能组里"
+            : this.IsSkillInCd(t.SkillId)
+            ? "技能处于CD中"
+            : 0 !== s.StrengthCost &&
+              FormationAttributeController_1.FormationAttributeController.GetValue(
+                1
+              ) <= 1
+            ? "体力不足"
+            : this.dZr?.IsMultiSkill(t.SkillInfo) &&
+              !this.dZr.CanStartMultiSkill(t)
+            ? "多段技能启动失败"
+            : ((s = this.EIe.GetEntityType()),
+              (e = this.bre?.AiController?.IsWaitingSwitchControl()),
+              s === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
+              !t.SkillInfo.AutonomouslyBySimulate &&
+              e
+                ? "在等待切换控制权期间，不允许释放普通技能"
+                : this.HZr(t, i, (s = []))
+                ? ""
+                : "技能打断失败[" + s.join(",") + "]")
+          : "非主控无权限释放技能";
+      }
     KZr(t) {
       if (
         !this.LoadedSkills.has(t) &&
