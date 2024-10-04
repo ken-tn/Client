@@ -188,7 +188,7 @@ class ModMethod {
     }
     
   //怪物淹死
-  static MonsterKillRequest(Entity) {
+  static MonsterKillRequest(Entity, retries) {
     //v1.20
     // update here
     // let prot = Protocol_1.Aki.Protocol.v4n.create()
@@ -199,6 +199,9 @@ class ModMethod {
     //     entity,
     //     prot
     // );
+    if (retries > 20) {
+        return false;
+    }
 
     // hit all enemies here
     let timer = null;
@@ -206,7 +209,9 @@ class ModMethod {
     let itsLimit = 10;
     
     if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(34) && Entity.GetComponent(61)) {
-        return;
+        setTimeout(() => {
+            this.MonsterKillRequest(Entity, retries + 1)
+        }, 30);
     }
     let entityPos = Entity.GetComponent(3).ActorLocationProxy;
     let CharacterPartComponent = Entity.GetComponent(61);

@@ -66,6 +66,83 @@ class ModUtils {
     puerts_1.logger.info("[KUNMOD:]" + info);
   }
 
+  static getProps(e, par = '', visited = new Set(), depth = 0) {
+        const indent = '  '.repeat(depth);  // Indentation for nested properties
+        for (let prop in e) {
+            if (e.hasOwnProperty(prop)) {
+                const fullPropName = par ? `${par}.${prop}` : prop;
+                const value = e[prop];
+                
+                // Handle circular references
+                if (typeof value === 'object' && value !== null) {
+                    if (visited.has(value)) {
+                        puerts_1.logger.info(`${indent}${fullPropName}: [Circular Reference]`);
+                        continue;
+                    }
+                    visited.add(value);
+                }
+
+                // Format the output based on the value type
+                if (typeof value === 'object' && value !== null) {
+                    if (Array.isArray(value)) {
+                        puerts_1.logger.info(`${indent}${fullPropName}: [Array]`);
+                        value.forEach((item, index) => {
+                            if (typeof item === 'object') {
+                                puerts_1.logger.info(`${indent}  ${fullPropName}[${index}]: {`);
+                                this.getProps(item, `${fullPropName}[${index}]`, visited, depth + 2);
+                                puerts_1.logger.info(`${indent}  }`);
+                            } else {
+                                puerts_1.logger.info(`${indent}  ${fullPropName}[${index}]: ${item}`);
+                            }
+                        });
+                    } else if (value instanceof Date) {
+                        puerts_1.logger.info(`${indent}${fullPropName}: [Date: ${value.toISOString()}]`);
+                    } else {
+                        puerts_1.logger.info(`${indent}${fullPropName}: {`);
+                        this.getProps(value, fullPropName, visited, depth + 1);
+                        puerts_1.logger.info(`${indent}}`);
+                    }
+                } else {
+                    puerts_1.logger.info(`${indent}${fullPropName}: ${value}`);
+                }
+            }
+        }
+    }
+
+    static serializeToJS(e, depth = 0) {
+        const indent = '  '.repeat(depth);  // Indentation for nested objects and arrays
+        let output = '';
+        
+        if (Array.isArray(e)) {
+            output += '[\n';
+            e.forEach((item, index) => {
+                output += `${indent}  ${this.serializeToJS(item, depth + 1)},\n`;
+            });
+            output += `${indent}]`;
+        } else if (e instanceof Date) {
+            output += `new Date('${e.toISOString()}')`;  // Date object in JS
+        } else if (typeof e === 'object' && e !== null) {
+            output += '{\n';
+            for (let prop in e) {
+                if (e.hasOwnProperty(prop)) {
+                    const value = e[prop];
+                    output += `${indent}  "${prop}": ${this.serializeToJS(value, depth + 1)},\n`;
+                }
+            }
+            output += `${indent}}`;
+        } else if (typeof e === 'string') {
+            output += `"${e}"`;  // Strings should be quoted
+        } else {
+            output += `${e}`;  // For numbers, booleans, null, and undefined
+        }
+    
+        return output;
+    }
+
+    static jsLog(e) {
+        puerts_1.logger.info(this.serializeToJS(e));
+    }
+
   static DrawDebugBox(
     Center,
     Extent,
