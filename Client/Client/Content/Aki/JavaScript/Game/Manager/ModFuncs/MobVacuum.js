@@ -28,7 +28,7 @@ class MobVacuum extends EntityManager_1.EntityManager {
   }
 
   static origPositions = {}
-  static MobVacuum(entity) {
+  static async MobVacuum(entity) {
     if (!ModManager_1.ModManager.Settings.MobVacuum) return;
     let comp = entity.Entity.GetComponent(1);
     if (!comp) {

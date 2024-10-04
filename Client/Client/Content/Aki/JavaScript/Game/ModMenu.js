@@ -135,15 +135,17 @@ class MainMenu {
                 }, 1);
                 setInterval(() => {
                     ModEntityListener.Runtime();
-                }, 1500);
+                }, 500);
                 setInterval(() => {
                     ModEntityListener.FasterRuntime();
                 }, 100);
                 setInterval(() => {
                     ESP_1.ESP.RuntimeESP();
                 }, ESP_1.ESP.ESP_INTERVAL);
-                let Listener = new EventListener_1.EventListener();
-                Listener.Setup();
+                // setTimeout(() => {
+                //     const Listener = new EventListener_1.EventListener();
+                //     Listener.Setup();
+                // }, 30000);
 
                 // 加载必要的资源和设置
                 DCG.Image_26.SetBrushFromTexture(

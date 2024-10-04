@@ -37,7 +37,7 @@ class KillAura extends EntityManager_1.EntityManager {
     } return false;
   }
 
-  static killAura(entity) {
+  static async killAura(entity) {
     if (!ModManager_1.ModManager.Settings.killAuranew) return;
     if (!entity.Entity) return;
 

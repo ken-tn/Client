@@ -188,7 +188,7 @@ class ModMethod {
     }
     
   //怪物淹死
-  static MonsterKillRequest(Entity, retries) {
+  static async MonsterKillRequest(Entity, retries) {
     //v1.20
     // update here
     // let prot = Protocol_1.Aki.Protocol.v4n.create()
@@ -199,7 +199,7 @@ class ModMethod {
     //     entity,
     //     prot
     // );
-    if (retries > 50) {
+    if (retries > 10) {
         return false;
     }
     if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(34) && Entity.GetComponent(61)) {

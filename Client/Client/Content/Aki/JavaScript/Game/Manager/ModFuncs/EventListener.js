@@ -15,18 +15,21 @@ const puerts_1 = require("puerts"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   EntityManager_1 = require("./EntityManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   EntityFilter_1 = require("./EntityFilter"),
   MobVacuum_1 = require("./MobVacuum"),
   AutoDestroy_1 = require("./AutoDestroy"),
   AutoPuzzle_1 = require("./AutoPuzzle"),
+  KillAura_1 = require("./KillAura"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class EventListener {
   constructor() {
     (this.Started = false),
-      (this.OnCreateEntity = (entityComp0, entity) => {
+      (this.OnAddEntity = (entityComp0, entity) => {
+        puerts_1.logger.info("OnAddEntity" + entity);
         MobVacuum_1.MobVacuum.MobVacuum(entity);
         AutoDestroy_1.AutoDestroy.AutoDestroy(entity);
         MobVacuum_1.MobVacuum.VacuumCollect(entity);
@@ -34,18 +37,40 @@ class EventListener {
         KillAura_1.KillAura.killAura(entity);
         KillAura_1.KillAura.KillAnimal(entity);
       });
+    this.OnCreateEntity = (entityComp0, entity) => {
+      puerts_1.logger.info("OnCreateEntity" + entity);
+      MobVacuum_1.MobVacuum.MobVacuum(entity);
+      AutoDestroy_1.AutoDestroy.AutoDestroy(entity);
+      MobVacuum_1.MobVacuum.VacuumCollect(entity);
+      AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entity);
+      KillAura_1.KillAura.killAura(entity);
+      KillAura_1.KillAura.KillAnimal(entity);
+    };
   }
 
   Setup() {
-    if (this.Started) {
+    if (this.Started === true) {
       return;
     }
+    puerts_1.logger.info("Started event listener");
     this.Started = true;
 
-    EventSystem_1.EventSystem.Add(
+    EventSystem_1.EventSystem.Has(
+      EventDefine_1.EEventName.AddEntity,
+      this.OnAddEntity
+    ) ||
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.AddEntity,
+        this.OnAddEntity
+      );
+    EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.CreateEntity,
       this.OnCreateEntity
-    );
+    ) ||
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CreateEntity,
+        this.OnCreateEntity
+      );
   }
 }
 //puerts.logger.info(debug)
