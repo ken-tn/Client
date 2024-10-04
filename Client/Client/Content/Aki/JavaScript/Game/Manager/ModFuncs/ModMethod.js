@@ -199,8 +199,13 @@ class ModMethod {
     //     entity,
     //     prot
     // );
-    if (retries > 20) {
+    if (retries > 50) {
         return false;
+    }
+    if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(34) && Entity.GetComponent(61)) {
+        setTimeout(() => {
+            this.MonsterKillRequest(Entity, retries + 1)
+        }, 30);
     }
 
     // hit all enemies here
@@ -208,11 +213,6 @@ class ModMethod {
     let its = 0;
     let itsLimit = 10;
     
-    if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(34) && Entity.GetComponent(61)) {
-        setTimeout(() => {
-            this.MonsterKillRequest(Entity, retries + 1)
-        }, 30);
-    }
     let entityPos = Entity.GetComponent(3).ActorLocationProxy;
     let CharacterPartComponent = Entity.GetComponent(61);
     let CharacterDamageComponent = Entity.GetComponent(18);
