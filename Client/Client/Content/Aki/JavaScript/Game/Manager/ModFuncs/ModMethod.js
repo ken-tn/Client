@@ -60,7 +60,6 @@ class ModMethod {
       cdc.Entity,
       s,
       (e) => {
-        // e.nAs = damage
         if (e.nAs === 0) {
           s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           CombatMessage_1.CombatNet.Call(
