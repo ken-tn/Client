@@ -25,43 +25,10 @@ class Stat {
   }
   static tza(t, e, a = "", r = "") {
     return new Stat();
-    // if (!t || 0 === t.length)
-    //   return (
-    //     Log_1.Log.CheckError() &&
-    //       Log_1.Log.Error("Stat", 1, "统计创建失败，名字为空"),
-    //     Stat.iza
-    //   );
-    // Stat.m6?.Start();
-    // let S = t;
-    // S.length > CycleCounter_1.STAT_MAX_NAME_LENGTH &&
-    //   (Log_1.Log.CheckWarn() &&
-    //     Log_1.Log.Warn("Stat", 31, "Stat名字过长", ["name", t]),
-    //   (S = t.substring(0, CycleCounter_1.STAT_MAX_NAME_LENGTH)));
-    // (t = Stat.Enable ? UE.KuroJsStatsLibrary.CreateCycleCounter(S, a, r) : -1),
-    //   (a = new Stat(S, t, e));
-    // return Stat.Enable && (a.ac = 2), Stat.m6?.Stop(), a;
   }
   Start() {
-    // Stat.lJa &&
-    //   this.eza &&
-    //   Stat.J7a < MAX_CALL_DEPTH &&
-    //   cpp_1.FKuroPerfSightHelper.SafePushCall(this.Y7a),
-    //   Stat.J7a++,
-    //   0 !== this.ac &&
-    //     ((this.ac = 1),
-    //     UE.KuroJsStatsLibrary.StartCycleCounterByIndex(this.S9),
-    //     CycleCounter_1.CycleCounter.CheckStart(this.Y7a));
   }
   Stop() {
-    // Stat.J7a--,
-    //   Stat.lJa &&
-    //     this.eza &&
-    //     Stat.J7a < MAX_CALL_DEPTH &&
-    //     cpp_1.FKuroPerfSightHelper.SafePopCall(this.Y7a),
-    //   0 !== this.ac &&
-    //     ((this.ac = 2),
-    //     CycleCounter_1.CycleCounter.IsPassedStackCheck(this.Y7a)) &&
-    //     UE.KuroJsStatsLibrary.StopCycleCounter();
   }
 }
 ((exports.Stat = Stat).EnableCreateWithStack = !0),

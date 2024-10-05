@@ -64,39 +64,6 @@ class Log {
     Log.b8(3, t, r, e, o, levelTrace[3]);
   }
   static b8(e, o, i, g, n, a, L) {
-    if (((Log.o6 += 1), !(e > Log.B8))) {
-      var [c, t] = LogDefine_1.logAuthorInfo[i];
-      if (Log.q8 || t) {
-        Log.A8?.Start();
-        let t =
-          `[${Log.o6}][${exports.levelName[e]}][${o}][${c}][${Time_1.Time.Frame}][${Log.ke()}] ` +
-          g;
-        var s = {};
-        if (0 < n.length) {
-          t += " ";
-          for (const f of n) {
-            var u = f[0],
-              l = Log.G8(f[1]);
-            (s[u] = l), (t += `[${u}: ${l}]`);
-          }
-        }
-        let r = void 0;
-        (r = a ? Log.N8(L, L ? 0 : DEFAULT_SKIP_INDEX) : r) &&
-          (t = (t += "\n") + r),
-          Log.Delegate?.(Log.o6, e, o, i, g, s, r),
-          logProxy[e](t),
-          Info_1.Info.IsBuildDevelopmentOrDebug &&
-            LogCaptureController_1.LogCaptureController.RegisterCapture[e] &&
-            LogCaptureController_1.LogCaptureController.LogCapture(
-              e,
-              o,
-              i,
-              t,
-              r ?? "",
-            ),
-          Log.A8?.Stop();
-      }
-    }
   }
   static ke() {
     var t = new Date();
@@ -134,66 +101,6 @@ class Log {
             : t.toString();
   }
   static N8(o, i) {
-    Log.P8?.Start();
-    var t = Error.prepareStackTrace;
-    Error.prepareStackTrace = Log.F8;
-    let g = void 0;
-    if (
-      (o
-        ? (g = o.stack)
-        : (Error.captureStackTrace(Log.V8, Log.N8),
-          (g = Log.V8.stack),
-          (Log.V8.stack = void 0)),
-      (Error.prepareStackTrace = t),
-      g && Array.isArray(g))
-    ) {
-      let r = "",
-        e = "";
-      for (let t = i; t < g.length; ++t) {
-        var n,
-          a,
-          L,
-          c,
-          s = g[t];
-        s &&
-          ((n =
-            ((n = s.getTypeName()) ? n + "." : "") +
-            (s.getFunctionName() ?? "")),
-          (c = s.getFileName() ?? void 0),
-          (a = s.getLineNumber() ?? -1),
-          (s = s.getColumnNumber() ?? -1),
-          (L = Log.H8(c, "JavaScript", 1)),
-          (r += `	${n} (${L}:${a}:${s})
-`),
-          puerts_1.convertSourceMap) &&
-          c &&
-          0 !== c.length &&
-          (Log.x8?.Start(),
-          (L = (0, puerts_1.convertSourceMap)(c + ".map", a, s)),
-          Log.x8?.Stop(),
-          L
-            ? ((c = Log.H8(L.source, "Src", 1)),
-              (e += `	${n} (${c}:${L.line}:${L.column})
-`))
-            : (e += "\tconvert source map fail\n"));
-      }
-      let t = `JS 堆栈${Log.U8}:
-`;
-      return (
-        (t += r),
-        0 < e.length && (t = (t += "TS 堆栈:a\n") + e),
-        UE.KuroStaticLibrary.GetBlueprintCallstack &&
-          (Log.w8?.Start(),
-          (o = UE.KuroStaticLibrary.GetBlueprintCallstack()),
-          Log.w8?.Stop(),
-          o) &&
-          0 < o.length &&
-          (t = t + "BP 堆栈:\n" + o),
-        Log.P8?.Stop(),
-        t
-      );
-    }
-    Log.P8?.Stop();
   }
   static H8(t, r, e) {
     var o;
