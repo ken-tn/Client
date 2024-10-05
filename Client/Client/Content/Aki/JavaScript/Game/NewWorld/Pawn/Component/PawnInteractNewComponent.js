@@ -1,4 +1,3 @@
-// delete?
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
