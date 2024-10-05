@@ -41,6 +41,7 @@ puerts_1 = require("puerts"),
   EffectProfiler_1 = require("./EffectProfiler/EffectProfiler"),
   EffectModelTrailSpec_1 = require("./EffectSpec/EffectModelTrailSpec"),
   PlayerEffectContainer_1 = require("./PlayerEffectContainer"),
+  ModManager_1 = require("../Manager/ModManager"),
   EFFECT_SPEC_DATA_PATH =
     ((exports.EFFECT_REASON_LENGTH_LIMIT = 4),
     (exports.EFFECT_LIFETIME_FLOAT_TO_INT = 1e4),
@@ -1004,50 +1005,6 @@ class EffectSystem {
         e(!1, void 0));
   }
 
-  static serializeToJS(e, depth = 0, visited = new WeakSet()) {
-    const indent = '  '.repeat(depth);  // Indentation for nested objects and arrays
-    let output = '';
-    
-    // Check for circular references
-    if (typeof e === 'object' && e !== null) {
-        if (visited.has(e)) {
-            return '"[Circular]"';  // Mark circular reference
-        }
-        visited.add(e);  // Mark this object as visited
-    }
-
-    if (Array.isArray(e)) {
-        output += '[\n';
-        e.forEach((item, index) => {
-            output += `${indent}  ${this.serializeToJS(item, depth + 1, visited)},\n`;
-        });
-        output += `${indent}]`;
-    } else if (e instanceof Date) {
-        output += `new Date('${e.toISOString()}')`;  // Date object in JS
-    } else if (typeof e === 'object' && e !== null) {
-        output += '{\n';
-        for (let prop in e) {
-            // if (e.hasOwnProperty(prop)) {
-            if (Object.prototype.hasOwnProperty.call(e, prop)) {  // Check if the object owns the property
-                const value = e[prop];
-                if (value !== undefined) {  // Skip undefined properties
-                    output += `${indent}  "${prop}": ${this.serializeToJS(value, depth + 1, visited)},\n`;
-                }
-            }
-        }
-        output += `${indent}}`;
-    } else if (typeof e === 'string') {
-        output += `"${e}"`;  // Strings should be quoted
-    } else {
-        output += `${e}`;  // For numbers, booleans, null, and undefined
-    }
-
-    return output;
-}
-
-static async jsLog(e) {
-    puerts_1.logger.info(this.serializeToJS(e));
-}
   static async xfe(t, e, i, a) {
     let f = void 0;
     Stats_1.Stat.Enable &&
@@ -1093,9 +1050,7 @@ static async jsLog(e) {
       if (t.IsPendingStop) return f?.Stop(), 3;
       if (this.ope(t)) return (t.StopReason = "屏蔽特效"), f?.Stop(), 3;
       if ((i = t.GetSureEffectActor()) && !i.IsValid()) return 4;
-      puerts_1.logger.info("xfe called");
-      if (t.InitCache.Path === "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_Breaking.DA_Fx_Group_Breaking") {
-        this.jsLog(t);
+      if (ModManager_1.ModManager.Settings.killAuranew && t.InitCache.Path === "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_Breaking.DA_Fx_Group_Breaking") {
         return;
       }
       t.IsPendingPlay
