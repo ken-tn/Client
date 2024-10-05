@@ -1050,8 +1050,10 @@ class EffectSystem {
       if (t.IsPendingStop) return f?.Stop(), 3;
       if (this.ope(t)) return (t.StopReason = "屏蔽特效"), f?.Stop(), 3;
       if ((i = t.GetSureEffectActor()) && !i.IsValid()) return 4;
-      if (ModManager_1.ModManager.Settings.killAuranew && t.InitCache.Path === "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_Breaking.DA_Fx_Group_Breaking") {
-        return;
+      if (ModManager_1.ModManager.Settings.killAuranew && t.InitCache) {
+        if (t.InitCache.Path === "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_Breaking.DA_Fx_Group_Breaking") {
+            return;
+        }
       }
       t.IsPendingPlay
         ? (a?.(t.Id), t.PlayEffect(t.PlayReason))
