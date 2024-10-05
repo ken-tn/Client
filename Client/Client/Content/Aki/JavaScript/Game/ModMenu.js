@@ -16,6 +16,7 @@ const puerts_1 = require("puerts"),
   KillAura_1 = require("./Manager/ModFuncs/KillAura"),
   MobVacuum_1 = require("./Manager/ModFuncs/MobVacuum"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
+  EventListener_1 = require("./Manager/ModFuncs/EventListener"),
   UiManager_1 = require("./Ui/UiManager"),
   AutoPuzzle_1 = require("./Manager/ModFuncs/AutoPuzzle"),
   PerceptionRange_1 = require("./Manager/ModFuncs/PerceptionRange"),
@@ -134,13 +135,17 @@ class MainMenu {
                 }, 1);
                 setInterval(() => {
                     ModEntityListener.Runtime();
-                }, 1500);
+                }, 500);
                 setInterval(() => {
                     ModEntityListener.FasterRuntime();
                 }, 100);
                 setInterval(() => {
                     ESP_1.ESP.RuntimeESP();
                 }, ESP_1.ESP.ESP_INTERVAL);
+                // setTimeout(() => {
+                //     const Listener = new EventListener_1.EventListener();
+                //     Listener.Setup();
+                // }, 30000);
 
                 // 加载必要的资源和设置
                 DCG.Image_26.SetBrushFromTexture(

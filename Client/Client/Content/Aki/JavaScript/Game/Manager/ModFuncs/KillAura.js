@@ -37,7 +37,7 @@ class KillAura extends EntityManager_1.EntityManager {
     } return false;
   }
 
-  static killAura(entity) {
+  static async killAura(entity) {
     if (!ModManager_1.ModManager.Settings.killAuranew) return;
     if (!entity.Entity) return;
 
@@ -45,8 +45,10 @@ class KillAura extends EntityManager_1.EntityManager {
       ModMethod_1.ModMethod.MonsterKillRequest(entity.Entity);
     }
   }
-  static KillAnimal(entity) {
+  static async KillAnimal(entity) {
     if (!ModManager_1.ModManager.Settings.KillAnimal) return;
+    if (!entity.Entity) return;
+
     let blueprintType = this.GetBlueprintType2(entity);
     if (AnimalList.includes(blueprintType)) {
       ModMethod_1.ModMethod.AnimalDieRequest(entity.Entity);

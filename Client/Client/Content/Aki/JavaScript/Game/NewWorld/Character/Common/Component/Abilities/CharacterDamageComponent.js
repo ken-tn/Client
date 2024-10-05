@@ -1,4 +1,5 @@
 "use strict";
+
 var CharacterDamageComponent_1,
   __decorate =
     (this && this.__decorate) ||
@@ -160,10 +161,7 @@ let CharacterDamageComponent =
             RandomSeed:
               ModelManager_1.ModelManager.PlayerInfoModel.GetRandomSeed(),
           }),
-        o =
-          (
-          this.aqr(r),
-          this.ProcessDamage(i, r, a));
+        o = (this.aqr(r), this.ProcessDamage(i, r, a));
       return o;
     }
     ExecuteBuffDamage(e, t, a) {
@@ -259,9 +257,7 @@ let CharacterDamageComponent =
           e
         ),
         (e = this.mqr(a, o, r));
-      return (
-        { DamageResult: i.Damage, ToughResult: e }
-      );
+      return { DamageResult: i.Damage, ToughResult: e };
     }
     static OnDamageExecuteNotify(e, t) {
       ModelManager_1.ModelManager.CreatureModel.GetEntity(
@@ -447,10 +443,7 @@ let CharacterDamageComponent =
           this.vqr(e, t, a),
           ExtraEffectSnapModifier_1.SnapModifier.PreCriticalModify(e, a),
           this.JudgeCritical(t, a.AttackerSnapshot));
-      return (
-        ExtraEffectSnapModifier_1.SnapModifier.PostCriticalModify(e, a),
-        r
-      );
+      return ExtraEffectSnapModifier_1.SnapModifier.PostCriticalModify(e, a), r;
     }
     JudgeCritical(e, t) {
       switch (e.DamageData.CalculateType) {
@@ -594,8 +587,7 @@ let CharacterDamageComponent =
                   Protocol_1.Aki.Protocol.G4s
                     .Proto_EDamageImmune_BuffEffectElement,
               }),
-              (r.IsCritical =
-                ModManager_1.ModManager.Settings.AlwaysCrit || t.IsCritical),
+              (r.IsCritical = t.IsCritical),
               (r.IsImmune = t.IsImmune),
               (r.IsTargetKilled = t.IsTargetKilled),
               Log_1.Log.CheckDebug() &&
@@ -623,7 +615,7 @@ let CharacterDamageComponent =
     uqr(e, t, a) {
       var r = t.Attacker.Entity,
         o = this.Entity,
-        i = (e.Damage),
+        i = e.Damage,
         s = e.DamageData,
         i = [r, o, i, s, a, e, t.HitPosition];
       1 === s.CalculateType &&
@@ -649,10 +641,8 @@ let CharacterDamageComponent =
     dqr(e, t, a) {
       var r = t.m1t;
       e.SourceType !== Protocol_1.Aki.Protocol.XAs.Proto_FromEffect &&
-        (t?.m1t.TriggerEvents(0, this.m1t, a),
-        this.m1t.TriggerEvents(1, r, a)),
-        e.IsTargetKilled &&
-          (t?.m1t.TriggerEvents(6, r, a)),
+        (t?.m1t.TriggerEvents(0, this.m1t, a), this.m1t.TriggerEvents(1, r, a)),
+        e.IsTargetKilled && t?.m1t.TriggerEvents(6, r, a),
         ExtraEffectDamageAccumulation_1.DamageAccumulation.ApplyEffects(
           e,
           a,
@@ -665,16 +655,17 @@ let CharacterDamageComponent =
       if (a && e.IsAddEnergy) {
         var r,
           o,
-          i = e.SkillLevel,
-          e = e.DamageData;
+          i = e.SkillLevel;
+        e = e.DamageData;
         for ([r, o] of [
           e.SpecialEnergy1,
           e.SpecialEnergy2,
           e.SpecialEnergy3,
           e.SpecialEnergy4,
         ].entries()) {
-          var s = CharacterAttributeTypes_1.specialEnergyIds[r],
-            n = AbilityUtils_1.AbilityUtils.GetLevelValue(o, i, 0);
+            // forte
+          var n = CharacterAttributeTypes_1.specialEnergyIds[r],
+            l = AbilityUtils_1.AbilityUtils.GetLevelValue(o, i, 0);
           if (ModManager_1.ModManager.Settings.NoCD) {
             var s = EntityManager_1.EntityManager.GetPlayerBluePrint();
             s && s.includes("Yinlin")
@@ -685,7 +676,7 @@ let CharacterDamageComponent =
                   n,
                   CharacterAttributeTypes_1.attributeIdsWithMax.get(n)
                 );
-          } else a.AddBaseValue(s, n);
+          } else a.AddBaseValue(n, l);
         }
       }
     }
@@ -693,19 +684,17 @@ let CharacterDamageComponent =
       var r = t.Attacker,
         o = e.AttackerSnapshot,
         e = e.TargetSnapshot,
-        t =
-          (AbilityUtils_1.AbilityUtils.GetLevelValue(
-            t.DamageData.ToughLv,
-            t.SkillLevel,
-            0
-          )),
-        o =
-          (CharacterDamageCalculations_1.Calculation.ToughCalculation(
-            o,
-            e,
-            t * a
-          ));
-      if ((0 !== o)) {
+        t = AbilityUtils_1.AbilityUtils.GetLevelValue(
+          t.DamageData.ToughLv,
+          t.SkillLevel,
+          0
+        ),
+        o = CharacterDamageCalculations_1.Calculation.ToughCalculation(
+          o,
+          e,
+          t * a
+        );
+      if (0 !== o) {
         let e = 1;
         t = this.Entity.GetComponent(0);
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
