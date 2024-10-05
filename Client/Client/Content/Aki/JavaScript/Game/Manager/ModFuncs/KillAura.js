@@ -47,6 +47,8 @@ class KillAura extends EntityManager_1.EntityManager {
   }
   static async KillAnimal(entity) {
     if (!ModManager_1.ModManager.Settings.KillAnimal) return;
+    if (!entity.Entity) return;
+    
     let blueprintType = this.GetBlueprintType2(entity);
     if (AnimalList.includes(blueprintType)) {
       ModMethod_1.ModMethod.AnimalDieRequest(entity.Entity);
