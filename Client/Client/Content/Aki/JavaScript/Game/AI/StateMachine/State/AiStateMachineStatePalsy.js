@@ -8,15 +8,15 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   CharacterHitComponent_1 = require("../../../NewWorld/Character/Common/Component/CharacterHitComponent"),
   AiStateMachine_1 = require("../AiStateMachine"),
+  ModManager_1 = require("../../../Manager/ModManager"),
   AiStateMachineState_1 = require("./AiStateMachineState");
-const { ModManager } = require("../../../Manager/ModManager");
 class AiStateMachineStatePalsy extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
     super(...arguments), (this.wne = ""), (this.Bne = "");
   }
   OnActivate() {
     var e, t;
-    if (ModManager.Settings.killAuranew) {
+    if (ModManager_1.ModManager.Settings.killAuranew) {
         return;
     }
     Log_1.Log.CheckDebug() && Log_1.Log.Debug("Battle", 4, "TestOnActivate"),
