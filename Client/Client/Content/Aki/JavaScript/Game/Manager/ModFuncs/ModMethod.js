@@ -31,79 +31,6 @@ const puerts_1 = require("puerts"),
   ModDebuger_1 = require("./ModDebuger");
 const { ModUtils } = require("./ModUtils");
 
-// for (let x of dam.RateLv) {
-//     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
-// }
-// for (let x of dam.HardnessLv) {
-//     ModMenu_1.MainMenu.KunLog(`Hardness ${x}`);
-// }
-// for (let x of dam.ToughLv) {
-//     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
-// }
-// for (let x of dam.Energy) {
-//     ModMenu_1.MainMenu.KunLog(`Energy ${x}`);
-// }
-// for (let x of dam.Percent0) {
-//     ModMenu_1.MainMenu.KunLog(`Percent0 ${x}`);
-// }
-// for (let x of dam.Percent1) {
-//     ModMenu_1.MainMenu.KunLog(`Percent1 ${x}`);
-// }
-
-// DamageById_1.configDamageById.GetConfig(BigInt(key));
-// for (let propertyName in dam) {
-//     ModMenu_1.MainMenu.KunLog(propertyName);
-//     ModMenu_1.MainMenu.KunLog(dam[propertyName]);
-// }
-//             [KUNMOD:]J7
-// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:][object Object]
-// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]z7
-// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]84
-// for (let i = 0; i < 32; i += 2) {
-//     var t = dam.J7.__offset(dam.z7, i);
-//     ModMenu_1.MainMenu.KunLog("i: " + i + " data: " + dam.J7.readInt32(dam.z7 + t).toString())
-// }
-
-// ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
-// ModMenu_1.MainMenu.KunLog(`DamageData [${dam.Element}]`);
-// for (let x of dam.RateLv) {
-//     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
-// }
-// for (let x of dam.HardnessLv) {
-//     ModMenu_1.MainMenu.KunLog(`Hardness ${x}`);
-// }
-// for (let x of dam.ToughLv) {
-//     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
-// }
-// for (let x of dam.CureBaseValue) {
-//     ModMenu_1.MainMenu.KunLog(`CureBase ${x}`);
-// }
-// for (let x of dam.FluctuationLower) {
-//     ModMenu_1.MainMenu.KunLog(`Lower ${x}`);
-// }
-// for (let x of dam.FluctuationUpper) {
-//     ModMenu_1.MainMenu.KunLog(`Upper ${x}`);
-// }
-// BulletDataMap m[1502002001] = [object Object] constructor: BulletDataMain damage: [object Object]damage constructor: Damage
-
-// let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
-// ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo);
-// let dmgKey = null;
-
-// function logMapElements(value, key, map) {
-//     // ModMenu_1.MainMenu.KunLog(`m[${key}] = ${value}`);
-//     dmgKey = key+"001"
-//     return;
-// }
-// EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).GetSkillMap().forEach(logMapElements)
-
-// ModMenu_1.MainMenu.KunLog("got skillmap");
-// let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
-// ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo);
-// ModelManager_1.ModelManager.BulletModel.CreateBullet(Owner, BulletRowName, InitialTransform, InitTargetLocation)
-// 1205005011 changli hit
-// 70119003001 prism hit
-
 class ModMethod {
   static best = {};
 
@@ -216,8 +143,8 @@ class ModMethod {
 
   static FireDamage(CharacterDamageComponent, t) {
     let s = Protocol_1.Aki.Protocol.U3n.create({
-      Fjn: MathUtils_1.MathUtils.BigIntToLong(1202011001n),
-      Wjn: 10,
+      Fjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
+      Wjn: 10, //skillLevel
       kjn: MathUtils_1.MathUtils.NumberToLong(
         t.Entity.GetComponent(0).GetCreatureDataId()
       ),
@@ -244,9 +171,8 @@ class ModMethod {
       CharacterDamageComponent.Entity,
       s,
       (e) => {
-        if (
-          e.lAs === Protocol_1.Aki.Protocol.G4s.Proto_EDamageImmune_Invincible
-        ) {
+        // e.nAs = damage
+        if (e.nAs === 0) {
           s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           CombatMessage_1.CombatNet.Call(
             22663,
@@ -264,19 +190,17 @@ class ModMethod {
     if (retries > 10) {
       return false;
     }
-    if (
-      !Entity.GetComponent(18) ) {
+    let CharacterDamageComponent = Entity.GetComponent(18);
+    if (!CharacterDamageComponent) {
       setTimeout(() => {
         this.MonsterKillRequest(Entity, retries + 1);
       }, 30);
     }
 
-    // hit all enemies here
     let timer = null;
     let its = 0;
     let itsLimit = 10;
 
-    let CharacterDamageComponent = Entity.GetComponent(18);
     timer = TimerSystem_1.TimerSystem.Forever(() => {
       if (!CharacterDamageComponent.Entity || its > itsLimit) {
         ModMenu_1.MainMenu.KunLog(
@@ -297,85 +221,104 @@ class ModMethod {
   static async MonsterKillRequest2(Entity, retries) {
     //v1.20
     if (retries > 10) {
-        return false;
+      return false;
     }
-    if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(34) && Entity.GetComponent(61)) {
-        setTimeout(() => {
-            this.MonsterKillRequest2(Entity, retries + 1)
-        }, 30);
+    if (
+      !Entity.GetComponent(3) &&
+      Entity.GetComponent(18) &&
+      Entity.GetComponent(34) &&
+      Entity.GetComponent(61)
+    ) {
+      setTimeout(() => {
+        this.MonsterKillRequest2(Entity, retries + 1);
+      }, 30);
     }
 
     // hit all enemies here
     let timer = null;
     let its = 0;
     let itsLimit = 10;
-    
+
     let entityPos = Entity.GetComponent(3).ActorLocationProxy;
     let CharacterPartComponent = Entity.GetComponent(61);
     let CharacterDamageComponent = Entity.GetComponent(18);
     let PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
     timer = TimerSystem_1.TimerSystem.Forever(() => {
-        if (!CharacterDamageComponent.Entity || its > itsLimit) {
-            ModMenu_1.MainMenu.KunLog(its > itsLimit ? "Hits over limit" : "Dead, clearing timer"); 
-            TimerSystem_1.TimerSystem.Remove(timer);
-            return;
+      if (!CharacterDamageComponent.Entity || its > itsLimit) {
+        ModMenu_1.MainMenu.KunLog(
+          its > itsLimit ? "Hits over limit" : "Dead, clearing timer"
+        );
+        TimerSystem_1.TimerSystem.Remove(timer);
+        return;
+      }
+
+      its++;
+      // ModMenu_1.MainMenu.KunLog("Got pos");
+      if (CharacterDamageComponent && Entity.GetComponent(34) && entityPos) {
+        if (!CharacterPartComponent) {
+          ModMenu_1.MainMenu.KunLog("Failed to find CharacterPartComponent");
+          TimerSystem_1.TimerSystem.Remove(timer);
+          return;
         }
+        CharacterPartComponent.OnInitData();
+        CharacterPartComponent.OnInit();
+        CharacterPartComponent.OnActivate();
 
-        its++;
-        // ModMenu_1.MainMenu.KunLog("Got pos"); 
-        if (CharacterDamageComponent && Entity.GetComponent(34) && entityPos) {
-            if (!CharacterPartComponent) {
-                ModMenu_1.MainMenu.KunLog("Failed to find CharacterPartComponent"); 
-                TimerSystem_1.TimerSystem.Remove(timer);
-                return;
-            }
-            CharacterPartComponent.OnInitData();
-            CharacterPartComponent.OnInit();
-            CharacterPartComponent.OnActivate();
-
-            // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
-            let bul = this.SpawnBullet(); // ModManager_1.ModManager.Settings.HideDmgUi ? null : Entity.GetComponent(3).Actor.GetTransform()
-            bul.GetBulletInfo().Lo.Render.f9o = "";
-            if (!bul) {
-                ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer"); 
-                TimerSystem_1.TimerSystem.Remove(timer);
-                return;
-            }
-            let BulletInfo = bul.GetBulletInfo();
-            let dict = {
-                DamageDataId: bul.Data.Base.DamageId,
-                SkillLevel: bul.SkillLevel,
-                Attacker: BulletInfo.Attacker,
-                HitPosition: entityPos.ToUeVector(),
-                IsAddEnergy: 1,
-                IsCounterAttack: !1,
-                ForceCritical: ModManager_1.ModManager.Settings.AlwaysCrit,
-                IsBlocked: !1,
-                IsReaction: !1,
-                PartId: -1,
-                ExtraRate: 1,
-                CounterSkillMessageId: void 0, // this.IsTriggerCounterAttack?n.CurrentSkill?.CombatMessageId : void 0,
-                BulletId: bul.BulletId,
-                CounterSkillId: void 0, //this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
-            }
-            if (ModManager_1.ModManager.Settings.killAuraState == 1) {
-                // ModMenu_1.MainMenu.KunLog("Executing bullet damage attacker: " + BulletInfo.Attacker);
-                dict.DamageDataId = 1202011001n;
-                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
-                // ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
-
-                bul = this.SpawnBullet();
-                BulletInfo = bul.GetBulletInfo();
-                dict.DamageDataId = 1305061001n;
-                dict.BulletId = bul.BulletId;
-                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
-            } else {
-                dict.DamageDataId = (this.best[PID][1].BaseDamageId);
-                CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
-            }
+        // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos");
+        let bul = this.SpawnBullet(); // ModManager_1.ModManager.Settings.HideDmgUi ? null : Entity.GetComponent(3).Actor.GetTransform()
+        bul.GetBulletInfo().Lo.Render.f9o = "";
+        if (!bul) {
+          ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer");
+          TimerSystem_1.TimerSystem.Remove(timer);
+          return;
         }
+        let BulletInfo = bul.GetBulletInfo();
+        let dict = {
+          DamageDataId: bul.Data.Base.DamageId,
+          SkillLevel: bul.SkillLevel,
+          Attacker: BulletInfo.Attacker,
+          HitPosition: entityPos.ToUeVector(),
+          IsAddEnergy: 1,
+          IsCounterAttack: !1,
+          ForceCritical: ModManager_1.ModManager.Settings.AlwaysCrit,
+          IsBlocked: !1,
+          IsReaction: !1,
+          PartId: -1,
+          ExtraRate: 1,
+          CounterSkillMessageId: void 0, // this.IsTriggerCounterAttack?n.CurrentSkill?.CombatMessageId : void 0,
+          BulletId: bul.BulletId,
+          CounterSkillId: void 0, //this.IsTriggerCounterAttack?Number(n.CurrentSkill?.SkillId) : void 0
+        };
+        if (ModManager_1.ModManager.Settings.killAuraState == 1) {
+          // ModMenu_1.MainMenu.KunLog("Executing bullet damage attacker: " + BulletInfo.Attacker);
+          dict.DamageDataId = 1202011001n;
+          CharacterDamageComponent?.ExecuteBulletDamage(
+            BulletInfo.BulletEntityId,
+            dict,
+            BulletInfo.ContextId
+          );
+          // ModMenu_1.MainMenu.KunLog("Executed bullet damage");
+
+          bul = this.SpawnBullet();
+          BulletInfo = bul.GetBulletInfo();
+          dict.DamageDataId = 1305061001n;
+          dict.BulletId = bul.BulletId;
+          CharacterDamageComponent?.ExecuteBulletDamage(
+            BulletInfo.BulletEntityId,
+            dict,
+            BulletInfo.ContextId
+          );
+        } else {
+          dict.DamageDataId = this.best[PID][1].BaseDamageId;
+          CharacterDamageComponent?.ExecuteBulletDamage(
+            BulletInfo.BulletEntityId,
+            dict,
+            BulletInfo.ContextId
+          );
+        }
+      }
     }, 100);
-  };
+  }
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {
     //1.1work
