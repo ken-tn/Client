@@ -1,4 +1,5 @@
 "use strict";
+
 var CharacterDamageComponent_1,
   __decorate =
     (this && this.__decorate) ||
@@ -586,8 +587,7 @@ let CharacterDamageComponent =
                   Protocol_1.Aki.Protocol.G4s
                     .Proto_EDamageImmune_BuffEffectElement,
               }),
-              (r.IsCritical =
-                ModManager_1.ModManager.Settings.AlwaysCrit || t.IsCritical),
+              (r.IsCritical = t.IsCritical),
               (r.IsImmune = t.IsImmune),
               (r.IsTargetKilled = t.IsTargetKilled),
               Log_1.Log.CheckDebug() &&

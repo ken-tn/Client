@@ -29,6 +29,7 @@ const puerts_1 = require("puerts"),
   EntityManager_1 = require("./EntityManager"),
   CreateController_1 = require("../../World/Controller/CreatureController"),
   ModDebuger_1 = require("./ModDebuger");
+const { ModUtils } = require("./ModUtils");
 
 // for (let x of dam.RateLv) {
 //     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
@@ -50,161 +51,257 @@ const puerts_1 = require("puerts"),
 // }
 
 // DamageById_1.configDamageById.GetConfig(BigInt(key));
-                // for (let propertyName in dam) {
-                //     ModMenu_1.MainMenu.KunLog(propertyName);
-                //     ModMenu_1.MainMenu.KunLog(dam[propertyName]);
-                // }
-    //             [KUNMOD:]J7
-    // [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:][object Object]
-    // [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]z7
-    // [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]84
-                // for (let i = 0; i < 32; i += 2) {
-                //     var t = dam.J7.__offset(dam.z7, i);
-                //     ModMenu_1.MainMenu.KunLog("i: " + i + " data: " + dam.J7.readInt32(dam.z7 + t).toString())
-                // }
-    
-                // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
-                // ModMenu_1.MainMenu.KunLog(`DamageData [${dam.Element}]`);
-                // for (let x of dam.RateLv) {
-                //     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
-                // }
-                // for (let x of dam.HardnessLv) {
-                //     ModMenu_1.MainMenu.KunLog(`Hardness ${x}`);
-                // }
-                // for (let x of dam.ToughLv) {
-                //     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
-                // }
-                // for (let x of dam.CureBaseValue) {
-                //     ModMenu_1.MainMenu.KunLog(`CureBase ${x}`);
-                // }
-                // for (let x of dam.FluctuationLower) {
-                //     ModMenu_1.MainMenu.KunLog(`Lower ${x}`);
-                // }
-                // for (let x of dam.FluctuationUpper) {
-                //     ModMenu_1.MainMenu.KunLog(`Upper ${x}`);
-                // }
-                // BulletDataMap m[1502002001] = [object Object] constructor: BulletDataMain damage: [object Object]damage constructor: Damage
+// for (let propertyName in dam) {
+//     ModMenu_1.MainMenu.KunLog(propertyName);
+//     ModMenu_1.MainMenu.KunLog(dam[propertyName]);
+// }
+//             [KUNMOD:]J7
+// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:][object Object]
+// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]z7
+// [2024.08.24-22.02.38:179][776][GameThread]Puerts: Display: (0x0000000012151D50) [KUNMOD:]84
+// for (let i = 0; i < 32; i += 2) {
+//     var t = dam.J7.__offset(dam.z7, i);
+//     ModMenu_1.MainMenu.KunLog("i: " + i + " data: " + dam.J7.readInt32(dam.z7 + t).toString())
+// }
 
-                // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
-        // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
-        // let dmgKey = null;
-        
-        // function logMapElements(value, key, map) {
-        //     // ModMenu_1.MainMenu.KunLog(`m[${key}] = ${value}`);
-        //     dmgKey = key+"001"
-        //     return;
-        // }
-        // EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).GetSkillMap().forEach(logMapElements)
+// ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
+// ModMenu_1.MainMenu.KunLog(`DamageData [${dam.Element}]`);
+// for (let x of dam.RateLv) {
+//     ModMenu_1.MainMenu.KunLog(`Rate ${x}`);
+// }
+// for (let x of dam.HardnessLv) {
+//     ModMenu_1.MainMenu.KunLog(`Hardness ${x}`);
+// }
+// for (let x of dam.ToughLv) {
+//     ModMenu_1.MainMenu.KunLog(`Tough ${x}`);
+// }
+// for (let x of dam.CureBaseValue) {
+//     ModMenu_1.MainMenu.KunLog(`CureBase ${x}`);
+// }
+// for (let x of dam.FluctuationLower) {
+//     ModMenu_1.MainMenu.KunLog(`Lower ${x}`);
+// }
+// for (let x of dam.FluctuationUpper) {
+//     ModMenu_1.MainMenu.KunLog(`Upper ${x}`);
+// }
+// BulletDataMap m[1502002001] = [object Object] constructor: BulletDataMain damage: [object Object]damage constructor: Damage
 
-        // ModMenu_1.MainMenu.KunLog("got skillmap"); 
-        // let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
-        // ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo); 
-        // ModelManager_1.ModelManager.BulletModel.CreateBullet(Owner, BulletRowName, InitialTransform, InitTargetLocation)
-        // 1205005011 changli hit
-        // 70119003001 prism hit
+// let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
+// ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo);
+// let dmgKey = null;
+
+// function logMapElements(value, key, map) {
+//     // ModMenu_1.MainMenu.KunLog(`m[${key}] = ${value}`);
+//     dmgKey = key+"001"
+//     return;
+// }
+// EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).GetSkillMap().forEach(logMapElements)
+
+// ModMenu_1.MainMenu.KunLog("got skillmap");
+// let dtinfo = EntityManager_1.EntityManager.GetPlayerEntity().GetComponent(33).DtBulletInfo;
+// ModMenu_1.MainMenu.KunLog("dtinfo: " + dtinfo);
+// ModelManager_1.ModelManager.BulletModel.CreateBullet(Owner, BulletRowName, InitialTransform, InitTargetLocation)
+// 1205005011 changli hit
+// 70119003001 prism hit
 
 class ModMethod {
-    static best = {}
+  static best = {};
 
-    static GenerateBest() {
-        const damageBlacklist = [
-            "110360200", // baizhi :middle_finger: 
-            "110360210",
-            "110360310"
-        ];
-        BulletConfig_1.BulletConfig.N9o.forEach((firstValue, PID, map) => {
-            // ModMenu_1.MainMenu.KunLog(`BulletConfig m[${key}] = ${value}` + " pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
-            if (!this.best[PID]) {
-                ModMenu_1.MainMenu.KunLog("Scanning for: " + PID);
-                let bestDmg = null;
-                let quietDmg = null;
-                let highest = 0;
-                let BulletDataMap = BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
-                BulletDataMap.forEach((value, key, map) => {
-                    try {
-                        // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
-                        // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value} constructor: ${value.constructor.name} data: ${value.Data} dataconstructor: ` + value.Data.constructor.name);
-                        // intermediary bullets
-                        if (value.Base.DamageId > 1) {
-                            let dam = ConfigManager_1.ConfigManager.RoleConfig.GetDamageConfig(value.Base.DamageId)
-                        
-                            // for (let propertyName in value.Data) {
-                            //     ModMenu_1.MainMenu.KunLog(propertyName);
-                            //     ModMenu_1.MainMenu.KunLog(value.Data[propertyName]);
-                            // }
-                            ModMenu_1.MainMenu.KunLog(`${value.BulletName}: ${key} | BulletRowName: ${value.BulletRowName} BaseDamageId: ${value.Base.DamageId}`);
-                            
-                            if (!value.Base.EnablePartHitAudio) {
-                                // ModMenu_1.MainMenu.KunLog(`Quiet Damage key: ${key}`);
-                                quietDmg = {'key': key, 'BaseDamageId': BigInt(value.Base.DamageId)};
-                            }
+  static GenerateBest() {
+    const damageBlacklist = [
+      "110360200", // baizhi :middle_finger:
+      "110360210",
+      "110360310",
+    ];
+    BulletConfig_1.BulletConfig.N9o.forEach((firstValue, PID, map) => {
+      // ModMenu_1.MainMenu.KunLog(`BulletConfig m[${key}] = ${value}` + " pid: " + EntityManager_1.EntityManager.GetPlayerEntity().Id);
+      if (!this.best[PID]) {
+        ModMenu_1.MainMenu.KunLog("Scanning for: " + PID);
+        let bestDmg = null;
+        let quietDmg = null;
+        let highest = 0;
+        let BulletDataMap =
+          BulletConfig_1.BulletConfig.O9o.get(firstValue).BulletDataMap;
+        BulletDataMap.forEach((value, key, map) => {
+          try {
+            // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value}` + " constructor: " + value.constructor.name + " damage: " + dam + "damage constructor: " + dam.constructor.name);
+            // ModMenu_1.MainMenu.KunLog(`BulletDataMap m[${key}] = ${value} constructor: ${value.constructor.name} data: ${value.Data} dataconstructor: ` + value.Data.constructor.name);
+            // intermediary bullets
+            if (value.Base.DamageId > 1) {
+              let dam =
+                ConfigManager_1.ConfigManager.RoleConfig.GetDamageConfig(
+                  value.Base.DamageId
+                );
 
-                            let rateLv = dam.RateLv;
-                            if (rateLv) {
-                                let maxRate = rateLv[rateLv.length - 1]
-                                if (maxRate > highest && !damageBlacklist.includes(key)) {
-                                    highest = maxRate;
-                                    bestDmg = {'key': key, 'BaseDamageId': BigInt(value.Base.DamageId)};
-                                    // fallback
-                                    if (!quietDmg) {
-                                        quietDmg = {'key': key, 'BaseDamageId': BigInt(value.Base.DamageId)}
-                                    }
-                                    //ModMenu_1.MainMenu.KunLog(`new maxrate: ${highest} key: ${key}`);
-                                }
-                            }
-                        }
-                    } catch {}
-                });
-                if (bestDmg && quietDmg) {
-                    ModMenu_1.MainMenu.KunLog(`Scan finished for ${PID} bestDmg: ${bestDmg.key} quietDmg: ${quietDmg.key}`);
-                    this.best[PID] = [quietDmg, bestDmg]
-                } else {
-                    ModMenu_1.MainMenu.KunLog("Failed scan for: " + PID);
+              // for (let propertyName in value.Data) {
+              //     ModMenu_1.MainMenu.KunLog(propertyName);
+              //     ModMenu_1.MainMenu.KunLog(value.Data[propertyName]);
+              // }
+              ModMenu_1.MainMenu.KunLog(
+                `${value.BulletName}: ${key} | BulletRowName: ${value.BulletRowName} BaseDamageId: ${value.Base.DamageId}`
+              );
+
+              if (!value.Base.EnablePartHitAudio) {
+                // ModMenu_1.MainMenu.KunLog(`Quiet Damage key: ${key}`);
+                quietDmg = {
+                  key: key,
+                  BaseDamageId: BigInt(value.Base.DamageId),
+                };
+              }
+
+              let rateLv = dam.RateLv;
+              if (rateLv) {
+                let maxRate = rateLv[rateLv.length - 1];
+                if (maxRate > highest && !damageBlacklist.includes(key)) {
+                  highest = maxRate;
+                  bestDmg = {
+                    key: key,
+                    BaseDamageId: BigInt(value.Base.DamageId),
+                  };
+                  // fallback
+                  if (!quietDmg) {
+                    quietDmg = {
+                      key: key,
+                      BaseDamageId: BigInt(value.Base.DamageId),
+                    };
+                  }
+                  //ModMenu_1.MainMenu.KunLog(`new maxrate: ${highest} key: ${key}`);
                 }
+              }
             }
+          } catch {}
         });
+        if (bestDmg && quietDmg) {
+          ModMenu_1.MainMenu.KunLog(
+            `Scan finished for ${PID} bestDmg: ${bestDmg.key} quietDmg: ${quietDmg.key}`
+          );
+          this.best[PID] = [quietDmg, bestDmg];
+        } else {
+          ModMenu_1.MainMenu.KunLog("Failed scan for: " + PID);
+        }
+      }
+    });
+  }
+
+  static SpawnBullet(InitialTransform) {
+    InitialTransform =
+      InitialTransform || Transform_1.Transform.Create().ToUeTransform();
+    let PlayerActor = EntityManager_1.EntityManager.GetPlayerActor();
+    if (!PlayerActor) {
+      return null;
+    }
+    const PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
+    if (!this.best[PID]) {
+      this.GenerateBest();
+      return;
     }
 
-    static SpawnBullet(InitialTransform) {
-        InitialTransform = InitialTransform || Transform_1.Transform.Create().ToUeTransform();
-        let PlayerActor = EntityManager_1.EntityManager.GetPlayerActor();
-        if (!PlayerActor) {
-            return null;
-        }
-        const PID = EntityManager_1.EntityManager.GetPlayerEntity().Id;
-        if (!this.best[PID]) {
-            this.GenerateBest()
-            return;
-        }
-
-        let transformLoc = InitialTransform.GetLocation();
-        let bul = ModelManager_1.ModelManager.BulletModel.CreateBullet(EntityManager_1.EntityManager.GetPlayerEntity(), (this.best[PID][0].key).toString(), InitialTransform, transformLoc);
-        if (!bul) {
-            ModMenu_1.MainMenu.KunLog(`Bullet failed for id ${(this.best[PID][0].key).toString()}`);
-            return;
-        }
-        bul.GetBulletInfo().ActorComponent.SetActorLocation(transformLoc);
-        return bul;
+    let transformLoc = InitialTransform.GetLocation();
+    let bul = ModelManager_1.ModelManager.BulletModel.CreateBullet(
+      EntityManager_1.EntityManager.GetPlayerEntity(),
+      this.best[PID][0].key.toString(),
+      InitialTransform,
+      transformLoc
+    );
+    if (!bul) {
+      ModMenu_1.MainMenu.KunLog(
+        `Bullet failed for id ${this.best[PID][0].key.toString()}`
+      );
+      return;
     }
-    
+    bul.GetBulletInfo().ActorComponent.SetActorLocation(transformLoc);
+    // ModUtils.jsLog(bul);
+    return bul;
+  }
+
+  static FireDamage(CharacterDamageComponent, t) {
+    let s = Protocol_1.Aki.Protocol.U3n.create({
+      Fjn: MathUtils_1.MathUtils.BigIntToLong(1202011001n),
+      Wjn: 10,
+      kjn: MathUtils_1.MathUtils.NumberToLong(
+        t.Entity.GetComponent(0).GetCreatureDataId()
+      ),
+      TVn: MathUtils_1.MathUtils.NumberToLong(
+        CharacterDamageComponent.Entity.GetComponent(0).GetCreatureDataId()
+      ),
+      Kjn: 1,
+      Qjn: 0,
+      Xjn: true,
+      $jn: 0,
+      jjn: -1,
+      Yjn: 0,
+      Njn: {
+        Vjn: Protocol_1.Aki.Protocol.XAs.Proto_FromBullet,
+        Mjn: BigInt(-1),
+        Hjn: [],
+        r5n: 0,
+      },
+      lHn: ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0),
+    });
+    // ModUtils.jsLog(s);
+    CombatMessage_1.CombatNet.Call(
+      22663,
+      CharacterDamageComponent.Entity,
+      s,
+      (e) => {
+        if (
+          e.lAs === Protocol_1.Aki.Protocol.G4s.Proto_EDamageImmune_Invincible
+        ) {
+          s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
+          CombatMessage_1.CombatNet.Call(
+            22663,
+            CharacterDamageComponent.Entity,
+            s
+          );
+        }
+      }
+    );
+  }
+
   //怪物淹死
   static async MonsterKillRequest(Entity, retries) {
     //v1.20
-    // update here
-    // let prot = Protocol_1.Aki.Protocol.v4n.create()
-    // prot.e8n = entity.GetComponent(3).ActorLocationProxy
+    if (retries > 10) {
+      return false;
+    }
+    if (
+      !Entity.GetComponent(18) ) {
+      setTimeout(() => {
+        this.MonsterKillRequest(Entity, retries + 1);
+      }, 30);
+    }
 
-    // CombatMessage_1.CombatNet.Call(
-    //     18989 /*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
-    //     entity,
-    //     prot
-    // );
+    // hit all enemies here
+    let timer = null;
+    let its = 0;
+    let itsLimit = 10;
+
+    let CharacterDamageComponent = Entity.GetComponent(18);
+    timer = TimerSystem_1.TimerSystem.Forever(() => {
+      if (!CharacterDamageComponent.Entity || its > itsLimit) {
+        ModMenu_1.MainMenu.KunLog(
+          its > itsLimit ? "Hits over limit" : "Dead, clearing timer"
+        );
+        TimerSystem_1.TimerSystem.Remove(timer);
+        return;
+      }
+
+      its++;
+      this.FireDamage(
+        CharacterDamageComponent,
+        Global_1.Global.BaseCharacter?.CharacterActorComponent
+      );
+    }, 50);
+  }
+
+  static async MonsterKillRequest2(Entity, retries) {
+    //v1.20
     if (retries > 10) {
         return false;
     }
     if (!Entity.GetComponent(3) && Entity.GetComponent(18) && Entity.GetComponent(34) && Entity.GetComponent(61)) {
         setTimeout(() => {
-            this.MonsterKillRequest(Entity, retries + 1)
+            this.MonsterKillRequest2(Entity, retries + 1)
         }, 30);
     }
 
@@ -238,6 +335,7 @@ class ModMethod {
 
             // ModMenu_1.MainMenu.KunLog("Got components, setting hitpos"); 
             let bul = this.SpawnBullet(); // ModManager_1.ModManager.Settings.HideDmgUi ? null : Entity.GetComponent(3).Actor.GetTransform()
+            bul.GetBulletInfo().Lo.Render.f9o = "";
             if (!bul) {
                 ModMenu_1.MainMenu.KunLog("Failed to spawn bullet, clearing timer"); 
                 TimerSystem_1.TimerSystem.Remove(timer);
@@ -262,13 +360,13 @@ class ModMethod {
             }
             if (ModManager_1.ModManager.Settings.killAuraState == 1) {
                 // ModMenu_1.MainMenu.KunLog("Executing bullet damage attacker: " + BulletInfo.Attacker);
-                dict.DamageDataId = 1205401001n;
+                dict.DamageDataId = 1202011001n;
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
                 // ModMenu_1.MainMenu.KunLog("Executed bullet damage"); 
 
                 bul = this.SpawnBullet();
                 BulletInfo = bul.GetBulletInfo();
-                dict.DamageDataId = 1301400001n;
+                dict.DamageDataId = 1305061001n;
                 dict.BulletId = bul.BulletId;
                 CharacterDamageComponent?.ExecuteBulletDamage(BulletInfo.BulletEntityId, dict, BulletInfo.ContextId);
             } else {
@@ -277,37 +375,7 @@ class ModMethod {
             }
         }
     }, 100);
-
-    // SpawnEntity_1.EntitySpawner.SpawnEntity(983041, 6);
-
-    // let dat = {
-    //     J4n: 983041,
-    //     HHn: Protocol_1.Aki.Protocol.wks.Proto_Custom,
-    //     jHn: null,
-    //     _9n: null,
-    //     pEs: null,
-    //     X8n: null,
-    // }
-    // CreateController_1.CreatureController.CreateEntity(dat);
-
-    // entity.GetComponent(3).Entity.GetComponent(52).OnHit(ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(_.Attacker, e.Base.BeHitEffect), true, ??.GetBulletInfo().Entity, this.Bjo.AllowedEnergy, true, r, s, a, n),
-    // ModMenu_1.MainMenu.KunLog("Calling 1");
-    // this.ThrowDamageChangeRequest(entity, 5, "1604001001n");
-    // this.LandingDamageRequest(EntityManager_1.EntityManager.GetPlayerEntity());
-
-    // entity.GetComponent(188).RemoveTag(1918148596);
-    // entity.GetComponent(188).RemoveTag(560942831);
-    // ModMenu_1.MainMenu.KunLog("Called 2")
-
-    // var t = Protocol_1.Aki.Protocol.g4n.create();
-    // t.P4n = entity.GetComponent(0).GetCreatureDataId()
-    // t.$4n = 1
-    // CombatMessage_1.CombatNet.Call(16858, this.Entity, t, () => {})
-    // ModMenu_1.MainMenu.KunLog("Called 3")
-
-    // this.LandingDamageRequest(entity);
-    // ModMenu_1.MainMenu.KunLog("Called 4")
-  }
+  };
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {
     //1.1work
@@ -341,7 +409,9 @@ class ModMethod {
     // update here (they're immune to fall damage🗿)
     let Protocol = Protocol_1.Aki.Protocol.gis.create();
     // ModMenu_1.MainMenu.KunLog(Entity.GetComponent(0).GetCreatureDataId());
-    Protocol.P4n = MathUtils_1.MathUtils.NumberToLong(Entity.GetComponent(0).GetCreatureDataId())
+    Protocol.P4n = MathUtils_1.MathUtils.NumberToLong(
+      Entity.GetComponent(0).GetCreatureDataId()
+    );
     Protocol.TKn = 2037;
     Protocol.LKn = 300000;
     Net_1.Net.Call(28127, Protocol);
@@ -382,8 +452,8 @@ class ModMethod {
     let fov = value.toString();
     ModDebuger_1.ModDebuger.ConsoleCommand("fov " + fov);
   }
-  static SetTime(hour,minute){
-    let a =hour*60*60+minute*60;
+  static SetTime(hour, minute) {
+    let a = hour * 60 * 60 + minute * 60;
     TimeOfDayController_1.TimeOfDayController.pIo(a);
   }
 }

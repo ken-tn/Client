@@ -66,7 +66,7 @@ class ModUtils {
     puerts_1.logger.info("[KUNMOD:]" + info);
   }
 
-  static getProps(e, par = '', visited = new Set(), depth = 0) {
+  static async getProps(e, par = '', visited = new Set(), depth = 0) {
         const indent = '  '.repeat(depth);  // Indentation for nested properties
         for (let prop in e) {
             if (e.hasOwnProperty(prop)) {
@@ -109,14 +109,22 @@ class ModUtils {
         }
     }
 
-    static serializeToJS(e, depth = 0) {
+    static serializeToJS(e, depth = 0, visited = new WeakSet()) {
         const indent = '  '.repeat(depth);  // Indentation for nested objects and arrays
         let output = '';
         
+        // Check for circular references
+        if (typeof e === 'object' && e !== null) {
+            if (visited.has(e)) {
+                return '"[Circular]"';  // Mark circular reference
+            }
+            visited.add(e);  // Mark this object as visited
+        }
+    
         if (Array.isArray(e)) {
             output += '[\n';
             e.forEach((item, index) => {
-                output += `${indent}  ${this.serializeToJS(item, depth + 1)},\n`;
+                output += `${indent}  ${this.serializeToJS(item, depth + 1, visited)},\n`;
             });
             output += `${indent}]`;
         } else if (e instanceof Date) {
@@ -124,9 +132,12 @@ class ModUtils {
         } else if (typeof e === 'object' && e !== null) {
             output += '{\n';
             for (let prop in e) {
-                if (e.hasOwnProperty(prop)) {
+                // if (e.hasOwnProperty(prop)) {
+                if (Object.prototype.hasOwnProperty.call(e, prop)) {  // Check if the object owns the property
                     const value = e[prop];
-                    output += `${indent}  "${prop}": ${this.serializeToJS(value, depth + 1)},\n`;
+                    if (value !== undefined) {  // Skip undefined properties
+                        output += `${indent}  "${prop}": ${this.serializeToJS(value, depth + 1, visited)},\n`;
+                    }
                 }
             }
             output += `${indent}}`;
@@ -139,7 +150,7 @@ class ModUtils {
         return output;
     }
 
-    static jsLog(e) {
+    static async jsLog(e) {
         puerts_1.logger.info(this.serializeToJS(e));
     }
 

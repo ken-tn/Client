@@ -30,7 +30,7 @@ class AutoPuzzle extends EntityManager_1.EntityManager {
     return list.includes(blueprintType);
   }
 
-  static AutoPuzzle(entity) {
+  static async AutoPuzzle(entity) {
     if (ModManager_1.ModManager.Settings.AutoPuzzle) {
       this.HitGear(entity);
       this.Gameplay004(entity);

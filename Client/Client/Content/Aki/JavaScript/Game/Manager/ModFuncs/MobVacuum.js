@@ -94,7 +94,7 @@ class MobVacuum extends EntityManager_1.EntityManager {
     }
   }
 
-  static VacuumCollect(entity) {
+  static async VacuumCollect(entity) {
     if (!ModManager_1.ModManager.Settings.VacuumCollect) return;
     if (
       EntityFilter_1.EntityFilter.isneedLoot(
