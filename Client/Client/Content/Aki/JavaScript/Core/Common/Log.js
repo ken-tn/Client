@@ -207,7 +207,7 @@ class Log {
     return ++Log.o6;
   }
 }
-((exports.Log = Log).B8 = 1),
+((exports.Log = Log).B8 = -1),
   (Log.k8 = !0),
   (Log.q8 = !1),
   (Log.o6 = 0),

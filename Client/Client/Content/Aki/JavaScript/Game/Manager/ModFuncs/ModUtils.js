@@ -65,6 +65,11 @@ class ModUtils {
     var info = string.toString();
     puerts_1.logger.info("[KUNMOD:]" + info);
   }
+  
+  static StackTrace() {
+        var err = new Error();
+        return err.stack;
+    }
 
   static async getProps(e, par = '', visited = new Set(), depth = 0) {
         const indent = '  '.repeat(depth);  // Indentation for nested properties

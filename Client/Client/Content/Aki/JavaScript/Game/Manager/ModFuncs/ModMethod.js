@@ -144,19 +144,19 @@ class ModMethod {
   static FireDamage(CharacterDamageComponent, t) {
     let s = Protocol_1.Aki.Protocol.U3n.create({
       Fjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
-      Wjn: 10, //skillLevel
+      Wjn: 10, // skillLevel
       kjn: MathUtils_1.MathUtils.NumberToLong(
         t.Entity.GetComponent(0).GetCreatureDataId()
       ),
       TVn: MathUtils_1.MathUtils.NumberToLong(
         CharacterDamageComponent.Entity.GetComponent(0).GetCreatureDataId()
       ),
-      Kjn: 1,
-      Qjn: 0,
-      Xjn: true,
-      $jn: 0,
-      jjn: -1,
-      Yjn: 0,
+      Kjn: 1, // IsAddEnergy
+      Qjn: 0, // counterattack
+      Xjn: 1, // crit
+      $jn: 0, // isblocked
+      jjn: -1, // PartId
+      Yjn: 0, // CounterSkillMessageId
       Njn: {
         Vjn: Protocol_1.Aki.Protocol.XAs.Proto_FromBullet,
         Mjn: BigInt(-1),
@@ -339,10 +339,10 @@ class ModMethod {
     );
     entity
       .CheckGetComponent(0)
-      .SetLivingStatus(Protocol_1.Aki.Protocol.HEs.Proto_Dead);
+      .SetLivingStatus(Protocol_1.Aki.Protocol.JEs.Proto_Dead);
   }
   static AnimalDropRequest(entity) {
-    let id = entity.Entity.Id;
+    let id = entity.Id;
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDropItemRequest(
       id
     );
