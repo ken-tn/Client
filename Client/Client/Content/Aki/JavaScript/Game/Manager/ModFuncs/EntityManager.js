@@ -58,12 +58,14 @@ class EntityManager {
   }
 
   static GetPosition(Entity) {
-    let a = Entity.GetComponent(0);
-    // let actor = a.ActorInternal;
-    // let pos = actor.K2_GetActorLocation();
-    // let pos = a?.Owner.K2_GetActorLocation();
+    let a = Entity.GetComponent(1);
+    let actor = a.ActorInternal;
+    if (!actor) {
+        return;
+    }
+    let pos = actor.K2_GetActorLocation();
 
-    return a.GetLocation();
+    return pos;
   }
 
   static GetName(entity) {
