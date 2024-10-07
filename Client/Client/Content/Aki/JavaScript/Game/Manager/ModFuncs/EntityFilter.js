@@ -63,7 +63,9 @@ class EntityFilter {
     "Collect_CXS08", //龙吐珠
     "Collect_CXS09", //龙吐珠
     "Collect605", // Nova
-    "CollectHHA3", // Sea Flytrap
+    "Collect_HHA3", // Sea Flytrap
+    "Collect_HHA4", // Sea Flytrap
+    "Collect_HHA5", // Sea Flytrap
   ];
   static CollectAnimal = [
     "Animal016", //霄凤蝶
