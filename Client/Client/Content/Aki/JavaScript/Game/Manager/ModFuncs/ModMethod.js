@@ -31,8 +31,8 @@ const puerts_1 = require("puerts"),
   ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
-  static FireDamage(CharacterDamageComponent, t) {
-    if ((!CharacterDamageComponent) || (!t)) {
+  static FireDamage(cdc, t) {
+    if ((!cdc) || (!t)) {
         return;
     }
     let s = Protocol_1.Aki.Protocol.U3n.create({
