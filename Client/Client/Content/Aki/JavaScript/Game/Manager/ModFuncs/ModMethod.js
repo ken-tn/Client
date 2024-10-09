@@ -142,6 +142,9 @@ class ModMethod {
   }
 
   static FireDamage(CharacterDamageComponent, t) {
+    if (!CharacterDamageComponent || !t) {
+        return;
+    }
     let s = Protocol_1.Aki.Protocol.U3n.create({
       Fjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
       Wjn: 10, // skillLevel
@@ -161,7 +164,7 @@ class ModMethod {
         Vjn: Protocol_1.Aki.Protocol.XAs.Proto_FromBullet,
         Mjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
         Hjn: [],
-        r5n: 0,
+        r5n: 1205401,
       },
       lHn: ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0),
     });
@@ -175,6 +178,7 @@ class ModMethod {
         if (e.nAs === 0) {
           s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           s.Njn.Mjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
+          s.Njn.r5n = 1305061;
           s.lHn = ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0);
           CombatMessage_1.CombatNet.Call(
             22663,
@@ -187,7 +191,7 @@ class ModMethod {
   }
 
   //怪物淹死
-  static async MonsterKillRequest(Entity, retries) {
+  static async MonsterKillRequest(Entity, retries = 0) {
     //v1.20
     if (retries > 10) {
       return false;
