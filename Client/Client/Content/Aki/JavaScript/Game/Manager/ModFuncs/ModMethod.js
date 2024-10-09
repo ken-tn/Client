@@ -142,7 +142,7 @@ class ModMethod {
   }
 
   static FireDamage(CharacterDamageComponent, t) {
-    if (!CharacterDamageComponent || !t) {
+    if ((!CharacterDamageComponent) || (!t)) {
         return;
     }
     let s = Protocol_1.Aki.Protocol.U3n.create({
