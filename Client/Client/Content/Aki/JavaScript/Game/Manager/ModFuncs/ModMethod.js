@@ -63,6 +63,7 @@ class ModMethod {
         if (e.nAs === 0) {
           s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           s.Njn.Mjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
+          s.lHn = ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0);
           CombatMessage_1.CombatNet.Call(
             22663,
             cdc.Entity,
