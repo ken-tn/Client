@@ -159,7 +159,7 @@ class ModMethod {
       Yjn: 0, // CounterSkillMessageId
       Njn: {
         Vjn: Protocol_1.Aki.Protocol.XAs.Proto_FromBullet,
-        Mjn: BigInt(-1),
+        Mjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
         Hjn: [],
         r5n: 0,
       },
@@ -174,6 +174,7 @@ class ModMethod {
         // e.nAs = damage
         if (e.nAs === 0) {
           s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
+          s.Njn.Mjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           CombatMessage_1.CombatNet.Call(
             22663,
             CharacterDamageComponent.Entity,
