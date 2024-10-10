@@ -33,17 +33,17 @@ const puerts_1 = require("puerts"),
 class ModMethod {
   static getSl(lv) {
     if (lv < 21) {
-        return 1; // level 20 until 1
+        return 1;
     } else if (lv < 31) {
-        return 3; // 3 until level 30
+        return 3;
     } else if (lv < 41) {
-        return 4; // 4 until level 40
+        return 4;
     } else if (lv < 51) {
-        return 6; // 6 until level 50
+        return 6;
     } else if (lv < 61) {
-        return 8; // 8 until level 60
+        return 8;
     } else if (lv >= 61) {
-        return 10; // 10
+        return 10;
     }
     return 1;
   }
@@ -56,7 +56,7 @@ class ModMethod {
     
     let s = Protocol_1.Aki.Protocol.U3n.create({
       Fjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
-      Wjn: this.getSl(lv), // skillLevel
+      Wjn: this.getSl(lv),
       kjn: MathUtils_1.MathUtils.NumberToLong(
         t.Entity.GetComponent(0).GetCreatureDataId()
       ),
