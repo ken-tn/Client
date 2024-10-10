@@ -7,3 +7,4 @@ Client\Client\Content\Aki\JavaScript\Game\Module\AntiCheat\AntiCheatModel.js 4
 Client\Client\Content\Aki\JavaScript\Core\Common\Log.js 3
 Client\Client\Content\Aki\JavaScript\Core\Common\LogAnalyzer.js 4
 Client\Client\Content\Aki\JavaScript\Core\Common\Stats.js 3
+Client\Client\Content\Aki\JavaScript\Game\Manager\ModFuncs\ModMethod.js 3
