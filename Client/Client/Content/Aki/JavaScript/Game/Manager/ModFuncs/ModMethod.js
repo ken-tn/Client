@@ -48,8 +48,8 @@ class ModMethod {
     return 1;
   }
 
-  static FireDamage(CharacterDamageComponent, t) {
-    if ((!CharacterDamageComponent) || (!t)) {
+  static FireDamage(cdc, t) {
+    if ((!cdc) || (!t)) {
         return;
     }
     let lv = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
