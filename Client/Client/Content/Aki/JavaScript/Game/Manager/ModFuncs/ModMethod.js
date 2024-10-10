@@ -31,13 +31,32 @@ const puerts_1 = require("puerts"),
   ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
-  static FireDamage(cdc, t) {
-    if ((!cdc) || (!t)) {
+  static getSl(lv) {
+    if (lv < 21) {
+        return 1; // level 20 until 1
+    } else if (lv < 31) {
+        return 3; // 3 until level 30
+    } else if (lv < 41) {
+        return 4; // 4 until level 40
+    } else if (lv < 51) {
+        return 6; // 6 until level 50
+    } else if (lv < 61) {
+        return 8; // 8 until level 60
+    } else if (lv >= 61) {
+        return 10; // 10
+    }
+    return 1;
+  }
+
+  static FireDamage(CharacterDamageComponent, t) {
+    if ((!CharacterDamageComponent) || (!t)) {
         return;
     }
+    let lv = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
+    
     let s = Protocol_1.Aki.Protocol.U3n.create({
       Fjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
-      Wjn: 10,
+      Wjn: this.getSl(lv), // skillLevel
       kjn: MathUtils_1.MathUtils.NumberToLong(
         t.Entity.GetComponent(0).GetCreatureDataId()
       ),
