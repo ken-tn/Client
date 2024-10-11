@@ -224,8 +224,9 @@ class ModMethod {
 
     let timer = null;
     let its = 0;
-    let itsLimit = 10;
+    let itsLimit = 6;
 
+    await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 100)) // wait 0-100ms
     timer = TimerSystem_1.TimerSystem.Forever(() => {
       if (!CharacterDamageComponent.Entity || its > itsLimit) {
         ModMenu_1.MainMenu.KunLog(
@@ -240,7 +241,7 @@ class ModMethod {
         CharacterDamageComponent,
         Global_1.Global.BaseCharacter?.CharacterActorComponent
       );
-    }, 50);
+    }, Math.floor(Math.random() * 100) + 100); // 100ms at least, 200ms at most
   }
 
   static async MonsterKillRequest2(Entity, retries) {
