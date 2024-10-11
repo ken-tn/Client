@@ -41,7 +41,7 @@ fs.readFile(fileListPath, "utf8", (err, data) => {
       // Obfuscate the middle content
       JsConfuser.obfuscate(contentToObfuscate, {
         target: "browser",
-        preset: "high",
+        preset: "low",
         stringEncoding: false,
       }).then(obfuscated => {
         // Combine the top, obfuscated, and bottom content
