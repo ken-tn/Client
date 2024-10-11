@@ -81,8 +81,10 @@ class ModMethod {
       22663,
       cdc.Entity,
       s,
-      (e) => {
+      async e => {
+        // e.nAs = damage
         if (e.nAs === 0) {
+          await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 100) + 100) // wait 100-200ms
           s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           s.Njn.Mjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           s.Njn.r5n = 1305061;
