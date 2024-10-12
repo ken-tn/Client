@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AntiCheatController = void 0);
 const UE = require("ue"),
+    puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -11,10 +12,12 @@ const UE = require("ue"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   Heartbeat_1 = require("../Login/Heartbeat"),
   LogReportController_1 = require("../LogReport/LogReportController"),
+  ReConnectController_1 = require("../../Module/ReConnect/ReConnectController"),
   AntiCheatModel_1 = require("./AntiCheatModel"),
   HEARTBEAT_EXCEPTION_FACTOR = 0.5,
   HEARTBEAT_REPORT_INTERVAL = TimeUtil_1.TimeUtil.Hour;
 class AntiCheatController extends UiControllerBase_1.UiControllerBase {
+  static Axf = null;
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ChangePlayerInfoId,
@@ -48,13 +51,22 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
 ((exports.AntiCheatController = AntiCheatController).Bje = 0),
   (AntiCheatController.bje = 0),
   (AntiCheatController.Aje = () => {
-    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe(
-      e.toString(),
-      e
-    ),
-      AntiCheatController.xje();
-    ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe("0", 0);
+    // just incase, but logging out clears this anyway with a jsreload
+    if (AntiCheatController.Axf) {
+        clearInterval(AntiCheatController.Axf);
+    }
+    ReConnectController_1.ReConnectController.TryReConnect(!0, "OnNetworkTypeChange") // reconnect once to reset the timer
+    AntiCheatController.Axf = setInterval(() => {
+        ReConnectController_1.ReConnectController.TryReConnect(!0, "OnNetworkTypeChange")
+    }, 300000 + Math.floor(Math.random() * 120000)); // 5 mins + 0-2mins
+    
+    // var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+    // ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe(
+    //   e.toString(),
+    //   e
+    // ),
+    //   AntiCheatController.xje();
+    // ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe("0", 0);
   }),
   (AntiCheatController.Pje = () => {
     var e = TimeUtil_1.TimeUtil.GetServerTimeStamp(),
