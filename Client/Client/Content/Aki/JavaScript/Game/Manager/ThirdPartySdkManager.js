@@ -24,7 +24,7 @@ class ThirdPartySdkManager {
       ),
       r =
         (cpp_1.FCrashSightProxy.SetBranchInfo(r, e),
-        UE.KuroStaticLibrary.IsModuleLoaded("TpSafe"));
+        true)// UE.KuroStaticLibrary.IsModuleLoaded("TpSafe"));
     r &&
       (void 0 !== ThirdPartySdkManager.BBe &&
         (TimerSystem_1.TimerSystem.Remove(ThirdPartySdkManager.BBe),
@@ -59,12 +59,6 @@ class ThirdPartySdkManager {
         ue_1.TpSafeProxy.SetUserInfo(a, 0, r, e));
   }
   static InitDataTransferTimerForTpSafe() {
-    let r = ACE_DATA_TRANSFER_INTERVAL_MOBILE;
-    Platform_1.Platform.IsWindowsPlatform() &&
-      (r = ACE_DATA_TRANSFER_INTERVAL_PC),
-      (ThirdPartySdkManager.BBe = TimerSystem_1.TimerSystem.Forever(() => {
-        ThirdPartySdkManager.NBe();
-      }, r));
   }
   static NBe() {}
   static GBe() {
@@ -76,6 +70,6 @@ class ThirdPartySdkManager {
 }
 ((exports.ThirdPartySdkManager = ThirdPartySdkManager).BBe = void 0),
   (ThirdPartySdkManager.bBe = (r) => {
-    ue_1.TpSafeProxy.RecvAntiData(r.v6n);
+    // ue_1.TpSafeProxy.RecvAntiData(r.v6n);
   });
 //# sourceMappingURL=ThirdPartySdkManager.js.map
