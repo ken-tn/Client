@@ -19,7 +19,6 @@ const UE = require("ue"),
   HEARTBEAT_EXCEPTION_FACTOR = 0.5,
   HEARTBEAT_REPORT_INTERVAL = TimeUtil_1.TimeUtil.Hour;
 class AntiCheatController extends UiControllerBase_1.UiControllerBase {
-  static Axf = null;
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ChangePlayerInfoId,
@@ -52,6 +51,7 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.AntiCheatController = AntiCheatController).Bje = 0),
   (AntiCheatController.bje = 0),
+  (AntiCheatController.Axf = null),
   (AntiCheatController.Aje = () => {
     // just incase, but logging out clears this anyway with a jsreload
     if (AntiCheatController.Axf) {
