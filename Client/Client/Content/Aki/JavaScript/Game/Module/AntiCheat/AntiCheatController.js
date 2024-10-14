@@ -53,7 +53,7 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
   (AntiCheatController.bje = 0),
   (AntiCheatController.Axf = null),
   (AntiCheatController.Aje = () => {
-    // just incase, but logging out clears this anyway with a jsreload
+    // just incase, but logging out clears this anyway with a Game.Shutdown()
     if (AntiCheatController.Axf) {
         clearInterval(AntiCheatController.Axf);
     }
