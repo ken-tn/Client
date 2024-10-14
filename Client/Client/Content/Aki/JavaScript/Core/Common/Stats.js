@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Stat = void 0);
 const cpp_1 = require("cpp"),
   UE = require("ue"),
+  puerts_1 = require("puerts"),
   CycleCounter_1 = require("../Performance/CycleCounter"),
   Macro_1 = require("../Preprocessor/Macro"),
   Log_1 = require("./Log"),
@@ -21,6 +22,7 @@ class Stat {
     return CycleCounter_1.CycleCounter.IsEnabled;
   }
   static Create(t, e = "", a = "") {
+    // puerts_1.logger.info(`requests create stat2 t: ${t} e: ${e} a: ${a}`);
     return Stat.tza(t, !0, e, a);
   }
   static tza(t, e, a = "", r = "") {
