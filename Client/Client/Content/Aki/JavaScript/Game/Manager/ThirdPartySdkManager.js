@@ -52,11 +52,6 @@ class ThirdPartySdkManager {
     // cpp_1.FCrashSightProxy.SetUserId(0);
   }
   static SetUserInfoForTpSafe(r, e) {
-    var a;
-    // cpp_1.FCrashSightProxy.SetCustomData("PlayerId", "0"),
-      UE.KuroStaticLibrary.IsModuleLoaded("TpSafe") &&
-        ((a = ThirdPartySdkManager.GBe()),
-        ue_1.TpSafeProxy.SetUserInfo(a, 0, r, e));
   }
   static InitDataTransferTimerForTpSafe() {
   }
@@ -65,7 +60,6 @@ class ThirdPartySdkManager {
     return Platform_1.Platform.IsWindowsPlatform() ? 601 : 99;
   }
   static Logout() {
-    ue_1.TpSafeProxy.Logout();
   }
   static Clear() {
     void 0 !== ThirdPartySdkManager.BBe &&
