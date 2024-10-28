@@ -67,6 +67,11 @@ class ThirdPartySdkManager {
   static Logout() {
     ue_1.TpSafeProxy.Logout();
   }
+  static Clear() {
+    void 0 !== ThirdPartySdkManager.BBe &&
+      (TimerSystem_1.TimerSystem.Remove(ThirdPartySdkManager.BBe),
+      (ThirdPartySdkManager.BBe = void 0));
+  }
 }
 ((exports.ThirdPartySdkManager = ThirdPartySdkManager).BBe = void 0),
   (ThirdPartySdkManager.bBe = (r) => {
