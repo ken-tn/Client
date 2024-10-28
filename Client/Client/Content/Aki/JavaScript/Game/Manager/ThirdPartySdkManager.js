@@ -54,9 +54,9 @@ class ThirdPartySdkManager {
   static SetUserInfoForTpSafe(r, e) {
     var a;
     // cpp_1.FCrashSightProxy.SetCustomData("PlayerId", "0"),
-    //   UE.KuroStaticLibrary.IsModuleLoaded("TpSafe") &&
-    //     ((a = ThirdPartySdkManager.GBe()),
-    //     ue_1.TpSafeProxy.SetUserInfo(a, 0, r, e));
+      UE.KuroStaticLibrary.IsModuleLoaded("TpSafe") &&
+        ((a = ThirdPartySdkManager.GBe()),
+        ue_1.TpSafeProxy.SetUserInfo(a, 0, r, e));
   }
   static InitDataTransferTimerForTpSafe() {
   }
