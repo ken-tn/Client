@@ -159,7 +159,7 @@ class ModManager {
     this.AddToggle("GodMode", "F5");
     this.AddToggle("HitMultiplier", "F6");
     this.AddToggle("AutoPickTreasure", "F7");
-    this.AddToggle("AutoAbsorbnew", "F8");
+    this.AddToggle("AutoAbsorb", "F8");
     this.AddToggle("HitAll", "F9");
     this.AddToggle("PerceptionRange", "F10");
     this.AddToggle("NoCD", "F11");
@@ -169,7 +169,7 @@ class ModManager {
     this.AddToggle("AutoDestroy", "NumPadOne");
     this.AddKey("MarkTp", "t");
     this.AddKey("QuestTp", "v");
-    this.AddKey("TestKey", "k");
+    // this.AddKey("TestKey", "k");
   }
 
   static listenModsToggle() {
@@ -177,8 +177,8 @@ class ModManager {
     this.listenMod("HitMultiplier", "F6", "HitMultiplier");
 
     this.listenMod("AutoPickTreasure", "F7", "AutoPickTreasure");
-    this.listenMod("AutoAbsorbnew", "F8", "AutoAbsorbnew");
-    this.listenMod("HitAll", "F9", "HitAll");
+    this.listenMod("AutoAbsorb", "F8", "AutoAbsorbnew");
+    this.listenMod("HitAll", "F9", "hitAll");
     this.listenMod("PerceptionRange", "F10", "PerceptionRange");
     this.listenMod("NoCD", "F11", "NoCD");
 
@@ -232,9 +232,8 @@ class ModManager {
     //   ModDebuger_1.ModDebuger.ListenDebug();
     // }
 
-    if (this.listenKey("TestKey", "k")) {
-        ControllerManager_1.ControllerManager.GetControllerByName("ReConnectController").mso("Logout");
-    }
+    // if (this.listenKey("TestKey", "k")) {
+    // }
 
     if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView()) {
       if (this.listenKey("MarkTp", "t")) {
