@@ -42,7 +42,7 @@ class ModManager {
     AntiDither: false,
     NoCD: false,
     InfiniteStamina: false,
-    hitAll: false,
+    HitAll: false,
     killAuraState: 0, //0 Only Hatred  1 Infinity
     PerceptionRange: false,
     MarkTp: false,
@@ -178,7 +178,7 @@ class ModManager {
 
     this.listenMod("AutoPickTreasure", "F7", "AutoPickTreasure");
     this.listenMod("AutoAbsorbnew", "F8", "AutoAbsorb");
-    this.listenMod("hitAll", "F9", "HitAll");
+    this.listenMod("HitAll", "F9", "HitAll");
     this.listenMod("PerceptionRange", "F10", "PerceptionRange");
     this.listenMod("NoCD", "F11", "NoCD");
 

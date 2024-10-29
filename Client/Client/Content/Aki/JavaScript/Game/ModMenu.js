@@ -292,7 +292,7 @@ class MainMenu {
       });
 
       this.Menu.KillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
-        ModManager_1.ModManager.Settings.hitAll = isChecked;
+        ModManager_1.ModManager.Settings.HitAll = isChecked;
         this.KunLog("Hit All: " + isChecked);
       });
 
@@ -802,7 +802,7 @@ class MainMenu {
       this.Menu.AutoPickTreasureCheck.SetIsChecked(
         ModManager_1.ModManager.Settings.AutoPickTreasure
       );
-      this.Menu.KillAuraCheck.SetIsChecked(ModManager_1.ModManager.Settings.hitAll);
+      this.Menu.KillAuraCheck.SetIsChecked(ModManager_1.ModManager.Settings.HitAll);
       this.Menu.AutoLootCheck.SetIsChecked(ModManager_1.ModManager.Settings.AutoLoot);
       this.Menu.KillAnimalCheck.SetIsChecked(ModManager_1.ModManager.Settings.KillAnimal);
       this.Menu.PerceptionRangeCheck.SetIsChecked(

@@ -1140,7 +1140,7 @@ let CharacterHitComponent =
           : void 0,
       };
 
-      if (ModManager_1.ModManager.Settings.hitAll) {
+      if (ModManager_1.ModManager.Settings.HitAll) {
         let l =
             Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.Id,
           m = t.Attacker.Id;
