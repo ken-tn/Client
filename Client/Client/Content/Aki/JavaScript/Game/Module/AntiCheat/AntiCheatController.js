@@ -54,31 +54,6 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
   (AntiCheatController.bje = 0),
   (AntiCheatController.Axf = null),
   (AntiCheatController.Aje = () => {
-    // puerts_1.logger.info("setting tpsafe");
-    // var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    // ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe(
-    //     e.toString(),
-    //     e
-    // )
-    // ThirdPartySdkManager_1.ThirdPartySdkManager.Logout();
-    puerts_1.logger.info("uhhh out");
-    // just incase, but logging out clears this anyway with a Game.Shutdown()
-    // if (AntiCheatController.Axf) {
-    //     clearInterval(AntiCheatController.Axf);
-    // }
-    // ReConnectController_1.ReConnectController.TryReConnect(!0, "OnNetworkTypeChange") // reconnect once to reset the timer
-    // AntiCheatController.Axf = setInterval(() => {
-    //     cpp_1.FuncOpenLibrary.SetFirstTimestamp(0);
-    //     // ReConnectController_1.ReConnectController.TryReConnect(!0, "OnNetworkTypeChange")
-    // }, 300000 + Math.floor(Math.random() * 120000)); // 5 mins + 0-2mins
-    
-    // var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    // ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe(
-    //   e.toString(),
-    //   e
-    // ),
-    //   AntiCheatController.xje();
-    // ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe("0", 0);
   }),
   (AntiCheatController.Pje = () => {
     var e = TimeUtil_1.TimeUtil.GetServerTimeStamp(),
