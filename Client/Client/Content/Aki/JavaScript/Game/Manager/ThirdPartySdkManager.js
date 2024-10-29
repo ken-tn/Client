@@ -45,11 +45,6 @@ class ThirdPartySdkManager {
   }
   static qBe(r) {}
   static SetUserInfoForTpSafe(r, e) {
-    var a;
-    // cpp_1.FCrashSightProxy.SetCustomData("PlayerId", "0"),
-    //   UE.KuroStaticLibrary.IsModuleLoaded("TpSafe") &&
-    //     ((a = ThirdPartySdkManager.GBe()),
-    //     ue_1.TpSafeProxy.SetUserInfo(a, 0, r, e));
   }
   static InitDataTransferTimerForTpSafe() {
   }
@@ -58,7 +53,11 @@ class ThirdPartySdkManager {
     return Platform_1.Platform.IsWindowsPlatform() ? 601 : 99;
   }
   static Logout() {
-    ue_1.TpSafeProxy.Logout();
+  }
+  static Clear() {
+    void 0 !== ThirdPartySdkManager.BBe &&
+      (TimerSystem_1.TimerSystem.Remove(ThirdPartySdkManager.BBe),
+      (ThirdPartySdkManager.BBe = void 0));
   }
 }
 ((exports.ThirdPartySdkManager = ThirdPartySdkManager).BBe = void 0),

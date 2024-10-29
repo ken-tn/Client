@@ -8,6 +8,7 @@ const puerts_1 = require("puerts"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  ControllerManager_1 = require("../Manager/ControllerManager"),
   InputSettings_1 = require("../InputSettings/InputSettings"),
   TeleportController_1 = require("../Module/Teleport/TeleportController"),
   CreatureController_1 = require("../World/Controller/CreatureController"),
@@ -158,8 +159,8 @@ class ModManager {
     this.AddToggle("GodMode", "F5");
     this.AddToggle("HitMultiplier", "F6");
     this.AddToggle("AutoPickTreasure", "F7");
-    this.AddToggle("AutoAbsorbnew", "F8");
-    this.AddToggle("hitAll", "F9");
+    this.AddToggle("AutoAbsorb", "F8");
+    this.AddToggle("HitAll", "F9");
     this.AddToggle("PerceptionRange", "F10");
     this.AddToggle("NoCD", "F11");
     this.AddToggle("PlayerSpeed", "F12");
@@ -168,6 +169,7 @@ class ModManager {
     this.AddToggle("AutoDestroy", "NumPadOne");
     this.AddKey("MarkTp", "t");
     this.AddKey("QuestTp", "v");
+    // this.AddKey("TestKey", "k");
   }
 
   static listenModsToggle() {
@@ -175,8 +177,8 @@ class ModManager {
     this.listenMod("HitMultiplier", "F6", "HitMultiplier");
 
     this.listenMod("AutoPickTreasure", "F7", "AutoPickTreasure");
-    this.listenMod("AutoAbsorbnew", "F8", "AutoAbsorbnew");
-    this.listenMod("hitAll", "F9", "hitAll");
+    this.listenMod("AutoAbsorb", "F8", "AutoAbsorbnew");
+    this.listenMod("HitAll", "F9", "hitAll");
     this.listenMod("PerceptionRange", "F10", "PerceptionRange");
     this.listenMod("NoCD", "F11", "NoCD");
 
@@ -228,6 +230,9 @@ class ModManager {
     // ModDebuger_1.ModDebuger.EnableDebug();
     // if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
     //   ModDebuger_1.ModDebuger.ListenDebug();
+    // }
+
+    // if (this.listenKey("TestKey", "k")) {
     // }
 
     if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView()) {
