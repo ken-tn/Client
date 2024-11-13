@@ -32,7 +32,9 @@ class ThinkingAnalyticsReporter {
   static Report(e, r) {}
 }
 (exports.ThinkingAnalyticsReporter = ThinkingAnalyticsReporter),
-  ((_a = ThinkingAnalyticsReporter).h9 = void 0),
+  ((_a = ThinkingAnalyticsReporter).h9 = Stats_1.Stat.Create(
+    "ThinkingAnalyticsReporter.Track",
+  )),
   (ThinkingAnalyticsReporter.Wvi = () => {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     UE.ThinkingAnalytics.Login("0");
@@ -82,10 +84,10 @@ class ThinkingAnalyticsReporter {
             (0, puerts_1.toManualReleaseDelegate)(_a.Xvi),
           ),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Login", 10, "数数上报实例已重新创建！");
+            Log_1.Log.Info("Login", 9, "数数上报实例已重新创建！");
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Login", 10, `未找到 ${r} 对应的数数上报配置`);
+          Log_1.Log.Error("Login", 9, `未找到 ${r} 对应的数数上报配置`);
     }
   }),
   (ThinkingAnalyticsReporter.Xvi = (e) => {
@@ -93,7 +95,7 @@ class ThinkingAnalyticsReporter {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "LogReport",
-          10,
+          9,
           "数数上报时间校准失败，可以因为以下问题导致：1.CDN数数上报配置错误；2.网络原因连接不上。",
         ));
   });
