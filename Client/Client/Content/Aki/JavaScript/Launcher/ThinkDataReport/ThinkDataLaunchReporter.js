@@ -59,9 +59,7 @@ class ThinkDataLaunchReporter {
       (0, puerts_1.toManualReleaseDelegate)(ThinkDataLaunchReporter.uyr),
     );
   }
-  static Report(e, r) {
-    // cpp_1.FThinkingAnalyticsForPuerts.Track(e, r);
-  }
+  static Report(e, r) {}
 }
 ((exports.ThinkDataLaunchReporter = ThinkDataLaunchReporter).ClientVersion =
   ""),
