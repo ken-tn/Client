@@ -42,7 +42,7 @@ class CharacterDitherEffectController {
         : (!this.qYo &&
           MathUtils_1.MathUtils.IsNearlyZero(
             this.GYo,
-            MathUtils_1.MathUtils.KindaSmallNumber
+            MathUtils_1.MathUtils.KindaSmallNumber,
           )
             ? this.SetHiddenInGame(!0, !1)
             : this.SetHiddenInGame(!1, !1),
@@ -68,14 +68,15 @@ class CharacterDitherEffectController {
     ModManager_1.ModManager.Settings.AntiDither
       ? (this.NYo = 1)
       : (this.GYo = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
+    (this.GYo = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
       (this.NYo = i),
       this.kYo ||
         (this.SetHiddenInGame(
           MathUtils_1.MathUtils.IsNearlyZero(
             this.GYo,
-            MathUtils_1.MathUtils.KindaSmallNumber
+            MathUtils_1.MathUtils.KindaSmallNumber,
           ),
-          s
+          s,
         ),
         this.l9e?.SetDitherEffect(this.GYo, i));
   }
@@ -87,11 +88,11 @@ class CharacterDitherEffectController {
         if (t) {
           if (this.Ane) return;
           (this.Ane = s.DisableActor(
-            "[CharacterDitherEffectController.SetHiddenInGame]"
+            "[CharacterDitherEffectController.SetHiddenInGame]",
           )),
-            s.Entity.GetComponent(171)?.IsNpcOutShowRange ||
+            s.Entity.GetComponent(172)?.IsNpcOutShowRange ||
               (this.Pne = s.DisableCollision(
-                "[CharacterDitherEffectController.SetHiddenInGame]"
+                "[CharacterDitherEffectController.SetHiddenInGame]",
               ));
         } else
           this.Ane && (s.EnableActor(this.Ane), (this.Ane = void 0)),
@@ -114,9 +115,9 @@ class CharacterDitherEffectController {
       this.SetHiddenInGame(
         MathUtils_1.MathUtils.IsNearlyZero(
           this.GYo,
-          MathUtils_1.MathUtils.KindaSmallNumber
+          MathUtils_1.MathUtils.KindaSmallNumber,
         ),
-        !0
+        !0,
       ),
       this.l9e.SetDitherEffect(this.GYo, this.NYo));
   }
