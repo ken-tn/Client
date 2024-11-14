@@ -48,8 +48,8 @@ class ModMethod {
     return 1;
   }
 
-  static FireDamage(cdc, t) {
-    if ((!cdc) || (!t)) {
+  static FireDamage(CharacterDamageComponent, t) {
+    if ((!CharacterDamageComponent) || (!t)) {
         return;
     }
     let lv = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
@@ -63,7 +63,7 @@ class ModMethod {
         t.Entity.GetComponent(0).GetCreatureDataId()
       ),
       TVn: MathUtils_1.MathUtils.NumberToLong(
-        cdc.Entity.GetComponent(0).GetCreatureDataId()
+        CharacterDamageComponent.Entity.GetComponent(0).GetCreatureDataId()
       ),
       Kjn: 1,
       Qjn: 0,
@@ -107,8 +107,8 @@ class ModMethod {
     if (retries > 10) {
       return false;
     }
-    let cdc = Entity.GetComponent(18);
-    if (!cdc) {
+    let CharacterDamageComponent = Entity.GetComponent(18);
+    if (!CharacterDamageComponent) {
       setTimeout(() => {
         this.MonsterKillRequest(Entity, retries + 1);
       }, 30);
@@ -120,14 +120,14 @@ class ModMethod {
 
     await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 50) + 20) // wait 20-50ms
     timer = TimerSystem_1.TimerSystem.Forever(() => {
-      if (!cdc.Entity || its > itsLimit) {
+      if (!CharacterDamageComponent.Entity || its > itsLimit) {
         TimerSystem_1.TimerSystem.Remove(timer);
         return;
       }
 
       its++;
       this.FireDamage(
-        cdc,
+        CharacterDamageComponent,
         Global_1.Global.BaseCharacter?.CharacterActorComponent
       );
     }, Math.floor(Math.random() * 100) + 100); // 100ms at least, 200ms at most
