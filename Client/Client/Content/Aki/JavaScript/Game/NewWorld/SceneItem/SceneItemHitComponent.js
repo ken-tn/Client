@@ -180,10 +180,13 @@ let SceneItemHitComponent =
       return !0;
     }
     OnSceneItemHit(t, e) {
-      if (!0 === ModManager_1.ModManager.Settings.HitMultiplier)
-        for (let i = 0; i < ModManager_1.ModManager.Settings.HitMultiplier; i++)
+      if (ModManager_1.ModManager.Settings.HitMultiplier) {
+        for (let i = 0; i < ModManager_1.ModManager.Settings.Hitcount; i++) {
           this.OnSceneItemHitOne(t, e);
-      else this.OnSceneItemHitOne(t, e);
+        }
+      } else {
+        this.OnSceneItemHitOne(t, e);
+      }
     }
     GetPenetrationType() {
       return this.Entity.GetComponent(0).GetBaseInfo().Category

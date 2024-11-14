@@ -1,5 +1,4 @@
 "use strict";
-
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectSystem =
@@ -1059,9 +1058,7 @@ class EffectSystem {
       if (this.ope(t)) return (t.StopReason = "屏蔽特效"), f?.Stop(), 3;
       if ((i = t.GetSureEffectActor()) && !i.IsValid()) return 4;
       if (ModManager_1.ModManager.Settings.killAuranew && t.InitCache) {
-        // ModUtils_1.ModUtils.KunLog("InitCache detected");
-        // ModUtils_1.ModUtils.jsLog(t.InitCache.Path);
-        if (t.InitCache.Path === "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_Breaking.DA_Fx_Group_Breaking") {
+        if (t.InitCache.Path === "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_Breaking.DA_Fx_Group_Breaking" || t.InitCache.Path.includes("BreakBuff")) {
             return;
         }
       }

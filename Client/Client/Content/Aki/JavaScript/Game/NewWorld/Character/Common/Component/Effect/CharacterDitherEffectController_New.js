@@ -68,7 +68,6 @@ class CharacterDitherEffectController {
     ModManager_1.ModManager.Settings.AntiDither
       ? (this.NYo = 1)
       : (this.GYo = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
-    (this.GYo = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
       (this.NYo = i),
       this.kYo ||
         (this.SetHiddenInGame(
