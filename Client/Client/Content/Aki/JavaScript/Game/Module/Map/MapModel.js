@@ -27,6 +27,7 @@ class MapModel extends ModelBase_1.ModelBase {
       (this.IDi = void 0),
       (this.TDi = void 0),
       (this.LDi = void 0),
+      (this.Yll = void 0),
       (this.DDi = void 0),
       (this.RDi = void 0),
       (this.UDi = void 0),
@@ -37,12 +38,15 @@ class MapModel extends ModelBase_1.ModelBase {
       (this.LastSafeLocation = Vector_1.Vector.Create()),
       (this.CacheEnrichmentAreaWorldMapCircle = void 0),
       (this.CacheEnrichmentAreaEntityId = 0),
+      (this.Aul = void 0),
+      (this.xul = void 0),
       (this.MapLifeEventListenerTriggerMap = void 0);
   }
   OnInit() {
     return (
       (this.EDi = new Map()),
       (this.LDi = new Map()),
+      (this.Yll = new Map()),
       (this.DDi = new Map()),
       (this.ADi = new Map()),
       (this.RDi = void 0),
@@ -53,6 +57,8 @@ class MapModel extends ModelBase_1.ModelBase {
       (this.IDi = new Map()),
       (this.PDi = new Map()),
       (this.MapLifeEventListenerTriggerMap = new Map()),
+      (this.Aul = new Map()),
+      (this.xul = new Map()),
       (this.UnlockMapBlockIds = []),
       (this.UnlockMultiMapIds = []),
       !0
@@ -69,14 +75,18 @@ class MapModel extends ModelBase_1.ModelBase {
     return (
       this.EDi.clear(),
       this.LDi.clear(),
+      this.Yll.clear(),
       this.DDi.clear(),
       this.ADi.clear(),
       this.SDi.clear(),
       this.yDi.clear(),
       this.IDi.clear(),
       this.PDi.clear(),
+      this.Aul.clear(),
+      this.xul.clear(),
       (this.EDi = void 0),
       (this.LDi = void 0),
+      (this.Yll = void 0),
       (this.DDi = void 0),
       (this.ADi = void 0),
       (this.RDi = void 0),
@@ -105,12 +115,12 @@ class MapModel extends ModelBase_1.ModelBase {
     return this.EDi;
   }
   GetDynamicMarkInfoById(t) {
-    let r = void 0;
+    let i = void 0;
     return (
       this.EDi.forEach((e) => {
-        e.has(t) && (r = e.get(t));
+        e.has(t) && (i = e.get(t));
       }),
-      r
+      i
     );
   }
   SetCurTrackMark(e) {
@@ -136,58 +146,64 @@ class MapModel extends ModelBase_1.ModelBase {
   ResetDynamicMarkData() {
     var e = this.EDi.get(12),
       t = this.EDi.get(7);
-    this.EDi?.clear(), this.TDi?.clear(), this.Weh(12, e), this.Weh(7, t);
+    this.EDi?.clear(), this.TDi?.clear(), this.ohh(12, e), this.ohh(7, t);
   }
-  Weh(e, t) {
+  ohh(e, t) {
     t &&
       (this.EDi?.set(e, t),
       t.forEach((e) => {
         this.TDi?.set(e.MarkId, e);
       }));
   }
-  xDi(r) {
+  xDi(i) {
     if (this.EDi) {
-      let e = this.EDi.get(r.MarkType),
-        t = (e || ((e = new Map()), this.EDi.set(r.MarkType, e)), void 0);
+      let e = this.EDi.get(i.MarkType),
+        t = (e || ((e = new Map()), this.EDi.set(i.MarkType, e)), void 0);
       e.forEach((e) => {
-        this.wDi(r) &&
+        this.wDi(i) &&
           e.TrackTarget instanceof Vector_1.Vector &&
-          r.TrackTarget instanceof Vector_1.Vector &&
-          e.TrackTarget.Equality(r.TrackTarget) &&
+          i.TrackTarget instanceof Vector_1.Vector &&
+          e.TrackTarget.Equality(i.TrackTarget) &&
           (t = e),
-          e.MarkId === r.MarkId && (t = e);
+          e.MarkId === i.MarkId && (t = e);
       }),
         t && this.RemoveMapMark(t.MarkType, t.MarkId),
-        e.set(r.MarkId, r),
-        this.TDi?.set(r.MarkId, r),
+        e.set(i.MarkId, i),
+        this.TDi?.set(i.MarkId, i),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CreateMapMark,
-          r,
+          i,
         );
     }
   }
-  SetTrackMark(e, t, r) {
+  SetTrackMark(e, t, i) {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.TrackMapMark,
       e,
       t,
-      r,
+      i,
     ),
-      r ||
+      i ||
         (this.EDi &&
-          (r = this.EDi.get(e)) &&
-          r.get(t)?.DestroyOnUnTrack &&
+          (i = this.EDi.get(e)) &&
+          i.get(t)?.DestroyOnUnTrack &&
           this.RemoveMapMark(e, t));
   }
   IsMarkIdExist(e, t) {
     if (this.EDi && e && t) {
-      var r = this.EDi.get(e);
-      if (r) return r.has(t);
-      r = MapUtil_1.MapUtil.GetMarkBelongMapId(t, e);
-      for (const i of ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(r))
-        if (i.MarkId === t && i.ObjectType === e) return !0;
+      var i = this.EDi.get(e);
+      if (i) return i.has(t);
+      i = MapUtil_1.MapUtil.GetMarkBelongMapId(t, e);
+      for (const r of ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(i))
+        if (r.MarkId === t && r.ObjectType === e) return !0;
     }
     return !1;
+  }
+  GetSoundBoxDetectMark() {
+    var e = this.GetMarkByType(16);
+    return (e && 0 < e.size) || ((e = this.GetMarkByType(21)) && 0 < e.size)
+      ? [(e = e.values().next().value).MarkId, e.MarkType]
+      : void 0;
   }
   IsConfigMarkIdUnlock(e) {
     var t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(e);
@@ -199,7 +215,7 @@ class MapModel extends ModelBase_1.ModelBase {
     );
   }
   BDi(e) {
-    return 1 === e.FogShow || this.CheckAreasUnlocked(e.FogHide);
+    return 1 === e.FogShow || this.CheckFogUnlocked(e.FogHide);
   }
   bDi(e) {
     var t = e.ShowCondition,
@@ -209,12 +225,12 @@ class MapModel extends ModelBase_1.ModelBase {
       : 0 === t || this.IsMarkUnlockedByServer(e);
   }
   RemoveMapMark(e, t) {
-    var r;
+    var i;
     this.EDi &&
       void 0 !== e &&
       void 0 !== t &&
-      (r = this.EDi.get(e)) &&
-      ((r = r.delete(t)), this.TDi?.delete(t), r) &&
+      (i = this.EDi.get(e)) &&
+      ((i = i.delete(t)), this.TDi?.delete(t), i) &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RemoveMapMark,
         e,
@@ -225,11 +241,11 @@ class MapModel extends ModelBase_1.ModelBase {
     if (this.EDi && void 0 !== e && void 0 !== t) {
       t = this.EDi.get(e);
       if (t) {
-        var r,
-          i,
-          n = [];
-        for ([r, i] of t) i.MarkType === e && n.push(r);
-        for (const o of n) this.RemoveMapMark(e, o);
+        var i,
+          r,
+          o = [];
+        for ([i, r] of t) r.MarkType === e && o.push(i);
+        for (const n of o) this.RemoveMapMark(e, n);
       }
     }
   }
@@ -238,21 +254,21 @@ class MapModel extends ModelBase_1.ModelBase {
     t
       ? this.RemoveMapMark(t?.MarkType, t?.MarkId)
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Map", 50, "找不到mark id:", ["markId", e]);
+        Log_1.Log.Error("Map", 49, "找不到mark id:", ["markId", e]);
   }
   UpdateCustomMarkInfo(e, t) {
-    var r;
+    var i;
     this.EDi &&
-      ((r = this.EDi.get(9))
-        ? (r.get(e).TrackTarget = t)
-        : Log_1.Log.CheckError() && Log_1.Log.Error("Map", 50, "找不到markId"));
+      ((i = this.EDi.get(9))
+        ? (i.get(e).TrackTarget = t)
+        : Log_1.Log.CheckError() && Log_1.Log.Error("Map", 49, "找不到markId"));
   }
   ReplaceCustomMarkIcon(e, t) {
-    var r;
+    var i;
     this.EDi &&
-      (r = this.EDi.get(9)) &&
-      (r = r.get(e)) &&
-      ((r.MarkConfigId = t),
+      (i = this.EDi.get(9)) &&
+      (i = i.get(e)) &&
+      ((i.MarkConfigId = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MapReplaceMarkResponse,
         9,
@@ -265,21 +281,21 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   UnlockTeleports(e, t = !1) {
     if ((t && this.LDi.clear(), !(e.length <= 0))) {
-      var r = new Array();
-      for (const n of e) {
-        var i = TeleporterById_1.configTeleporterById.GetConfig(n);
-        i && r.push(i);
+      var i = new Array();
+      for (const o of e) {
+        var r = TeleporterById_1.configTeleporterById.GetConfig(o);
+        r && i.push(r);
       }
-      for (const o of r)
-        o.TeleportEntityConfigId &&
+      for (const n of i)
+        n.TeleportEntityConfigId &&
           ControllerHolder_1.ControllerHolder.CreatureController.ChangeLockTagByTeleportPbDataId(
-            o.TeleportEntityConfigId,
+            n.TeleportEntityConfigId,
             1196894179,
           ),
-          this.LDi.set(o.Id, !0),
+          this.LDi.set(n.Id, !0),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.UnlockTeleport,
-            o.Id,
+            n.Id,
           );
     }
   }
@@ -300,26 +316,37 @@ class MapModel extends ModelBase_1.ModelBase {
   CheckTeleportUnlocked(e) {
     return this.LDi.get(e);
   }
+  GetAllUnlockedFogs() {
+    return this.Yll;
+  }
   GetAllUnlockedAreas() {
     return this.DDi;
   }
-  AddUnlockedAreas(e) {
-    this.DDi.set(e, !0),
+  AddUnlockedFogs(e) {
+    this.Yll.set(e, !0),
+      this.zll(e),
       EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.MapOpenAreaChange,
+        EventDefine_1.EEventName.MapOpenFogChange,
         e,
       );
   }
-  FullUpdateUnlockedAreas(e) {
-    this.DDi.clear();
-    for (const t of e) this.DDi.set(t, !0);
+  FullUpdateUnlockedFogs(e) {
+    this.Yll.clear(), this.DDi.clear();
+    for (const t of e) this.Yll.set(t, !0), this.zll(t);
     EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.MapOpenAreaFullUpdate,
-      this.DDi,
+      EventDefine_1.EEventName.MapOpenFogFullUpdate,
+      this.Yll,
     );
+  }
+  zll(e) {
+    e = ConfigManager_1.ConfigManager.WorldMapConfig.GetMapFogConfig(e);
+    e && this.DDi.set(e.AreaId, !0);
   }
   CheckAreasUnlocked(e, t = !0) {
     return !(0 !== e || !t) || (this.DDi.get(e) ?? !1);
+  }
+  CheckFogUnlocked(e) {
+    return 0 === e || (this.Yll.get(e) ?? !1);
   }
   SetUnlockMultiMapIds(e) {
     this.UnlockMultiMapIds = e;
@@ -332,11 +359,11 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   CheckUnlockMapBlockIds(e) {
     let t = 0;
-    for (const i of this.UnlockMapBlockIds ?? []) {
-      var r =
-        ConfigManager_1.ConfigManager.MapConfig.GetUnlockMapTileConfigById(i);
-      if (r?.Block === e) {
-        t = r.Id;
+    for (const r of this.UnlockMapBlockIds ?? []) {
+      var i =
+        ConfigManager_1.ConfigManager.MapConfig.GetUnlockMapTileConfigById(r);
+      if (i?.Block === e) {
+        t = i.Id;
         break;
       }
     }
@@ -344,9 +371,9 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   CheckIsInMultiMapWithAreaId(e) {
     let t = 0;
-    for (const r of ConfigManager_1.ConfigManager.MapConfig?.GetAllSubMapConfig())
-      if (r.Area.includes(e)) {
-        t = r.Id;
+    for (const i of ConfigManager_1.ConfigManager.MapConfig?.GetAllSubMapConfig())
+      if (i.Area.includes(e)) {
+        t = i.Id;
         break;
       }
     return t;
@@ -361,38 +388,30 @@ class MapModel extends ModelBase_1.ModelBase {
     return this.ADi;
   }
   IsInMapPolygon(e) {
-    var t =
-      ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.MapConfigId;
+    var t = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.Id;
     if (!MapUtil_1.MapUtil.IsInBigWorld(t)) return !0;
     this.LastSafeLocation.IsNearlyZero() && this.LastSafeLocation.DeepCopy(e);
-    t = UnopenedAreaController_1.UnopenedAreaController.OnCheckUnopenedArea(
-      e,
-      t,
-    );
+    (t = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.MapConfigId),
+      (t = UnopenedAreaController_1.UnopenedAreaController.OnCheckUnopenedArea(
+        e,
+        t,
+      ));
     return t && this.LastSafeLocation.DeepCopy(e), t;
   }
   GetLastSafeLocation() {
     return this.LastSafeLocation;
   }
   IsInUnopenedAreaPullback() {
-    // var e;
-    // return (
-    //   !!ModelManager_1.ModelManager.GameModeModel.WorldDone &&
-    //   !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
-    //   ((e =
-    //     ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.MapConfigId),
-    //   !!MapUtil_1.MapUtil.IsInBigWorld(e)) &&
-    //   UnopenedAreaController_1.UnopenedAreaController.CheckInPullback()
-    // );
+    // here
   }
-  SetMarkExtraShowState(e, t, r, i) {
+  SetMarkExtraShowState(e, t, i, r) {
     return (
-      this.UDi.set(e, { Id: e, IsShow: t, NeedFocus: r, ShowFlag: i }),
+      this.UDi.set(e, { Id: e, IsShow: t, NeedFocus: i, ShowFlag: r }),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnMarkItemShowStateChange,
         e,
       ),
-      r
+      i
     );
   }
   GetMarkExtraShowState(e) {
@@ -407,33 +426,33 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   GetCurMapBorderId(e) {
     let t = MapDefine_1.DEFAULT_MAP_BORDER_ID;
-    for (const i of ConfigManager_1.ConfigManager.MapConfig.GetMapBorderConfigList()) {
-      var r = i.ConditionId;
-      if (i.MapId === e) {
+    for (const r of ConfigManager_1.ConfigManager.MapConfig.GetMapBorderConfigList()) {
+      var i = r.ConditionId;
+      if (r.MapId === e) {
         let e = !1;
         if (
           !(e =
-            0 === r ||
+            0 === i ||
             ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
-              r.toString(),
+              i.toString(),
               void 0,
               !1,
             ))
         )
           break;
-        t = i.BorderId;
+        t = r.BorderId;
       }
     }
     return t;
   }
-  ForceSetMarkVisible(e, t, r) {
-    let i = this.SDi.get(e);
-    void 0 === i && ((i = new Map()), this.SDi.set(e, i)), i.set(t, r);
+  ForceSetMarkVisible(e, t, i) {
+    let r = this.SDi.get(e);
+    void 0 === r && ((r = new Map()), this.SDi.set(e, r)), r.set(t, i);
   }
   GetMarkForceVisible(e, t) {
-    let r = !0;
+    let i = !0;
     e = this.SDi.get(e);
-    return (r = e && e.has(t) ? (e.get(t) ?? !1) : r);
+    return (i = e && e.has(t) ? (e.get(t) ?? !1) : i);
   }
   AddOccupationInfo(e) {
     var t = ConfigManager_1.ConfigManager.QuestNewConfig.GetNewOccupationConfig(
@@ -448,8 +467,8 @@ class MapModel extends ModelBase_1.ModelBase {
       t = Json_1.Json.Parse(t.OccupationData);
       if (t) {
         t = t.LevelPlayIds;
-        for (const r of t)
-          this.yDi.set(r, MathUtils_1.MathUtils.LongToBigInt(e.w5n));
+        for (const i of t)
+          this.yDi.set(i, MathUtils_1.MathUtils.LongToBigInt(e.w5n));
         this.IDi.set(e.qEs, t);
       }
     }
@@ -458,7 +477,7 @@ class MapModel extends ModelBase_1.ModelBase {
     if (this.IDi.has(e)) {
       var t = this.IDi.get(e);
       this.IDi.delete(e);
-      for (const r of t) this.yDi.delete(r);
+      for (const i of t) this.yDi.delete(i);
     }
   }
   IsLevelPlayOccupied(e) {
@@ -479,11 +498,11 @@ class MapModel extends ModelBase_1.ModelBase {
         )?.AreaId ?? 0,
       t = ConfigManager_1.ConfigManager.AreaConfig.GetParentAreaId(e),
       e = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e),
-      r = e
+      i = e
         ? ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(e.Title)
         : "",
       t = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(t),
-      i = t
+      r = t
         ? ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(t.Title)
         : "",
       e = e
@@ -491,7 +510,40 @@ class MapModel extends ModelBase_1.ModelBase {
             e.CountryId,
           )
         : "";
-    return 0 === t?.Father ? e + "-" + r : e + `-${i}-` + r;
+    return 0 === t?.Father ? e + "-" + i : e + `-${r}-` + i;
+  }
+  UpdateBoxSlotInfo(e) {
+    this.Aul.set(e.T7n, e);
+  }
+  RemoveBoxSlotInfo(e) {
+    for (var [, t] of this.Aul)
+      if (t.b7n === e) {
+        this.Aul.delete(t.T7n);
+        break;
+      }
+  }
+  FullUpdateBoxSlotInfo(e) {
+    this.Aul.clear();
+    for (const t of e) this.UpdateBoxSlotInfo(t);
+  }
+  GetBoxSlotInfoByMarkId(e) {
+    for (var [, t] of this.Aul) if (t.T7n === e) return t;
+  }
+  UpdateTemporaryTeleportInfo(e) {
+    this.xul.set(e.T7n, e);
+    var t = this.GetDynamicMark(e.T7n);
+    t && (t.TeleportId = MathUtils_1.MathUtils.LongToNumber(e.R7n));
+  }
+  RemoveTemporaryTeleportInfo(e) {
+    for (var [, t] of this.xul)
+      if (t.R7n === e) {
+        this.xul.delete(t.T7n);
+        break;
+      }
+  }
+  FullUpdateTemporaryTeleportInfo(e) {
+    this.xul.clear();
+    for (const t of e) this.UpdateTemporaryTeleportInfo(t);
   }
 }
 exports.MapModel = MapModel;

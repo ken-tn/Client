@@ -121,7 +121,8 @@ class MobVacuum extends EntityManager_1.EntityManager {
     t.PendingMoveInfos.push(i);
     let s = Protocol_1.Aki.Protocol.Yus.create();
     s.WRs.push(t.CollectPendingMoveInfos());
-    Net_1.Net.Send(28450 /*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
+    // see BaseMovementSyncComponent.CollectSampleAndSend
+    Net_1.Net.Send(29926 /*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
   }
 }
 //puerts.logger.info(debug)

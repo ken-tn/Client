@@ -88,7 +88,7 @@ class UnopenedAreaPullback {
   vBe() {
     (this.sBe = !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "开始执行拉回移动操作,禁用玩家输入"),
+        Log_1.Log.Info("Map", 42, "开始执行拉回移动操作,禁用玩家输入"),
       this.SBe(!0),
       this.yBe(!1),
       this.IBe(),
@@ -97,7 +97,7 @@ class UnopenedAreaPullback {
   EBe() {
     (this.sBe = !1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "退出拉回移动操作,恢复玩家控制"),
+        Log_1.Log.Info("Map", 42, "退出拉回移动操作,恢复玩家控制"),
       this.SBe(!1),
       this.yBe(!0),
       this.TBe(this.dBe);
@@ -115,30 +115,7 @@ class UnopenedAreaPullback {
       !0
     );
   }
-  OnEnterUnopenedArea() {
-    // this.hBe ||
-    //   (this._Be.DeepCopy(
-    //     ModelManager_1.ModelManager.MapModel.GetLastSafeLocation(),
-    //   ),
-    //   this._Be.IsNearlyZero()) ||
-    //   (EventSystem_1.EventSystem.Has(
-    //     EventDefine_1.EEventName.OnChangeRole,
-    //     this.xie,
-    //   ) ||
-    //     EventSystem_1.EventSystem.Add(
-    //       EventDefine_1.EEventName.OnChangeRole,
-    //       this.xie,
-    //     ),
-    //   (this.hBe = !0),
-    //   (this.lBe = void 0),
-    //   this.CBe(),
-    //   this.LBe(!0),
-    //   Log_1.Log.CheckInfo() &&
-    //     Log_1.Log.Info("Map", 43, "--------进入了未开放区域--------", [
-    //       "EnterLoc",
-    //       this._Be,
-    //     ]));
-  }
+  OnEnterUnopenedArea() {}
   OnExitUnopenedArea() {
     this.hBe &&
       (EventSystem_1.EventSystem.Has(
@@ -151,7 +128,7 @@ class UnopenedAreaPullback {
         ),
       (this.hBe = !1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "- - - - 离开了未开放区域- - - - "),
+        Log_1.Log.Info("Map", 42, "- - - - 离开了未开放区域- - - - "),
       this.LBe(!1),
       this.sBe) &&
       this.EBe();
@@ -179,22 +156,8 @@ class UnopenedAreaPullback {
       t.Entity?.GetComponent(31)?.ClimbPress(!0);
   }
   RBe() {
-    // ModelManager_1.ModelManager.SceneTeamModel.IsAllDid() ||
-    //   (this.sBe && this.EBe(),
-    //   Log_1.Log.CheckInfo() &&
-    //     Log_1.Log.Info("Map", 43, "在未开放区域待太久，开始传送"),
-    //   this.UBe());
   }
   UBe() {
-    // Net_1.Net.Call(25547, Protocol_1.Aki.Protocol.ECs.create(), (t) => {
-    //   t.Q4n !==
-    //     Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
-    //     t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
-    //     ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-    //       t.Q4n,
-    //       15573,
-    //     );
-    // });
   }
   TBe(t) {
     var e = t.Entity.GetComponent(164),
@@ -235,7 +198,7 @@ class UnopenedAreaPullback {
       (this.mBe = this.dBe.Entity.GetComponent(161));
   }
   ABe(t, e, i) {
-    var s = t.Entity.GetComponent(190);
+    var s = t.Entity.GetComponent(191);
     0 === e || s?.HasTag(-2100129479)
       ? t.CharacterMovement.SetMovementMode(1, i)
       : t.CharacterMovement.SetMovementMode(e, i);
@@ -263,7 +226,7 @@ class UnopenedAreaPullback {
     t
       ? this.lBe ||
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Map", 43, "开启定时器传送", [
+          Log_1.Log.Info("Map", 42, "开启定时器传送", [
             "Time",
             TELEPORT_DELAY_TIME,
           ]),
@@ -272,7 +235,7 @@ class UnopenedAreaPullback {
         }, TELEPORT_DELAY_TIME)))
       : (this.lBe &&
           TimerSystem_1.TimerSystem.Has(this.lBe) &&
-          (Log_1.Log.CheckInfo() && Log_1.Log.Info("Map", 43, "移除定时器传送"),
+          (Log_1.Log.CheckInfo() && Log_1.Log.Info("Map", 42, "移除定时器传送"),
           TimerSystem_1.TimerSystem.Remove(this.lBe)),
         (this.lBe = void 0));
   }
@@ -281,11 +244,11 @@ class UnopenedAreaPullback {
     t &&
       t.Valid &&
       (e &&
-        ((i = t.Entity.GetComponent(190))?.AddTag(-1697149502),
+        ((i = t.Entity.GetComponent(191))?.AddTag(-1697149502),
         i?.AddTag(-541178966),
         i?.AddTag(-542518289)),
       e ||
-        ((i = t.Entity.GetComponent(190))?.RemoveTag(-1697149502),
+        ((i = t.Entity.GetComponent(191))?.RemoveTag(-1697149502),
         i?.RemoveTag(-541178966),
         i?.RemoveTag(-542518289)));
   }

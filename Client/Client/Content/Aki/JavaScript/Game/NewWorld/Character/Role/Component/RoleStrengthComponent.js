@@ -75,7 +75,7 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
                   ModManager_1.ModManager.Settings.InfiniteStamina)
                 )
                   return;
-                this.Entity.CheckGetComponent(176)?.Drowning();
+                this.Entity.CheckGetComponent(177)?.Drowning();
           }
       }),
       (this.Wqr = (t, e) => {
@@ -130,7 +130,7 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),
       (this.$zo = this.Entity.CheckGetComponent(160)),
-      (this.Xte = this.Entity.CheckGetComponent(190)),
+      (this.Xte = this.Entity.CheckGetComponent(191)),
       (this.HBr = this.Entity.CheckGetComponent(161)),
       (this.u1t = this.Entity.CheckGetComponent(0)),
       (this.Crn = -1),

@@ -492,7 +492,7 @@ class Calculation {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Battle",
-            29,
+            28,
             "角色跌落伤害",
             ["上一帧速度", t],
             ["这一帧速度", e],
@@ -523,7 +523,7 @@ class Calculation {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Battle",
-            29,
+            28,
             "怪物跌落伤害",
             ["height", t],
             ["landing_damage_args_monster", a],
@@ -625,7 +625,7 @@ class Calculation {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              20,
+              19,
               "unexpected formula type",
               ["damageId", r.Id],
               ["formula type", c]

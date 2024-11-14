@@ -110,7 +110,7 @@ class DamageUiManager {
         ? Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Battle",
-            8,
+            17,
             "[DamageText]产生伤害飘字时，伤害飘字Id无效",
             ["textId", i],
             ["elementId", a.ElementId],
@@ -133,13 +133,13 @@ class DamageUiManager {
                 a.DamageText,
               )
             : Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Battle", 8, "找不到对应的伤害飘字配置", [
+              Log_1.Log.Warn("Battle", 17, "找不到对应的伤害飘字配置", [
                 "伤害飘字Id",
                 i,
               ])));
   }
   static Tick(a) {
-    if (this.Kka) {
+    if (this.YFa) {
       var e = ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity;
       if (e?.Valid) {
         var i = e.Entity?.GetComponent(165)?.CurrentTimeScale ?? 1;
@@ -201,8 +201,11 @@ class DamageUiManager {
     for (const e of DamageUiManager.V2t) e.RefreshFontSize();
   }
   static SetDamageTimeScaleEnable(a) {
-    if (((this.Kka = a), !this.Kka))
+    if (((this.YFa = a), !this.YFa))
       for (const e of DamageUiManager.$2t) e.SetTimeScale(1);
+  }
+  static SetDamageViewVisible(a) {
+    this.H2t = a;
   }
   static OnLeaveLevel() {
     for (const a of DamageUiManager.$2t) a.ClearData(), a.Destroy();
@@ -230,5 +233,5 @@ class DamageUiManager {
   (DamageUiManager.DamagePositionCache = void 0),
   (DamageUiManager.k2t = void 0),
   (DamageUiManager.Y2t = (0, puerts_1.$ref)(void 0)),
-  (DamageUiManager.Kka = !1);
+  (DamageUiManager.YFa = !1);
 //# sourceMappingURL=DamageUiManager.js.map

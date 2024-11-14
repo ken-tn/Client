@@ -23,9 +23,11 @@ const puerts_1 = require("puerts"),
   ModManager_1 = require("../../../Manager/ModManager"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapController_1 = require("../../Map/Controller/MapController"),
   MapDefine_1 = require("../../Map/MapDefine"),
   MapUtil_1 = require("../../Map/MapUtil"),
   TaskTrackedMarkItem_1 = require("../../Map/Marks/MarkItem/TaskTrackedMarkItem"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   BattleUiControl_1 = require("../BattleUiControl"),
   CENTER_Y = 62.5,
@@ -50,7 +52,10 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
     var i;
     super(),
       (this.TrackTarget = void 0),
+      (this.fCl = 0),
       (this.IsSubTrack = !1),
+      (this.Sll = void 0),
+      (this.yll = !1),
       (this.pCt = !1),
       (this.xst = ""),
       (this.y$e = 0),
@@ -60,6 +65,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       (this.MarkHideDis = 0),
       (this.vCt = 0),
       (this.MCt = 0),
+      (this.Ell = 0),
       (this.ECt = 0),
       (this.SCt = void 0),
       (this.IsInTrackRange = !1),
@@ -92,7 +98,8 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       (this.KCt = 0),
       (this.QCt = 0),
       (this.XCt = 0),
-      (this.v$a = void 0),
+      (this.gza = void 0),
+      (this.Mpl = !1),
       (this.ilt = () => {
         var t = MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
           this.TrackTarget,
@@ -103,7 +110,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       (this.Tct = (t) => {
         "Start" === t && (this.PCt = !1);
       }),
-      (this.pYa = [2, 4, 3]),
+      (this.dZa = [2, 4, 3]),
       (this.$Ct = (t) => {
         t !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest ||
           this.IsInTrackRange ||
@@ -118,7 +125,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Map",
-            40,
+            39,
             "[TrackedMark] [疑难杂症] 播放点声源特效",
             ["MarkId", this.MCt],
             ["EffectDuration", t],
@@ -155,15 +162,23 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         (this.xst = t.IconPath),
         (this.vCt = t.ShowGroupId),
         (this.MCt = t.Id),
+        (this.Ell = t.MarkType ?? 0),
         (i = ModelManager_1.ModelManager.MapModel.GetDynamicMark(
           this.MCt
         )) instanceof MapDefine_1.QuestMarkCreateInfo &&
-          (this.v$a = new TaskTrackedMarkItem_1.TaskTrackedMarkItem(
+          (this.gza = new TaskTrackedMarkItem_1.TaskTrackedMarkItem(
             i,
             this.ECt
           )),
+        (i = t.MarkConfig) &&
+          -1 !== i.TrackAutoCancelDistance &&
+          (this.Sll = i.TrackAutoCancelDistance * MapDefine_1.FLOAT_0_01),
+        (this.yll = !1),
         (this.MarkHideDis = t.TrackHideDis),
         (this.TrackTarget = t.TrackTarget),
+        (this.fCl =
+          t.TrackInstanceId ??
+          ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.Id),
         (this.IsInTrackRange = t.IsInTrackRange ?? !1),
         (this.ACt = t.AutoHideTrack ?? !1),
         (this.kCt =
@@ -236,7 +251,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       this.RCt.BindSequenceCloseEvent(this.Tct),
       (this.bCt = this.GetUiNiagara(5)),
       this.bCt.SetUIActive(!1),
-      this.xst && this.SetSpriteByPath(this.xst, this.GetSprite(0), !1),
+      this.ehi(!0),
       this.BCt.SetUIActive(!this.IsInTrackRange && !this.HCt),
       5 === this.ECt &&
         this.RootItem?.SetHierarchyIndex(QUEST_TRACK_MARK_INDEX),
@@ -245,7 +260,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeDestroy() {
     (this.TrackTarget = void 0),
-      (this.v$a = void 0),
+      (this.gza = void 0),
       (this.PointTransport = void 0),
       this.RCt?.Clear(),
       (this.RCt = void 0),
@@ -347,6 +362,15 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
   UpdateTrackTarget(t) {
     this.TrackTarget = t;
   }
+  ehi(t = !1) {
+    var i = ModelManager_1.ModelManager.TrackModel.GetTrackData(
+      this.ECt,
+      this.MCt
+    );
+    void 0 !== i &&
+      ((i = i.IconPath), (t = t || i !== this.xst), (this.xst = i)),
+      t && this.xst && this.SetSpriteByPath(this.xst, this.GetSprite(0), !1);
+  }
   SetVisibleByOccupied(t) {
     this.pCt = t;
   }
@@ -356,7 +380,8 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       (MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
         this.TrackTarget,
         !0,
-        this.TempTrackPosition
+        this.TempTrackPosition,
+        this.fCl
       ),
       this.UCt && (this.TempTrackPosition.Z += this.UCt),
       (t =
@@ -373,41 +398,69 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         (ModManager_1.ModManager.Settings.QuestZ = this.TempTrackPosition.Z));
   }
   Update(t) {
-    var i;
+    var i, e, s;
     GlobalData_1.GlobalData.World
       ? UiLayer_1.UiLayer.UiRootItem
         ? this.RootItem &&
-          (this.v$a && this.v$a.Update(),
+          (this.gza && this.gza.Update(),
+          (i = this.LCt),
+          this.yll ||
+            (this.Sll &&
+              this.Sll >= i &&
+              (0 !== this.Ell
+                ? (MapController_1.MapController.RequestTrackMapMark(
+                    this.Ell,
+                    this.MCt,
+                    !1,
+                    (t, i) => {
+                      0 === t &&
+                        ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+                          "MapTrackingCanceled_Text"
+                        );
+                    }
+                  ),
+                  (this.yll = !0))
+                : Log_1.Log.CheckError() &&
+                  Log_1.Log.Error(
+                    "Map",
+                    63,
+                    "[追踪标记]->自动取消标记追踪失败，请检查配置或是否逻辑漏传参数",
+                    ["MarkType", this.Ell],
+                    ["MarkId", this.MCt]
+                  ))),
           (this.CurShowTime += t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
-          this.tgt()
-            ? (i = this.LCt) < this.MarkHideDis && !this.PCt
-              ? (this.RootItem.SetUIActive(!1), 1 === this.WCt && this.ZCt())
-              : (this.RootItem.SetUIActive(!0),
-                this.UpdatePositionAndRotation(t),
-                !this.InRange || this.IsInTrackRange || this.FCt
-                  ? this.xCt.SetUIActive(!1)
-                  : ((i = Math.round(i)),
-                    this.DCt !== i &&
-                      ((this.DCt = i),
-                      LguiUtil_1.LguiUtil.SetLocalTextNew(
-                        this.GetText(1),
-                        "Text_Meter_Text",
-                        this.DCt.toString()
-                      )),
-                    this.xCt.SetUIActive(!0)),
-                1 === this.WCt && this.ogt(t),
-                this.BCt.SetUIActive(!this.IsInTrackRange && !this.HCt))
+          (e = (s = this.tgt()) !== this.Mpl),
+          (this.Mpl = s),
+          this.Mpl
+            ? (e && this.ehi(),
+              i < this.MarkHideDis && !this.PCt
+                ? (this.RootItem.SetUIActive(!1), 1 === this.WCt && this.ZCt())
+                : (this.RootItem.SetUIActive(!0),
+                  this.UpdatePositionAndRotation(t),
+                  !this.InRange || this.IsInTrackRange || this.FCt
+                    ? this.xCt.SetUIActive(!1)
+                    : ((s = Math.round(i)),
+                      this.DCt !== s &&
+                        ((this.DCt = s),
+                        LguiUtil_1.LguiUtil.SetLocalTextNew(
+                          this.GetText(1),
+                          "Text_Meter_Text",
+                          this.DCt.toString()
+                        )),
+                      this.xCt.SetUIActive(!0)),
+                  1 === this.WCt && this.ogt(t),
+                  this.BCt.SetUIActive(!this.IsInTrackRange && !this.HCt)))
             : this.RootItem.SetUIActive(!1))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Map",
-            50,
+            63,
             "【疑难杂症】标记固定在屏幕中心，RootItem为空"
           )
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Map",
-          50,
+          63,
           "【疑难杂症】标记固定在屏幕中心，GameWorld为空"
         );
   }
@@ -471,7 +524,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
   tgt() {
     if (this.pCt) return !1;
     if (this.ACt && this.CurShowTime > this.kCt) return !1;
-    if (this.v$a && this.v$a.TargetInDiffWorld()) return !1;
+    if (this.gza && this.gza.TargetInDiffWorld()) return !1;
     if (
       !ModelManager_1.ModelManager.TrackModel.CanShowInGroup(
         this.vCt,
@@ -490,7 +543,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
     if (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()) {
       if (ModelManager_1.ModelManager.GameModeModel.IsMulti) return !1;
       let t = !1;
-      for (const i of this.pYa)
+      for (const i of this.dZa)
         if (
           (t =
             t || ModelManager_1.ModelManager.TrackModel.IsTracking(i, this.MCt))

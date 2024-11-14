@@ -164,6 +164,8 @@ class ModMethod {
     }
     let lv = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
     
+    // see CharacterDamageComponent.GetServerDamage
+    let dmgProto = 21253;
     let s = Protocol_1.Aki.Protocol.U3n.create({
       Fjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
       Wjn: this.getSl(lv), // skillLevel
@@ -181,7 +183,7 @@ class ModMethod {
       Yjn: 0, // CounterSkillMessageId
       Njn: {
         Vjn: Protocol_1.Aki.Protocol.XAs.Proto_FromBullet,
-        Mjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n),
+        Mjn: MathUtils_1.MathUtils.BigIntToLong(1205401001n), // changli liberation
         Hjn: [],
         r5n: 1205401,
       },
@@ -189,19 +191,19 @@ class ModMethod {
     });
     // ModUtils.jsLog(s);
     CombatMessage_1.CombatNet.Call(
-      22663,
+      dmgProto,
       CharacterDamageComponent.Entity,
       s,
       async e => {
         // e.nAs = damage
         if (e.nAs === 0) {
           await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 100) + 100) // wait 100-200ms
-          s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
+          s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n); // xiangli liberation
           s.Njn.Mjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           s.Njn.r5n = 1305061;
           s.lHn = ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0);
           CombatMessage_1.CombatNet.Call(
-            22663,
+            dmgProto,
             CharacterDamageComponent.Entity,
             s
           );
@@ -227,7 +229,7 @@ class ModMethod {
     let its = 0;
     let itsLimit = 6;
 
-    await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 100)) // wait 0-100ms
+    await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 50) + 20) // wait 20-50ms
     timer = TimerSystem_1.TimerSystem.Forever(() => {
       if (!CharacterDamageComponent.Entity || its > itsLimit) {
         ModMenu_1.MainMenu.KunLog(

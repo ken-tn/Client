@@ -9,8 +9,8 @@ var SceneItemHitComponent_1,
           r < 3
             ? e
             : null === n
-              ? (n = Object.getOwnPropertyDescriptor(e, i))
-              : n;
+            ? (n = Object.getOwnPropertyDescriptor(e, i))
+            : n;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         o = Reflect.decorate(t, e, i, n);
       else
@@ -67,30 +67,27 @@ let SceneItemHitComponent =
         (this.kSa = void 0),
         (this.wla = (t) =>
           SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchPlayerAttack(
-            { Type: IComponent_1.EHitBulletType.PlayerAttack },
-            t,
-            this.Entity,
+            t
           )),
         (this.Bla = (t) =>
           SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchFixedBulletId(
             this.Pla,
-            t,
-            this.Entity,
+            t
           ));
     }
     OnStart() {
-      (this.inn = this.Entity.GetComponent(181)),
+      (this.inn = this.Entity.GetComponent(182)),
         (this.Ifn = this.Entity.GetComponent(118)),
-        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Hte = this.Entity.GetComponent(188)),
         (this.w0n = this.Entity.GetComponent(0).GetEntityOnlineInteractType());
       var t = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
-        this.Hte?.CreatureData.GetPbDataId(),
+        this.Hte?.CreatureData.GetPbDataId()
       );
       return (
         t &&
           (t = (0, IComponent_1.getComponent)(
             t.ComponentsData,
-            "HitComponent",
+            "HitComponent"
           )) &&
           (this.kSa = t),
         !0
@@ -139,7 +136,7 @@ let SceneItemHitComponent =
         SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchBulletType(
           t,
           e,
-          this.Entity,
+          this.Entity
         )
       );
     }
@@ -148,70 +145,74 @@ let SceneItemHitComponent =
         (EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemEntityHitAlways,
-          t,
+          t
         ),
         !LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
           this.w0n,
-          !1,
+          !1
         ))
       )
         return !1;
       var i = EntitySystem_1.EntitySystem.Get(
-        t.BulletEntityId,
+        t.BulletEntityId
       )?.GetBulletInfo();
       if (i) {
         if (this.Entity.GetComponent(149)?.ReboundBullet(t, i)) return !1;
         if (0 !== t.CalculateType)
           return t.ReBulletData.TimeScale.TimeScaleOnHit && this.Ofn(t), !1;
         if (this.Pfn(t)) {
-          this.WVr(t), this.Bfn(t, e), this.bfn(t), this.iwr(t);
+          this.WVr(t, i.EffectInfo.DisablePostProcess),
+            this.Bfn(t, e),
+            this.bfn(t),
+            this.iwr(t);
           for (var [n] of this.Lfn)
             this.wfn(n, t) && this.xfn(n, t) && this.qfn(n, t);
           EventSystem_1.EventSystem.EmitWithTarget(
             this.Entity,
-            EventDefine_1.EEventName.OnSceneItemEntityHit,
+            EventDefine_1.EEventName.OnSceneItemEntityHit
           ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnAnySceneItemEntityHit,
-              this.Entity,
+              this.Entity
             );
-        } else this.WVr(t);
-      } else this.WVr(t);
+        } else this.WVr(t, i.EffectInfo.DisablePostProcess);
+      } else this.WVr(t, !1);
       return !0;
     }
     OnSceneItemHit(t, e) {
-        if (!0 === ModManager_1.ModManager.Settings.HitMultiplier)
-          for (let i = 0; i < ModManager_1.ModManager.Settings.HitMultiplier; i++)
-            this.OnSceneItemHitOne(t, e);
-        else this.OnSceneItemHitOne(t, e);
-      }
+      if (!0 === ModManager_1.ModManager.Settings.HitMultiplier)
+        for (let i = 0; i < ModManager_1.ModManager.Settings.HitMultiplier; i++)
+          this.OnSceneItemHitOne(t, e);
+      else this.OnSceneItemHitOne(t, e);
+    }
     GetPenetrationType() {
       return this.Entity.GetComponent(0).GetBaseInfo().Category
         .BulletPenetrationType;
     }
-    WVr(t) {
-      var e,
-        i = t.ReBulletData.Render.EffectOnHit.get(4);
-      i &&
-        0 !== i.length &&
-        ((e = new UE.Transform(
+    WVr(t, e) {
+      var i,
+        n = t.ReBulletData.Render.EffectOnHit.get(4);
+      n &&
+        0 !== n.length &&
+        ((i = new UE.Transform(
           t.HitEffectRotation.ToUeRotator(),
           t.HitPosition.ToUeVector(),
-          Vector_1.Vector.OneVector,
+          Vector_1.Vector.OneVector
         )),
         BulletCollisionUtil_1.BulletCollisionUtil.PlaySceneItemHitEffect(
           t.Attacker,
+          n,
           i,
-          e,
           t.ReBulletData.Render.AudioOnHit,
+          e
         ));
     }
     Bfn(e, i) {
-      var n = this.Entity.GetComponent(181);
+      var n = this.Entity.GetComponent(182);
       if (n) {
         var s =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetPartCollisionActorsNum(
-            this.Hte.GetSceneInteractionLevelHandleId(),
+            this.Hte.GetSceneInteractionLevelHandleId()
           );
         let t = void 0;
         s && 0 < s
@@ -219,20 +220,20 @@ let SceneItemHitComponent =
             (t =
               SceneInteractionManager_1.SceneInteractionManager.Get().GetPartCollisionActorTag(
                 this.Hte.GetSceneInteractionLevelHandleId(),
-                i.Actor,
+                i.Actor
               )?.TagId)
           : ((i = (s = EntitySystem_1.EntitySystem.Get(
-              e.BulletEntityId,
+              e.BulletEntityId
             ).GetBulletInfo()).BulletDataMain.Base.BeHitEffect),
             (e = ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(
               s.Attacker,
-              i,
+              i
             )),
             BulletUtil_1.BulletUtil.GetHitRotator(s, this.Hte, this.Afn),
             (i = BulletUtil_1.BulletUtil.GetOverrideHitAnimByAngle(
               this.Hte,
               e?.被击动作,
-              this.Afn.Yaw,
+              this.Afn.Yaw
             )),
             (t = this.Gfn(i))),
           void 0 !== this.Ufn && (n.RemoveTag(this.Ufn), (this.Ufn = void 0)),
@@ -243,7 +244,7 @@ let SceneItemHitComponent =
       var e = t.ReBulletData.Base.BeHitEffect,
         e = ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(
           t.Attacker,
-          e,
+          e
         );
       e && this.Hte.UpdateHitInfo(t.HitPosition, e.地面受击速度);
     }
@@ -251,12 +252,12 @@ let SceneItemHitComponent =
       t?.Valid &&
         (EventSystem_1.EventSystem.EmitWithTarget(
           t,
-          EventDefine_1.EEventName.OnSceneItemHit,
+          EventDefine_1.EEventName.OnSceneItemHit
         ),
         EventSystem_1.EventSystem.EmitWithTarget(
           t,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
-          e,
+          e
         ));
     }
     iwr(t) {
@@ -272,7 +273,7 @@ let SceneItemHitComponent =
       i.TimeScaleOnAttackIgnoreAttacker
         ? 0 < n.时间膨胀时长 &&
           ((e = EntitySystem_1.EntitySystem.Get(
-            t.BulletEntityId,
+            t.BulletEntityId
           ).GetBulletInfo()),
           BulletUtil_1.BulletUtil.SetTimeScale(
             e,
@@ -280,7 +281,7 @@ let SceneItemHitComponent =
             n.时间膨胀值 * s,
             n.时间膨胀变化曲线,
             Math.min(n.时间膨胀时长 * r, n.时间膨胀时长 + o),
-            1,
+            1
           ))
         : 0 < n.时间膨胀时长 &&
           (t.Attacker.GetComponent(110)?.SetTimeScale(
@@ -288,7 +289,7 @@ let SceneItemHitComponent =
             n.时间膨胀值 * s,
             n.时间膨胀变化曲线,
             Math.min(n.时间膨胀时长 * r, n.时间膨胀时长 + o),
-            1,
+            1
           ),
           (e = i.CharacterCustomKeyTimeScale),
           StringUtils_1.StringUtils.IsEmpty(e) ||
@@ -296,7 +297,7 @@ let SceneItemHitComponent =
               ModelManager_1.ModelManager.BulletModel.GetEntityIdByCustomKey(
                 t.Attacker.Id,
                 e,
-                t.BulletId.toString(),
+                t.BulletId.toString()
               )) &&
               EntitySystem_1.EntitySystem.Get(i)
                 ?.GetComponent(110)
@@ -305,7 +306,7 @@ let SceneItemHitComponent =
                   n.时间膨胀值 * s,
                   n.时间膨胀变化曲线,
                   Math.min(n.时间膨胀时长 * r, n.时间膨胀时长 + o),
-                  1,
+                  1
                 )));
     }
     Ofn(t) {
@@ -327,7 +328,17 @@ let SceneItemHitComponent =
             Math.min(n.时间膨胀时长 * r, n.时间膨胀时长 + o),
             2,
             i.RemoveHitTimeScaleOnDestroy,
+            this.qCl(t)
           ));
+    }
+    qCl(t) {
+      var e;
+      return !(
+        !this.kSa?.HitBullet ||
+        this.kSa.HitBullet.Type !== IComponent_1.EHitBulletType.FixedBulletId ||
+        (e = this.kSa.HitBullet.BulletId).length <= 0 ||
+        !e.includes(t.BulletId)
+      );
     }
     AddHitCondition(t) {
       this.Tfn.push(t);
@@ -369,7 +380,7 @@ let SceneItemHitComponent =
   (SceneItemHitComponent = SceneItemHitComponent_1 =
     __decorate(
       [(0, RegisterComponent_1.RegisterComponent)(141)],
-      SceneItemHitComponent,
+      SceneItemHitComponent
     )),
   (exports.SceneItemHitComponent = SceneItemHitComponent);
 //# sourceMappingURL=SceneItemHitComponent.js.map

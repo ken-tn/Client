@@ -188,6 +188,7 @@ class EntityManager {
     }
   }
   static GetCurrRoleId() {
+    // probably no longer correct
     let player = this.GetPlayerEntity();
     return player.Components[0].wDe;
   }

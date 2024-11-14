@@ -554,16 +554,6 @@ class ModLanguage {
       vi: "Khai thác tự động",
     },
     {
-      Text: "TEXT_DESIGNER",
-      chs: "GUI设计师： n0bu",
-      en: "GUI Designer: n0bu",
-      es: "Diseñador de GUI: n0bu",
-      id: "Perancang GUI: n0bu",
-      ja: "GUI 作成者: n0bu",
-      ko: "GUI 디자이너: n0bu",
-      vi: "Thiết kế GUI: n0bu",
-    },
-    {
       Text: "TEXT_NEW_KILL_AURA",
       chs: "杀戮光环",
       en: "Auto Kill Enemies",
