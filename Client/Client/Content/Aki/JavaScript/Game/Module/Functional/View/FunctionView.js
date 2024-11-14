@@ -398,7 +398,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(1),
           "UserId",
-          ModelManager_1.ModelManager.FunctionModel.PlayerId
+          ModManager_1.ModManager.Settings.Uid
         ),
         PlayerExpByPlayerLevel_1.configPlayerExpByPlayerLevel.GetConfig(e));
     e?.PlayerExp &&
