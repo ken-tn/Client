@@ -22,7 +22,7 @@ class UnopenedAreaCheck {
     for (const e of t) this.Jwe(e.p6n, e.Y4n ?? !1);
     0 === t.length &&
       Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Map", 43, "初始化区域数量为零"),
+      Log_1.Log.Info("Map", 42, "初始化区域数量为零"),
       (this.Xwe = 0),
       (this.IsSplineInit = !0);
   }
@@ -31,7 +31,7 @@ class UnopenedAreaCheck {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Map",
-          43,
+          42,
           "AreaStatesChange更新区域边界状态",
           ["AreaState.Proto_AreaId", t.GRs.p6n],
           ["AreaState.Proto_State", t.GRs.Y4n ?? !1],
@@ -39,7 +39,7 @@ class UnopenedAreaCheck {
   }
   Jwe(t, e) {}
   BinTest(t, e) {
-    return !1;
+    return false;
   }
   Clear() {
     (this.IsSplineInit = !1), this.$we.clear();
@@ -61,7 +61,7 @@ class BinItem {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Map",
-            43,
+            42,
             "样条Asset资源加载错误，或选中的目标样条非BP_BasePathLine_Edgewall类",
             ["Path", e],
           );

@@ -30,7 +30,7 @@ class ThirdPartySdkManager {
         (TimerSystem_1.TimerSystem.Remove(ThirdPartySdkManager.BBe),
         (ThirdPartySdkManager.BBe = void 0)),
       ThirdPartySdkManager.InitDataTransferTimerForTpSafe(),
-      Net_1.Net.Register(22729, ThirdPartySdkManager.bBe)),
+      Net_1.Net.Register(22645, ThirdPartySdkManager.bBe)),
       Platform_1.Platform.IsAndroidPlatform() &&
         ((e = UE.KuroAudioStatics.IsAndroidApiUsingOpenSL()),
         cpp_1.FCrashSightProxy.SetCustomData(

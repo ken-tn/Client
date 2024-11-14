@@ -2,20 +2,20 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, r) {
-    var s,
-      o = arguments.length,
-      l =
-        o < 3
+    var o,
+      s = arguments.length,
+      n =
+        s < 3
           ? e
           : null === r
             ? (r = Object.getOwnPropertyDescriptor(e, i))
             : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      l = Reflect.decorate(t, e, i, r);
+      n = Reflect.decorate(t, e, i, r);
     else
-      for (var n = t.length - 1; 0 <= n; n--)
-        (s = t[n]) && (l = (o < 3 ? s(l) : 3 < o ? s(e, i, l) : s(e, i)) || l);
-    return 3 < o && l && Object.defineProperty(e, i, l), l;
+      for (var l = t.length - 1; 0 <= l; l--)
+        (o = t[l]) && (n = (s < 3 ? o(n) : 3 < s ? o(e, i, n) : o(e, i)) || n);
+    return 3 < s && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterSkillCdComponent = void 0);
@@ -36,9 +36,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
     super(...arguments),
       (this.Bzr = void 0),
       (this.fZo = void 0),
-      (this.bzr = void 0),
       (this.qzr = void 0),
-      (this.Gzr = void 0),
       (this.TGn = void 0),
       (this.EZo = void 0),
       (this.Arn = (t) => {
@@ -51,10 +49,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
       (this.Bzr = this.Entity.CheckGetComponent(159)),
       (this.fZo =
         ModelManager_1.ModelManager.SkillCdModel.GetCurWorldSkillCdData()),
-      (this.bzr =
-        ModelManager_1.ModelManager.SkillCdModel.GetCurWorldPassiveSkillCdData()),
       (this.qzr = new Map()),
-      (this.Gzr = new Map()),
       (this.TGn = new Map()),
       (this.EZo = this.fZo.InitMultiSkill(this.Entity.Id)),
       this.EZo.Init(this.Entity.Id),
@@ -74,9 +69,10 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
     );
   }
   OnEnd() {
+    super.OnEnd();
+    for (const t of this.qzr.values()) t.ClearCdTags(this.Entity.Id);
     return (
       this.fZo && (this.fZo.RemoveEntity(this.Entity), (this.fZo = void 0)),
-      this.bzr && (this.bzr.RemoveEntity(this.Entity), (this.bzr = void 0)),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
@@ -96,7 +92,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Battle",
-                18,
+                17,
                 "获取多段技能下一段技能Id时，传入的技能Id不是多段技能",
                 ["skillId", t],
               ));
@@ -108,10 +104,16 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
     return this.EZo.IsMultiSkill(t);
   }
   CanStartMultiSkill(t) {
-    return this.EZo.CanStartMultiSkill(t);
+    return (
+      !!ModelManager_1.ModelManager.SkillCdModel?.SkillDebugMode ||
+      this.EZo.CanStartMultiSkill(t)
+    );
   }
   StartMultiSkill(t, e = !0) {
-    return this.EZo.StartMultiSkill(t, e);
+    return (
+      !!ModelManager_1.ModelManager.SkillCdModel?.SkillDebugMode ||
+      this.EZo.StartMultiSkill(t, e)
+    );
   }
   ResetMultiSkills(t) {
     this.EZo.ResetMultiSkills(t);
@@ -132,12 +134,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
   }
   InitSkillCdBySkillInfo(e, i) {
     var t = this.qzr.get(e);
-    if (t)
-      return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 18, "技能重复初始化", ["skillId", e]),
-        t
-      );
+    if (t) return t;
     try {
       var r = i.CooldownConfig;
       return 1 < r.SectionCount - r.SectionRemaining
@@ -167,6 +164,12 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
           );
     }
   }
+  InitSkillCdTags() {
+    var t = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(
+      this.Entity,
+    );
+    for (const e of this.qzr.values()) e.InitCdTags(t);
+  }
   GetGroupSkillCdInfo(t) {
     return this.qzr.get(t);
   }
@@ -181,7 +184,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Battle",
-            18,
+            17,
             "角色技能组件还没有初始化，不允许修改技能CD",
           ),
         !1);
@@ -192,24 +195,24 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
       if (1 === t.length)
         (r = this.qzr.get(Number(t[0]))) && r.ModifyRemainingCd(e, i);
       else {
-        var s = new Set();
-        for (const l of t) {
-          var o = this.qzr.get(Number(l));
-          o && s.add(o);
+        var o = new Set();
+        for (const n of t) {
+          var s = this.qzr.get(Number(n));
+          s && o.add(s);
         }
-        for (const n of s) n.ModifyRemainingCd(e, i);
+        for (const l of o) l.ModifyRemainingCd(e, i);
       }
   }
   ModifyCdTimeBySkillGenres(t, e, i) {
     var r = new Array();
     for (const a of t) r.push(Number(a));
-    var s,
-      o,
-      l,
-      n = new Set();
-    for ([s, o] of this.TGn)
-      r.includes(o.SkillGenre) && (l = this.qzr.get(s)) && n.add(l);
-    for (const h of n) h.ModifyRemainingCd(e, i);
+    var o,
+      s,
+      n,
+      l = new Set();
+    for ([o, s] of this.TGn)
+      r.includes(s.SkillGenre) && (n = this.qzr.get(o)) && l.add(n);
+    for (const h of l) h.ModifyRemainingCd(e, i);
   }
   StartCd(t, e) {
     var i = this.qzr.get(t);
@@ -229,27 +232,27 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
   }
   CalcExtraEffectCd(t, e, i) {
     let r = 0,
-      s = 1;
+      o = 1;
     if (this.HasModifyCdEffect)
-      for (const l of this.BuffComp.BuffEffectManager.FilterById(49))
-        this.Hoa(l, e, i) &&
-          (0 === l.ModifyType
-            ? (r += l.ModifyValue)
-            : 1 === l.ModifyType && (s *= l.ModifyValue));
-    var o =
+      for (const n of this.BuffComp.BuffEffectManager.FilterById(49))
+        this.Hoa(n, e, i) &&
+          (0 === n.ModifyType
+            ? (r += n.ModifyValue)
+            : 1 === n.ModifyType && (o *= n.ModifyValue));
+    var s =
       ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
         ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
       );
-    if (o?.GetComponent(191)?.HasModifyCdEffect) {
-      o = o?.GetComponent(194);
-      if (o)
-        for (const n of o.BuffEffectManager.FilterById(49))
-          this.Hoa(n, e, i) &&
-            (0 === n.ModifyType
-              ? (r += n.ModifyValue)
-              : 1 === n.ModifyType && (s *= n.ModifyValue));
+    if (s?.GetComponent(192)?.HasModifyCdEffect) {
+      s = s?.GetComponent(195);
+      if (s)
+        for (const l of s.BuffEffectManager.FilterById(49))
+          this.Hoa(l, e, i) &&
+            (0 === l.ModifyType
+              ? (r += l.ModifyValue)
+              : 1 === l.ModifyType && (o *= l.ModifyValue));
     }
-    return (t + r) * s;
+    return (t + r) * o;
   }
   Hoa(t, e, i) {
     return 0 === t.SkillType
@@ -263,7 +266,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Battle",
-            18,
+            17,
             "SetLimitCount 不存在该技能:",
             ["EntityId", this.Entity.Id],
             ["limitCount", e],
@@ -276,42 +279,22 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
     return e
       ? (e.ResetDelayCd() &&
           (((e = Protocol_1.Aki.Protocol.f4n.create()).r5n = t),
-          CombatMessage_1.CombatNet.Call(20002, this.Entity, e, () => {}),
+          CombatMessage_1.CombatNet.Call(27214, this.Entity, e, () => {}),
           this.EZo?.ResetMultiSkills(t, !0)),
         !0)
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Battle",
-            18,
+            17,
             "修改CD不生效，该技能不记录CD",
             ["EntityId", this.Entity.Id],
             ["skillID", t],
           ),
         !1);
   }
-  InitPassiveSkill(t) {
-    var e = t.Id,
-      i = this.Gzr.get(e);
-    return (
-      i ||
-        ((i = this.bzr.InitPassiveSkillCd(this.Entity, t)), this.Gzr.set(e, i)),
-      i
-    );
-  }
-  IsPassiveSkillInCd(t) {
-    t = this.Gzr.get(t);
-    return !!t && t.IsInCd();
-  }
-  StartPassiveCd(t, e = -1) {
-    var i = this.Gzr.get(t);
-    return !!i && (i.StartCd(t, e), !0);
-  }
-  GetPassiveSkillCdInfo(t) {
-    return this.Gzr.get(t);
-  }
 };
 (CharacterSkillCdComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(192)],
+  [(0, RegisterComponent_1.RegisterComponent)(193)],
   CharacterSkillCdComponent,
 )),
   (exports.CharacterSkillCdComponent = CharacterSkillCdComponent);

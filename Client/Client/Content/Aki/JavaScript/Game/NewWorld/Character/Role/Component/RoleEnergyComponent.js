@@ -1,3 +1,4 @@
+// looks ok
 "use strict";
 var __decorate =
   (this && this.__decorate) ||

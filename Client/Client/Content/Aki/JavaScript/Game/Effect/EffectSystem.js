@@ -1,13 +1,12 @@
 "use strict";
-
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectSystem =
     exports.EFFECT_LIFETIME_FLOAT_TO_INT =
     exports.EFFECT_REASON_LENGTH_LIMIT =
       void 0);
-const UE = require("ue"),
-puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
@@ -39,7 +38,6 @@ puerts_1 = require("puerts"),
   EffectDefine_1 = require("./EffectDefine"),
   EffectHandle_1 = require("./EffectHandle"),
   EffectProfiler_1 = require("./EffectProfiler/EffectProfiler"),
-  EffectModelTrailSpec_1 = require("./EffectSpec/EffectModelTrailSpec"),
   PlayerEffectContainer_1 = require("./PlayerEffectContainer"),
   ModManager_1 = require("../Manager/ModManager"),
   EFFECT_SPEC_DATA_PATH =
@@ -102,9 +100,9 @@ class EffectSystem {
         UE.HoldPreloadObject.StaticClass(),
         GlobalData_1.GlobalData.GameInstance,
       )),
-      (this.AZa = !UE.KuroStaticLibrary.IsLowMemoryDevice()),
+      (this.Vnh = !UE.KuroStaticLibrary.IsLowMemoryDevice()),
       this.Efe(),
-      this.hja(),
+      this.eKa(),
       EffectProfiler_1.EffectProfiler.SetEnable(
         Info_1.Info.IsPlayInEditor && this.Sfe,
       ),
@@ -123,6 +121,15 @@ class EffectSystem {
         EventDefine_1.EEventName.AfterGameQualitySettingsManagerInitialize,
         EffectSystem.mna,
       ),
+      (EffectEnvironment_1.EffectEnvironment.OpenTickOptimize ||
+        EffectEnvironment_1.EffectEnvironment.OpenVisibilityOptimize) &&
+        cpp_1.FKuroEffectSystemInterface.InitializeEnvironment(
+          GlobalData_1.GlobalData.World,
+          EffectEnvironment_1.EffectEnvironment.OpenVisibilityOptimize,
+          EffectEnvironment_1.EffectEnvironment.OpenTickOptimize,
+          0.1,
+          0.3,
+        ),
       !0
     );
   }
@@ -157,7 +164,7 @@ class EffectSystem {
   }
   static dna() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderEffect", 37, "Open Niagara Down Sampling"),
+      Log_1.Log.Info("RenderEffect", 36, "Open Niagara Down Sampling"),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "Kuro.Niagara.SystemSimulation.TickDeltaTime " +
@@ -170,7 +177,7 @@ class EffectSystem {
   }
   static Cna() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderEffect", 37, "Close Niagara Down Sampling"),
+      Log_1.Log.Info("RenderEffect", 36, "Close Niagara Down Sampling"),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "Kuro.Niagara.SystemSimulation.TickDeltaTime -1",
@@ -180,27 +187,26 @@ class EffectSystem {
         "Kuro.Niagara.SystemSimulation.SpawnAlignment 0",
       );
   }
-  static Ufe(a, f, s, r, o = !0, t, _, c, n) {
-    const E = a.Id;
+  static Ufe(a, f, s, r, o = !0, t, _, n) {
+    const c = a.Id;
     var e;
     a.IsRoot() &&
-      (this.Afe.Set(E, a),
+      (this.Afe.Set(c, a),
       Info_1.Info.IsGameRunning() &&
         UE.KuroStaticLibrary.IsImplementInterface(
           f.GetClass(),
           UE.BPI_EffectInterface_C.StaticClass(),
         ) &&
         (e = f)?.IsValid() &&
-        e.SetHandle(E),
+        e.SetHandle(c),
       f.IsA(UE.TsEffectActor_C.StaticClass())
         ? f.SetEffectHandle(a)
-        : f.IsA(UE.BP_EffectPreview_C.StaticClass()) && (f.EffectView = E)),
-      t?.(E),
+        : f.IsA(UE.BP_EffectPreview_C.StaticClass()) && (f.EffectView = c)),
+      t?.(c),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.CreateEffectHandle,
-        E,
+        c,
       ),
-      a.SetIsInitializing(!0),
       this.Pfe(a, (t, e) => {
         let i = void 0;
         Stats_1.Stat.Enable &&
@@ -211,7 +217,7 @@ class EffectSystem {
             ? (this.Mfe?.AddEntityAsset(a.HoldObjectId, e),
               f?.IsValid()
                 ? f.GetWorld()?.IsValid()
-                  ? this.xfe(a, o, e, c).then((t) => {
+                  ? this.xfe(a, o, e, n).then((t) => {
                       switch (
                         (EffectEnvironment_1.EffectEnvironment.UseLog &&
                           Log_1.Log.CheckInfo() &&
@@ -230,7 +236,7 @@ class EffectSystem {
                         case 2:
                         case 1:
                           return (
-                            this.wfe(_, 2, E),
+                            this.wfe(_, 2, c),
                             this.Bfe(
                               a,
                               "[SpawnEffectWithActor.LoadEffectData.InitHandle] InitHandle有特效有可能被销毁了或者取消了",
@@ -252,7 +258,7 @@ class EffectSystem {
                                 ["Result", t],
                                 ["Reason", r],
                               ),
-                            this.wfe(_, 0, E),
+                            this.wfe(_, 0, c),
                             this.Bfe(
                               a,
                               "[SpawnEffectWithActor.LoadEffectData.InitHandle] InitHandle失败",
@@ -262,7 +268,7 @@ class EffectSystem {
                           );
                         case 3:
                           return (
-                            this.wfe(_, 3, E),
+                            this.wfe(_, 3, c),
                             this.StopEffect(a, a.StopReason, !0),
                             void i?.Stop()
                           );
@@ -272,18 +278,18 @@ class EffectSystem {
                               Log_1.Log.CheckInfo() &&
                               Log_1.Log.Info(
                                 "RenderEffect",
-                                37,
+                                36,
                                 "特效框架:InitHandle失败，EffectActor已经失效",
                                 ["句柄Id", a.Id],
                                 ["Path", a.Path],
                                 ["Reason", r],
                               ),
-                            this.wfe(_, 0, E),
+                            this.wfe(_, 0, c),
                             this.Bfe(a, "[InitHandle] EffectActor已经失效", !0),
                             void i?.Stop()
                           );
                       }
-                      i?.Stop(), this.wfe(_, t, E), this.wfe(n, t, E);
+                      i?.Stop(), this.wfe(_, t, c);
                     })
                   : (this.Bfe(
                       a,
@@ -291,14 +297,14 @@ class EffectSystem {
                       !0,
                     ),
                     i?.Stop(),
-                    this.wfe(_, 2, E))
+                    this.wfe(_, 2, c))
                 : (this.Bfe(
                     a,
                     "[SpawnEffectWithActor.LoadEffectData]1 Result:" + t,
                     !0,
                   ),
                   i?.Stop(),
-                  this.wfe(_, 2, E)))
+                  this.wfe(_, 2, c)))
             : (this.Bfe(
                 a,
                 "[SpawnEffectWithActor.LoadEffectData]1 Result:" + t,
@@ -308,18 +314,18 @@ class EffectSystem {
               this.wfe(_, 0, 0));
       });
   }
-  static bfe(t, e, i, a, f, s, r = !0, o, _, c, n = !0, E, h = 3) {
+  static bfe(t, e, i, a, f, s, r = !0, o, _, n, c = !0, E, h = 3) {
     if (!t)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            37,
+            36,
             "[EffectSystem.SpawnEffectWithActor]worldContext参数无效",
             ["Path", i],
             ["Reason", a],
           ),
-        this.wfe(c, 0, 0),
+        this.wfe(n, 0, 0),
         0
       );
     if (!a)
@@ -327,12 +333,12 @@ class EffectSystem {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            37,
+            36,
             "[EffectSystem.SpawnEffectWithoutActor]Reason不能使用undefined",
             ["Path", i],
             ["Reason", a],
           ),
-        this.wfe(c, 0, 0),
+        this.wfe(n, 0, 0),
         0
       );
     if (a.length < exports.EFFECT_REASON_LENGTH_LIMIT)
@@ -340,12 +346,12 @@ class EffectSystem {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            37,
+            36,
             "[EffectSystem.SpawnEffectWithoutActor]Reason字符串长度必须大于等于限制字符数量",
             ["Reason", a],
             ["限制的字符数量", exports.EFFECT_REASON_LENGTH_LIMIT],
           ),
-        this.wfe(c, 0, 0),
+        this.wfe(n, 0, 0),
         0
       );
     if (!i)
@@ -353,17 +359,17 @@ class EffectSystem {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            37,
+            36,
             "[EffectSystem.SpawnEffectWithoutActor]创建特效失败，因为Path无效",
             ["Path", i],
             ["Reason", a],
           ),
-        this.wfe(c, 0, 0),
+        this.wfe(n, 0, 0),
         0
       );
     var S = this.qfe(i, !1),
       l = this.Gfe(i, a, !1, S);
-    if (!l) return this.wfe(c, 0, 0), 0;
+    if (!l) return this.wfe(n, 0, 0), 0;
     l.SetEffectType(h);
     let d = 0;
     S &&
@@ -371,8 +377,8 @@ class EffectSystem {
         0 < S.LifeTime
           ? S.LifeTime / exports.EFFECT_LIFETIME_FLOAT_TO_INT
           : S.LifeTime);
-    (h = this.Nfe(e, i, o, n, void 0, l, a, s, d)), (S = this.Ofe(h));
-    return S ? (h.PendingInit(t, i, a, f, r, _, c, E), S) : 0;
+    (h = this.Nfe(e, i, o, c, void 0, l, a, s, d)), (S = this.Ofe(h));
+    return S ? (h.PendingInit(t, i, a, f, r, _, n, E), S) : 0;
   }
   static Ofe(t) {
     let e = 0,
@@ -411,20 +417,20 @@ class EffectSystem {
               : Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "RenderEffect",
-                  37,
+                  36,
                   "[特效句柄分配错误]句柄分配完，但容器中还有Undefined的位",
                   ["Index", t],
                 );
           }
           var o = new Array();
-          for (const n of a) n[1] < 5 || o.push([n[0], n[1]]);
+          for (const c of a) c[1] < 5 || o.push([c[0], c[1]]);
           o.sort((t, e) => e[1] - t[1]);
           let t = "\n";
           for (const E of o) t += E[0] + "|" + E[1] + "\n";
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
-              37,
+              36,
               "[特效句柄分配错误]此时占据句柄的Path统计",
               ["统计", t],
             );
@@ -435,7 +441,7 @@ class EffectSystem {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
-              37,
+              36,
               "[特效句柄分配错误]此时占据句柄的CreateReason统计",
               ["统计", t],
             );
@@ -447,12 +453,12 @@ class EffectSystem {
         (i = ++this.rY[e]) > this.hY && ((i = 1), (this.rY[e] = i));
     }
     this.Ffe++, t.IsRoot() && this.kfe++;
-    var c = (e << this.Vfe) | i;
-    return (t.Id = c), t.Id;
+    var n = (e << this.Vfe) | i;
+    return (t.Id = n), t.Id;
   }
   static Hfe(t, e, i) {
     return !(
-      !this.jfe ||
+      !EffectEnvironment_1.EffectEnvironment.OpenDistanceOptimize ||
       (3 !== e && 0 !== e) ||
       i >= GameBudgetAllocatorConfigCreator_1.EFFECT_IMPORTANCE_ENABLE_RANGE ||
       ((e =
@@ -473,7 +479,7 @@ class EffectSystem {
       t.K2_DestroyActor();
   }
   static Bfe(t, e, i = !1) {
-    if ((this.Qfe.Start(), this.t5a.has(t.Id) && this.t5a.delete(t.Id), !t))
+    if ((this.Qfe.Start(), this.k8a.has(t.Id) && this.k8a.delete(t.Id), !t))
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("RenderEffect", 3, "删除的handle参数为undefined", [
@@ -551,6 +557,7 @@ class EffectSystem {
         !i && !t.IsPendingInit && t.IsEffectActorValid && this.$fe(t))
       )
         return (
+          t.SetContext(void 0),
           t.SetTimeScale(1),
           t.ExecuteStopCallback(),
           this.Yfe(a),
@@ -596,46 +603,46 @@ class EffectSystem {
   }
   static epe(t, e, i, a = !0, f, s, r, o, _ = 3) {
     if ((this.tpe.Start(), Info_1.Info.IsGameRunning())) {
-      var c = this.ipe(e, f);
-      if (c)
-        if (c?.GetSureEffectActor()?.IsValid()) {
-          (c.IsPendingStop = !1),
-            (c.CreateReason = i),
-            c.SetContext(f),
-            (c.InContainer = !1),
-            c.SetBornFrameCount(),
-            c.GetEffectSpec().SetEffectType(_),
-            (c.CreateTime = Time_1.Time.Now);
-          (i = c.GetSureEffectActor()),
+      var n = this.ipe(e, f);
+      if (n)
+        if (n?.GetSureEffectActor()?.IsValid()) {
+          (n.IsPendingStop = !1),
+            (n.CreateReason = i),
+            n.SetContext(f),
+            (n.InContainer = !1),
+            n.SetBornFrameCount(),
+            n.GetEffectSpec().SetEffectType(_),
+            (n.CreateTime = Time_1.Time.Now);
+          (i = n.GetSureEffectActor()),
             (f =
               (i.SetActorHiddenInGame(!1),
               i.K2_SetActorTransform(t, !1, void 0, !0),
               i.K2_DetachFromActor(1, 1, 1),
               i.OnEndPlay.Clear(),
-              c.RegisterActorDestroy(),
+              n.RegisterActorDestroy(),
               i.RootComponent.bHiddenInGame &&
                 i.RootComponent.SetHiddenInGame(!1, !0),
-              c.GetEffectSpec().SetProxyHandle(c),
-              c.Replay(),
-              c.AfterLeavePool(),
-              this.Ofe(c)));
+              n.GetEffectSpec().SetProxyHandle(n),
+              n.Replay(),
+              n.AfterLeavePool(),
+              this.Ofe(n)));
           if (f)
             return (
               i.IsA(UE.TsEffectActor_C.StaticClass())
-                ? ((_ = i).SetEffectHandle(c), (_.InPool = 0))
+                ? ((_ = i).SetEffectHandle(n), (_.InPool = 0))
                 : i.IsA(UE.BP_EffectPreview_C.StaticClass()) &&
                   (i.EffectView = f),
-              this.Afe.Set(f, c),
-              s?.(c.Id),
-              this.ope(c)
-                ? c.StopEffect("[EffectSystem.TryCreateFromContainer] 屏蔽特效")
-                : (a || c.GetEffectData()?.AutoPlay) &&
-                  (o?.(c.Id),
-                  c.PlayEffect(
+              this.Afe.Set(f, n),
+              s?.(n.Id),
+              this.ope(n)
+                ? n.StopEffect("[EffectSystem.TryCreateFromContainer] 屏蔽特效")
+                : (a || n.GetEffectData()?.AutoPlay) &&
+                  (o?.(n.Id),
+                  n.PlayEffect(
                     "[EffectSystem.TryCreateFromContainer]自动播放",
                   )),
               this.tpe.Stop(),
-              c
+              n
             );
         } else
           Log_1.Log.CheckError() &&
@@ -643,12 +650,12 @@ class EffectSystem {
               "RenderEffect",
               3,
               "特效的Actor非法销毁(从容器中取出来)",
-              ["句柄Id", c.Id],
+              ["句柄Id", n.Id],
               ["Path", e],
             ),
-            this.Jfe(c),
-            this.zfe(c),
-            this.Zfe(c),
+            this.Jfe(n),
+            this.zfe(n),
+            this.Zfe(n),
             this.tpe.Stop();
       else this.tpe.Stop();
     } else this.tpe.Stop();
@@ -656,7 +663,8 @@ class EffectSystem {
   static $fe(t) {
     if (!EffectEnvironment_1.EffectEnvironment.UsePool) return !1;
     if (!this.Ife) return !1;
-    if ((this.rpe.Start(), Info_1.Info.IsInCg())) return this.rpe.Stop(), !1;
+    if ((this.rpe.Start(), Info_1.Info.IsInEditorTick()))
+      return this.rpe.Stop(), !1;
     if (!Info_1.Info.IsGameRunning()) return this.rpe.Stop(), !1;
     if (t.IsPreview) return this.rpe.Stop(), !1;
     if (!t.IsRoot()) return this.rpe.Stop(), !1;
@@ -705,7 +713,7 @@ class EffectSystem {
             e.IsA(UE.BP_EffectPreview_C.StaticClass())) &&
           (!t.IsPreview && Info_1.Info.IsGameRunning()
             ? (e.OnEndPlay.Clear(),
-              ActorSystem_1.ActorSystem.Put(e),
+              ActorSystem_1.ActorSystem.Put("EffectSystem.ClearHandle", e),
               (e.InPool = 1))
             : e.K2_DestroyActor())),
       this.hpe.Stop(),
@@ -761,12 +769,12 @@ class EffectSystem {
           ]);
     }
   }
-  static hja() {
-    if (PublicUtil_1.PublicUtil.UseDbConfig() && this.AZa) {
-      this._ja.clear();
+  static eKa() {
+    if (PublicUtil_1.PublicUtil.UseDbConfig() && this.Vnh) {
+      this.tKa.clear();
       var t =
         EffectSpecDataGetAll_1.configEffectSpecDataGetAll.GetConfigList(!1);
-      if (t) for (const e of t) this._ja.set(e.Id, e);
+      if (t) for (const e of t) this.tKa.set(e.Id, e);
     }
   }
   static Tick(t) {
@@ -774,7 +782,7 @@ class EffectSystem {
     var e = t * TimeUtil_1.TimeUtil.Millisecond;
     if (
       !GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen ||
-      Info_1.Info.IsInCg()
+      Info_1.Info.IsInEditorTick()
     )
       for (const i of this.Afe.GetItems()) i.Tick(e);
     if (((this._pe -= t), this._pe < 0)) {
@@ -785,7 +793,7 @@ class EffectSystem {
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Render",
-              37,
+              36,
               "特效框架:Handle的Owner已经销毁，但Handle没有及时回收",
               ["句柄Id", a.Id],
               ["Path", a.Path],
@@ -841,7 +849,7 @@ class EffectSystem {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
-              37,
+              36,
               "[EffectSystem.CreateEffectActor]从池中取出EffectActor失败",
             )
           );
@@ -880,7 +888,7 @@ class EffectSystem {
     let s = void 0;
     if (
       (Stats_1.Stat.Enable &&
-        (s = Stats_1.Stat.Create(
+        (s = Stats_1.Stat.CreateNoFlameGraph(
           "[EffectSystem.CreateEffectSpec] Path:" + e,
         )).Start(),
       e)
@@ -933,27 +941,27 @@ class EffectSystem {
   }
   static Nfe(t, e, i, a, f, s, r, o, _) {
     this.Mpe?.Start();
-    let c = void 0;
-    var n = this.L0(f);
+    let n = void 0;
+    var c = this.L0(f);
     return (
-      ((c =
-        a || n ? new EffectHandle_1.EffectHandle() : this.Epe(e, i)).IsPreview =
-        n),
-      (c.Parent = t),
-      (c.HoldObjectId = ++this.Spe),
-      (c.Path = e),
-      c.SetContext(i),
-      (c.IsExternalActor = a),
-      (c.EffectEnableRange = o),
-      f && (c.SetEffectActor(f), c.RegisterActorDestroy()),
-      c.SetEffectSpec(s),
-      s.SetProxyHandle(c),
-      (c.CreateReason = r),
-      c.SetBornFrameCount(),
-      (c.LifeTime = _),
-      (c.CreateTime = Time_1.Time.Now),
+      ((n =
+        a || c ? new EffectHandle_1.EffectHandle() : this.Epe(e, i)).IsPreview =
+        c),
+      (n.Parent = t),
+      (n.HoldObjectId = ++this.Spe),
+      (n.Path = e),
+      n.SetContext(i),
+      (n.IsExternalActor = a),
+      (n.EffectEnableRange = o),
+      f && (n.SetEffectActor(f), n.RegisterActorDestroy()),
+      n.SetEffectSpec(s),
+      s.SetProxyHandle(n),
+      (n.CreateReason = r),
+      n.SetBornFrameCount(),
+      (n.LifeTime = _),
+      (n.CreateTime = Time_1.Time.Now),
       this.Mpe?.Stop(),
-      c
+      n
     );
   }
   static Pfe(t, e) {
@@ -964,7 +972,7 @@ class EffectSystem {
       )).Start();
     const a = t.Path;
     a
-      ? t.IsPreview || Info_1.Info.IsInCg()
+      ? t.IsPreview || Info_1.Info.IsInEditorTick()
         ? ((t = ResourceSystem_1.ResourceSystem.Load(a, UE.EffectModelBase)),
           i?.Stop(),
           t?.IsValid()
@@ -1004,7 +1012,6 @@ class EffectSystem {
         i?.Stop(),
         e(!1, void 0));
   }
-
   static async xfe(t, e, i, a) {
     let f = void 0;
     Stats_1.Stat.Enable &&
@@ -1051,7 +1058,7 @@ class EffectSystem {
       if (this.ope(t)) return (t.StopReason = "屏蔽特效"), f?.Stop(), 3;
       if ((i = t.GetSureEffectActor()) && !i.IsValid()) return 4;
       if (ModManager_1.ModManager.Settings.killAuranew && t.InitCache) {
-        if (t.InitCache.Path === "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_Breaking.DA_Fx_Group_Breaking") {
+        if (t.InitCache.Path === "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_Breaking.DA_Fx_Group_Breaking" || t.InitCache.Path.includes("BreakBuff")) {
             return;
         }
       }
@@ -1108,7 +1115,7 @@ class EffectSystem {
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "RenderEffect",
-            37,
+            36,
             "特效框架:句柄回收到池中(PlayerEffectPool)",
             ["句柄Id", t.Id],
             ["IsRoot", t.IsRoot()],
@@ -1145,12 +1152,12 @@ class EffectSystem {
       );
     let a = void 0;
     return (
-      this.AZa
-        ? (a = this._ja.get(i)) ||
+      this.Vnh
+        ? (a = this.tKa.get(i)) ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
-              37,
+              36,
               "EffectSpec配置中找不到该特效",
               ["Path", t],
             ))
@@ -1158,7 +1165,7 @@ class EffectSystem {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
-              37,
+              36,
               "EffectSpec配置中找不到该特效",
               ["Path", t],
             )),
@@ -1166,45 +1173,48 @@ class EffectSystem {
     );
   }
   static InitHandleWhenEnable(t) {
-    var e = t.InitCache;
-    if (!e) return this.Bfe(t, "InitHandleWhenEnable Failed", !0), !1;
-    let i = e.WorldContext;
-    i?.IsValid() ||
+    if (t.IsInitializing) return !1;
+    const a = t.InitCache;
+    if (!a) return this.Bfe(t, "InitHandleWhenEnable Failed", !0), !1;
+    let e = a.WorldContext;
+    e?.IsValid() ||
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderEffect",
-          37,
+          36,
           "InitHandleWhenEnable worldContext is invalid",
-          ["path", e.Path],
+          ["path", a.Path],
         ),
-      (i = GlobalData_1.GlobalData.World));
-    var a = this.mpe(i, e.EffectActorHandle.Transform);
-    return a?.IsValid()
+      (e = GlobalData_1.GlobalData.World));
+    var i = this.mpe(e, a.EffectActorHandle.Transform);
+    return i?.IsValid()
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("RenderEffect", 37, "EffectHandle.SetEffectActor", [
+          Log_1.Log.Debug("RenderEffect", 36, "EffectHandle.SetEffectActor", [
             "Id",
             t.Id,
           ]),
-        t.SetEffectActor(a),
+        t.SetEffectActor(i),
         t.RegisterActorDestroy(),
+        (t.IsInitializing = !0),
         this.Ufe(
           t,
-          a,
-          e.Path,
-          e.Reason,
-          e.AutoPlay,
-          e.BeforeInitCallback,
-          e.Callback,
-          e.BeforePlayCallback,
+          i,
+          a.Path,
+          a.Reason,
+          a.AutoPlay,
+          a.BeforeInitCallback,
           (t, e) => {
-            var i;
-            5 === t &&
-              ((i = this.cpe(e)).InitEffectActorAfterPendingInit(),
-              i.PlayEffectAfterPendingInit(),
+            var i = this.cpe(e);
+            i &&
+              (5 === t &&
+                (i.InitEffectActorAfterPendingInit(),
+                i.PlayEffectAfterPendingInit()),
               i.ClearInitCache(),
-              this.t5a.has(e)) &&
-              (this.t5a.get(e)?.(t, e), this.t5a.delete(e));
+              (i.IsInitializing = !1)),
+              a.Callback && a.Callback(t, e),
+              this.k8a.has(e) && (this.k8a.get(e)?.(t, e), this.k8a.delete(e));
           },
+          a.BeforePlayCallback,
         ),
         !0)
       : (Log_1.Log.CheckDebug() &&
@@ -1212,7 +1222,7 @@ class EffectSystem {
             "Entity",
             3,
             "[EffectSystem.InitHandleFromSelf]创建actor失败",
-            ["Reason", e.Reason],
+            ["Reason", a.Reason],
             ["Id", t.Id],
           ),
         this.Bfe(t, "InitHandleWhenEnable CreateEffectActor Failed", !0),
@@ -1228,19 +1238,19 @@ class EffectSystem {
     r,
     o,
     _,
-    c = !0,
-    n,
+    n = !0,
+    c,
     E = 3,
     h = void 0,
   ) {
     let S = void 0,
       l =
         (Stats_1.Stat.Enable &&
-          (S = Stats_1.Stat.Create(
+          (S = Stats_1.Stat.CreateNoFlameGraph(
             "[EffectSystem.SpawnEffectWithActor] Path:" + a,
           )).Start(),
         void 0);
-    if (((l = e ? this.ype : c ? this.Ipe : this.Tpe).Start(), !t))
+    if (((l = e ? this.ype : n ? this.Ipe : this.Tpe).Start(), !t))
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -1340,7 +1350,7 @@ class EffectSystem {
         0 < d.LifeTime
           ? d.LifeTime / exports.EFFECT_LIFETIME_FLOAT_TO_INT
           : d.LifeTime);
-    (E = this.Nfe(e, a, r, c, i, u, f, m, A)), (h = this.Ofe(E));
+    (E = this.Nfe(e, a, r, n, i, u, f, m, A)), (h = this.Ofe(E));
     return h
       ? (EffectEnvironment_1.EffectEnvironment.UseLog &&
           Log_1.Log.CheckInfo() &&
@@ -1357,7 +1367,7 @@ class EffectSystem {
             ["Lru命中率%", this.Lru.HitRate * PERCENT],
             ["Reason", f],
           ),
-        this.Ufe(E, i, a, f, s, o, _, n),
+        this.Ufe(E, i, a, f, s, o, _, c),
         l.Stop(),
         S?.Stop(),
         h)
@@ -1432,7 +1442,7 @@ class EffectSystem {
                   Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "RenderEffect",
-                    37,
+                    36,
                     "特效框架:停止特效(IsPendingStop)",
                     ["句柄Id", t.Id],
                     ["IsRoot", t.IsRoot()],
@@ -1481,7 +1491,7 @@ class EffectSystem {
   static GetEffectLruSize() {
     return this.Lru.Size;
   }
-  static SpawnUnloopedEffect(t, e, i, a, f, s = 3, r, o, _, c = !1, n = !1) {
+  static SpawnUnloopedEffect(t, e, i, a, f, s = 3, r, o, _, n = !1, c = !1) {
     if (i) {
       var E = this.L0(t),
         E = this.qfe(i, E);
@@ -1490,7 +1500,7 @@ class EffectSystem {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
-              37,
+              36,
               "[EffectSystem.SpawnEffect]当前情景不允许播放循环特效，请检查配置",
               ["path", i],
               ["createReason", a],
@@ -1508,10 +1518,10 @@ class EffectSystem {
           0
         );
     }
-    return this.SpawnEffect(t, e, i, a, f, s, r, o, _, c, n);
+    return this.SpawnEffect(t, e, i, a, f, s, r, o, _, n, c);
   }
-  static SpawnEffect(t, e, i, a, f, s = 3, r, o, _, c = !1, n = !1) {
-    var E = !c;
+  static SpawnEffect(t, e, i, a, f, s = 3, r, o, _, n = !1, c = !1) {
+    var E = !n;
     let h = void 0;
     if (
       (Stats_1.Stat.Enable &&
@@ -1599,8 +1609,8 @@ class EffectSystem {
         0
       );
     var S =
-      !c &&
-      !Info_1.Info.IsInCg() &&
+      !n &&
+      !Info_1.Info.IsInEditorTick() &&
       t.GetWorld() === GlobalData_1.GlobalData.World;
     let l = void 0;
     if (S && (l = this.epe(e, i, a, E, f, r, void 0, _, s)))
@@ -1631,14 +1641,14 @@ class EffectSystem {
       d = this.L0(t),
       d = this.ppe(this.fpe(i, d));
     if (
-      n ||
+      c ||
       !this.Hfe(S, s, d) ||
       !Info_1.Info.IsGameRunning() ||
-      c ||
-      Info_1.Info.IsInCg()
+      n ||
+      Info_1.Info.IsInEditorTick()
     ) {
-      n = this.mpe(t, e);
-      if (!n?.IsValid())
+      c = this.mpe(t, e);
+      if (!c?.IsValid())
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -1654,7 +1664,7 @@ class EffectSystem {
       S = this.SpawnEffectWithActor(
         t,
         void 0,
-        n,
+        c,
         i,
         a,
         E,
@@ -1670,7 +1680,7 @@ class EffectSystem {
           }
           h?.Stop(),
             o?.(t, e),
-            this.t5a.has(e) && (this.t5a.get(e)?.(t, e), this.t5a.delete(e));
+            this.k8a.has(e) && (this.k8a.get(e)?.(t, e), this.k8a.delete(e));
         },
         !1,
         _,
@@ -1678,10 +1688,14 @@ class EffectSystem {
         d,
       );
       if (!this.IsValid(S))
-        return ActorSystem_1.ActorSystem.Put(n), this.Dpe.Stop(), 0;
+        return (
+          ActorSystem_1.ActorSystem.Put("EffectSystem.SpawnEffect", c),
+          this.Dpe.Stop(),
+          0
+        );
       l = this.cpe(S);
     } else {
-      c = this.bfe(
+      n = this.bfe(
         t,
         void 0,
         i,
@@ -1702,21 +1716,21 @@ class EffectSystem {
           h?.Stop(),
             o?.(t, e),
             5 !== t &&
-              this.t5a.has(e) &&
-              (this.t5a.get(e)?.(t, e), this.t5a.delete(e));
+              this.k8a.has(e) &&
+              (this.k8a.get(e)?.(t, e), this.k8a.delete(e));
         },
         !1,
         _,
         s,
       );
-      (l = this.cpe(c)),
+      (l = this.cpe(n)),
         EffectEnvironment_1.EffectEnvironment.UseLog &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "RenderEffect",
             3,
             "特效框架:创建句柄(WithoutActor)",
-            ["句柄Id", c],
+            ["句柄Id", n],
             ["父句柄Id", void 0],
             ["特效总数", this.kfe],
             ["句柄总数", this.Ffe],
@@ -1736,13 +1750,14 @@ class EffectSystem {
     );
   }
   static DynamicRegisterSpawnCallback(t, e) {
-    this.IsValid(t) && (this.IsPlaying(t) ? e(5, t) : this.t5a.set(t, e));
+    this.IsValid(t) && (this.IsPlaying(t) ? e(5, t) : this.k8a.set(t, e));
   }
   static ForceCheckPendingInit(t) {
     t = this.cpe(t);
     t.IsPendingInit &&
-      !this.Hfe(t.InitCache.Location, t.GetEffectType(), t.EffectEnableRange) &&
-      this.InitHandleWhenEnable(t);
+      t.IsRoot() &&
+      (this.Hfe(t.InitCache.Location, t.GetEffectType(), t.EffectEnableRange) ||
+        this.InitHandleWhenEnable(t));
   }
   static SetEffectHidden(t, e, i = void 0) {
     this.IsValid(t) && this.cpe(t).SetHidden(e, i);
@@ -1786,6 +1801,9 @@ class EffectSystem {
   static GetNiagaraComponent(t) {
     if (this.IsValid(t)) return this.cpe(t).GetNiagaraComponent();
   }
+  static GetSureNiagaraComponent(t) {
+    if (this.IsValid(t)) return this.cpe(t).GetSureNiagaraComponent();
+  }
   static GetNiagaraComponents(t) {
     if (this.IsValid(t)) return this.cpe(t).GetNiagaraComponents();
   }
@@ -1814,8 +1832,8 @@ class EffectSystem {
       (t = this.cpe(t)).IsLoop &&
       t.GetEffectSpec()?.SetLifeCycle(e);
   }
-  static SetTimeScale(t, e) {
-    this.IsValid(t) && this.cpe(t).SetTimeScale(e);
+  static SetTimeScale(t, e, i = !1) {
+    this.IsValid(t) && this.cpe(t).SetTimeScale(e, !1, i);
   }
   static FreezeHandle(t, e, i = !1) {
     this.IsValid(t) && ((t = this.cpe(t)), i || t.IsLoop) && t.FreezeEffect(e);
@@ -1891,15 +1909,20 @@ class EffectSystem {
     t && (t.StoppingTime = e);
   }
   static get GlobalStoppingPlayTime() {
-    return this.DUn;
+    return this.fdl;
   }
   static get GlobalStoppingTime() {
-    return this.RUn;
+    return this.vdl;
   }
   static SetGlobalStoppingTime(t, e) {
-    if (this.RUn !== t) {
-      (this.RUn = t), (this.DUn = e);
+    if (this.vdl !== t) {
+      (this.vdl = t), (this.fdl = e);
       for (const i of this.Afe.GetItems()) i.OnGlobalStoppingTimeChange(t);
+      EffectEnvironment_1.EffectEnvironment.OpenTickOptimize &&
+        cpp_1.FKuroEffectSystemInterface.UpdateGlobalStoppingTimeInfo(
+          this.vdl,
+          this.fdl,
+        );
     }
   }
   static AttachToEffectSkeletalMesh(t, e, i, a) {
@@ -1953,12 +1976,6 @@ class EffectSystem {
       t.GetHideOnBurstSkill()
     );
   }
-  static SetupEffectTrailSpec(t, e) {
-    this.IsValid(t) &&
-      (t = this.cpe(t).GetEffectSpec()) instanceof
-        EffectModelTrailSpec_1.EffectModelTrailSpec &&
-      t.Setup(e);
-  }
   static RegisterCustomCheckOwnerFunc(t, e) {
     this.IsValid(t) && (this.cpe(t).OnCustomCheckOwner = e);
   }
@@ -2005,7 +2022,7 @@ class EffectSystem {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
-        37,
+        36,
         "<<<<<<<<<<<<<<<<错误特效打印开始:>>>>>>>>>>>>>>>",
       ),
       this.Effects.forEach((t) => {
@@ -2027,7 +2044,7 @@ class EffectSystem {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
-        37,
+        36,
         "<<<<<<<<<<<<<<<<重要特效打印开始:>>>>>>>>>>>>>>>",
       ),
       this.Effects.forEach((t) => {
@@ -2068,7 +2085,7 @@ class EffectSystem {
         ["4号池内数量", o],
       );
     let _ = "\n",
-      c = "\n";
+      n = "\n";
     this.Effects.forEach((t) => {
       var e;
       t &&
@@ -2084,10 +2101,10 @@ class EffectSystem {
                 this.Rpe(t),
               ])
             : (_ += this.Rpe(t))
-          : (c += this.Rpe(t)));
+          : (n += this.Rpe(t)));
     }),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 4, "\n【不可见的特效列表】", ["", c]),
+        Log_1.Log.Debug("Battle", 4, "\n【不可见的特效列表】", ["", n]),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 4, "\n【Disable的特效列表】", ["", _]),
       Log_1.Log.CheckDebug() &&
@@ -2116,11 +2133,9 @@ CreateEntityId:${t.GetContext()?.EntityId} CreateFromType:${t.GetContext()?.Crea
   (EffectSystem.Afe = new CustomMap_1.CustomMap()),
   (EffectSystem.upe = new Queue_1.Queue()),
   (EffectSystem.lpe = new Map()),
-  (EffectSystem._ja = new Map()),
+  (EffectSystem.tKa = new Map()),
   (EffectSystem.Lfe = !1),
   (EffectSystem.Mfe = void 0),
-  (EffectSystem.OpenVisibilityOptimize = !0),
-  (EffectSystem.jfe = !0),
   (EffectSystem.lY = 32),
   (EffectSystem._Y = 12),
   (EffectSystem.Vfe = EffectSystem.lY - EffectSystem._Y),
@@ -2189,7 +2204,7 @@ CreateEntityId:${t.GetContext()?.EntityId} CreateFromType:${t.GetContext()?.Crea
     ? Stats_1.Stat.Create("EffectSystem.CreateEffectHandle")
     : void 0),
   (EffectSystem.Ife = !1),
-  (EffectSystem.AZa = !0),
+  (EffectSystem.Vnh = !0),
   (EffectSystem.Tfe = () => {
     for (const t of _a.Afe.GetItems()) t.OnGlobalTimeScaleChange();
   }),
@@ -2206,7 +2221,7 @@ CreateEntityId:${t.GetContext()?.EntityId} CreateFromType:${t.GetContext()?.Crea
   (EffectSystem.Dfe = !0),
   (EffectSystem._pe = CHECK_EFFECT_OWNER_INTERVAL),
   (EffectSystem.vpe = new Map()),
-  (EffectSystem.t5a = new Map()),
-  (EffectSystem.RUn = !1),
-  (EffectSystem.DUn = 0);
+  (EffectSystem.k8a = new Map()),
+  (EffectSystem.vdl = !1),
+  (EffectSystem.fdl = 0);
 //# sourceMappingURL=EffectSystem.js.map

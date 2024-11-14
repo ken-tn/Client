@@ -9,7 +9,7 @@ const cpp_1 = require("cpp"),
   LogCaptureController_1 = require("./LogCaptureController"),
   Time_1 = require("./Time"),
   levelTrace =
-    (cpp_1.FKuroUtilityForPuerts.IsBuildShipping() &&
+    (cpp_1.KuroApplication.IsBuildShipping() &&
       (cpp_1.KuroLoggingLibrary.RegisterTerminateDelegate(),
       cpp_1.KuroLoggingLibrary.PromoteGlobalLogVerbosity(4)),
     { [0]: !0, 1: !1, 2: !1, 3: !1 }),
@@ -74,7 +74,7 @@ class Log {
   }
   static O8(t) {
     try {
-      return Log.BVa(t);
+      return Log.x7a(t);
     } catch (t) {
       t instanceof Error
         ? Log.CheckError() &&
@@ -86,8 +86,8 @@ class Log {
           Log.Error("Log", 1, "Log 序列化异常", ["error", t]);
     }
   }
-  static BVa(t) {
-    return JSON.stringify(t, Log.bVa).replace(/"/g, "");
+  static x7a(t) {
+    return JSON.stringify(t, Log.P7a).replace(/"/g, "");
   }
   static G8(t) {
     return void 0 === t
@@ -124,7 +124,7 @@ class Log {
   (Log.x8 = void 0),
   (Log.w8 = void 0),
   (Log.U8 = ""),
-  (Log.bVa = (t, e) => {
+  (Log.P7a = (t, e) => {
     if (void 0 === e) return "undefined";
     switch (typeof e) {
       case "bigint":
@@ -140,14 +140,14 @@ class Log {
           if (r.toString !== Object.prototype.toString) return e.toString();
           if (e instanceof Set) {
             let t = "Set(";
-            for (const i of e) 0 < t.length && (t += ","), (t += Log.BVa(i));
+            for (const i of e) 0 < t.length && (t += ","), (t += Log.x7a(i));
             return (t += ")");
           }
           if (e instanceof Map) {
             let t = "Map(";
             for (const g of e)
               0 < t.length && (t += ","),
-                (t += `[${Log.BVa(g[0])}, ${Log.BVa(g[1])}]`);
+                (t += `[${Log.x7a(g[0])}, ${Log.x7a(g[1])}]`);
             return (t += ")");
           }
           if (e instanceof UE.TMap) {
@@ -155,7 +155,7 @@ class Log {
             for (let t = 0; t < e.Num(); t++) {
               0 === r.length ? (r += "TMap(") : (r += ",");
               var o = e.GetKey(t);
-              r += `[${Log.BVa(o)}, ${Log.BVa(e.Get(o))}]`;
+              r += `[${Log.x7a(o)}, ${Log.x7a(e.Get(o))}]`;
             }
             return (r += ")");
           }
@@ -163,14 +163,14 @@ class Log {
             let r = "";
             for (let t = 0; t < e.Num(); t++)
               0 === r.length ? (r += "TArray(") : (r += ","),
-                (r += `[${Log.BVa(e.Get(t))}]`);
+                (r += `[${Log.x7a(e.Get(t))}]`);
             return (r += ")");
           }
           if (e instanceof UE.TSet) {
             let r = "";
             for (let t = 0; t < e.Num(); t++)
               0 === r.length ? (r += "TSet(") : (r += ","),
-                (r += `[${Log.BVa(e.Get(t))}]`);
+                (r += `[${Log.x7a(e.Get(t))}]`);
             return (r += ")");
           }
         }

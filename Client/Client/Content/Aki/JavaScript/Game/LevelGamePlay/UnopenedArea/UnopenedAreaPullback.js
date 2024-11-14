@@ -88,7 +88,7 @@ class UnopenedAreaPullback {
   vBe() {
     (this.sBe = !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "开始执行拉回移动操作,禁用玩家输入"),
+        Log_1.Log.Info("Map", 42, "开始执行拉回移动操作,禁用玩家输入"),
       this.SBe(!0),
       this.yBe(!1),
       this.IBe(),
@@ -97,7 +97,7 @@ class UnopenedAreaPullback {
   EBe() {
     (this.sBe = !1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "退出拉回移动操作,恢复玩家控制"),
+        Log_1.Log.Info("Map", 42, "退出拉回移动操作,恢复玩家控制"),
       this.SBe(!1),
       this.yBe(!0),
       this.TBe(this.dBe);
@@ -115,8 +115,7 @@ class UnopenedAreaPullback {
       !0
     );
   }
-  OnEnterUnopenedArea() {
-  }
+  OnEnterUnopenedArea() {}
   OnExitUnopenedArea() {
     this.hBe &&
       (EventSystem_1.EventSystem.Has(
@@ -129,7 +128,7 @@ class UnopenedAreaPullback {
         ),
       (this.hBe = !1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "- - - - 离开了未开放区域- - - - "),
+        Log_1.Log.Info("Map", 42, "- - - - 离开了未开放区域- - - - "),
       this.LBe(!1),
       this.sBe) &&
       this.EBe();
@@ -199,7 +198,7 @@ class UnopenedAreaPullback {
       (this.mBe = this.dBe.Entity.GetComponent(161));
   }
   ABe(t, e, i) {
-    var s = t.Entity.GetComponent(190);
+    var s = t.Entity.GetComponent(191);
     0 === e || s?.HasTag(-2100129479)
       ? t.CharacterMovement.SetMovementMode(1, i)
       : t.CharacterMovement.SetMovementMode(e, i);
@@ -227,7 +226,7 @@ class UnopenedAreaPullback {
     t
       ? this.lBe ||
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Map", 43, "开启定时器传送", [
+          Log_1.Log.Info("Map", 42, "开启定时器传送", [
             "Time",
             TELEPORT_DELAY_TIME,
           ]),
@@ -236,7 +235,7 @@ class UnopenedAreaPullback {
         }, TELEPORT_DELAY_TIME)))
       : (this.lBe &&
           TimerSystem_1.TimerSystem.Has(this.lBe) &&
-          (Log_1.Log.CheckInfo() && Log_1.Log.Info("Map", 43, "移除定时器传送"),
+          (Log_1.Log.CheckInfo() && Log_1.Log.Info("Map", 42, "移除定时器传送"),
           TimerSystem_1.TimerSystem.Remove(this.lBe)),
         (this.lBe = void 0));
   }
@@ -245,11 +244,11 @@ class UnopenedAreaPullback {
     t &&
       t.Valid &&
       (e &&
-        ((i = t.Entity.GetComponent(190))?.AddTag(-1697149502),
+        ((i = t.Entity.GetComponent(191))?.AddTag(-1697149502),
         i?.AddTag(-541178966),
         i?.AddTag(-542518289)),
       e ||
-        ((i = t.Entity.GetComponent(190))?.RemoveTag(-1697149502),
+        ((i = t.Entity.GetComponent(191))?.RemoveTag(-1697149502),
         i?.RemoveTag(-541178966),
         i?.RemoveTag(-542518289)));
   }

@@ -71,7 +71,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
         (this.DitherEffectControllerInternal =
           new CharacterDitherEffectController_1.CharacterDitherEffectController(
             this,
-            this.CharRenderingComponent
+            this.CharRenderingComponent,
           )),
       this.DitherEffectControllerInternal
     );
@@ -88,7 +88,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       (this.TempDaPath = this.DA.AssetPathName?.toString()),
       this.LoadModel(),
       this.Tags.Contains(
-        CharacterNameDefines_1.CharacterNameDefines.PFT_NO_SPAWN
+        CharacterNameDefines_1.CharacterNameDefines.PFT_NO_SPAWN,
       ) ||
         this.Tags.Add(CharacterNameDefines_1.CharacterNameDefines.PFT_NO_SPAWN),
       (this.bSetActorComponentTickEnabledByFocus = !0),
@@ -126,13 +126,13 @@ class TsSimpleNpc extends UE.KuroEffectActor {
           ? ((this.TempDaPath = this.DA.AssetPathName.toString()),
             (this.IsDirty = !0))
           : this.IsDirty
-          ? ((this.IsDirty = !1),
-            this.LoadModel(),
-            UE.KuroStaticLibrary.SetActorModify(this))
-          : this.NeedResetCollision &&
-            ((this.NeedResetCollision = !1),
-            this.SetDefaultCollision(),
-            this.ResetMeshLocation());
+            ? ((this.IsDirty = !1),
+              this.LoadModel(),
+              UE.KuroStaticLibrary.SetActorModify(this))
+            : this.NeedResetCollision &&
+              ((this.NeedResetCollision = !1),
+              this.SetDefaultCollision(),
+              this.ResetMeshLocation());
       }
     else this.EditorInit();
   }
@@ -158,7 +158,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       CollisionUtils_1.CollisionUtils.SetCollisionResponseToPawn(
         this.CapsuleCollision,
         0,
-        2
+        2,
       );
   }
   InitBaseInfo() {
@@ -172,12 +172,12 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       ((i = i.CharacterActorComponent.ActorLocationProxy),
       (this.TempDistanceSquared = Vector_1.Vector.DistSquared(
         this.StartLocationProxy,
-        i
+        i,
       ))),
       (this.InstanceId = ++TsSimpleNpc.InstanceCount),
       GlobalData_1.GlobalData.IsPlayInEditor &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("World", 30, "创建SimpleNpc", ["Id", this.InstanceId]);
+        Log_1.Log.Info("World", 29, "创建SimpleNpc", ["Id", this.InstanceId]);
   }
   InitRenderInfo() {
     this.CharRenderingComponent.Init(3),
@@ -206,24 +206,24 @@ class TsSimpleNpc extends UE.KuroEffectActor {
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "World",
-          30,
+          29,
           "销毁SimpleNpc",
           ["Id", this.InstanceId],
-          ["DeleteCount", ++TsSimpleNpc.DeleteCount]
+          ["DeleteCount", ++TsSimpleNpc.DeleteCount],
         );
   }
   FindComponents() {
     (this.CapsuleCollision && this.CapsuleCollision.IsValid()) ||
       (this.CapsuleCollision = this.GetComponentByClass(
-        UE.CapsuleComponent.StaticClass()
+        UE.CapsuleComponent.StaticClass(),
       )),
       (this.Mesh && this.Mesh.IsValid()) ||
         (this.Mesh = this.GetComponentByClass(
-          UE.SkeletalMeshComponent.StaticClass()
+          UE.SkeletalMeshComponent.StaticClass(),
         )),
       (this.CharRenderingComponent && this.CharRenderingComponent.IsValid()) ||
         (this.CharRenderingComponent = this.GetComponentByClass(
-          UE.CharRenderingComponent_C.StaticClass()
+          UE.CharRenderingComponent_C.StaticClass(),
         ));
   }
   LoadModel() {
@@ -247,11 +247,11 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       new UE.Transform(
         new UE.Rotator(0, DEFAULT_MESH_YAW, 0),
         new UE.Vector(0, 0, -this.CapsuleCollision.CapsuleHalfHeight),
-        Vector_1.Vector.OneVector
+        Vector_1.Vector.OneVector,
       ),
       !1,
       void 0,
-      !1
+      !1,
     );
   }
   FindFloor() {
@@ -263,12 +263,12 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       h =
         (TsSimpleNpc.SphereTrace ||
           ((TsSimpleNpc.SphereTrace = UE.NewObject(
-            UE.TraceSphereElement.StaticClass()
+            UE.TraceSphereElement.StaticClass(),
           )),
           (TsSimpleNpc.SphereTrace.bIsSingle = !0),
           (TsSimpleNpc.SphereTrace.bIgnoreSelf = !0),
           TsSimpleNpc.SphereTrace.SetTraceTypeQuery(
-            QueryTypeDefine_1.KuroTraceTypeQuery.IkGround
+            QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
           )),
         TsSimpleNpc.SphereTrace),
       e =
@@ -299,7 +299,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
           this.IsNotUnload && this.HandleLoadedDaConfig(i),
             this.SetTickEnabled(this.IsInLogicRangeInternal),
             this.SetMainShadowEnabled(this.IsInLogicRangeInternal);
-        }
+        },
       ),
       0)
     );
@@ -312,13 +312,13 @@ class TsSimpleNpc extends UE.KuroEffectActor {
           this,
           this.CapsuleCollision.GetRelativeTransform(),
           this.Mesh,
-          i
+          i,
         ),
         t ||
           (this.CharRenderingComponent.UpdateNpcDitherComponent(),
           SimpleNpcController_1.SimpleNpcController.CheckNpcShowState(
             this,
-            !0
+            !0,
           )),
         GlobalData_1.GlobalData.IsPlayInEditor ||
           (this.CacheComponents(), this.CloseSkeletalMeshShadow()),
@@ -326,8 +326,8 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Character",
-          30,
-          "[TsSimpleNpc.HandleLoadedDaConfig] DA资源类型错误"
+          29,
+          "[TsSimpleNpc.HandleLoadedDaConfig] DA资源类型错误",
         );
   }
   StartFlowLogic() {
@@ -351,8 +351,8 @@ class TsSimpleNpc extends UE.KuroEffectActor {
   StopMontage() {
     this.FlowLogic && this.FlowLogic.StopMontage();
   }
-  FilterFlowWorldState(i) {
-    this.FlowLogic?.FilterFlowWorldState(i);
+  FilterFlowWorldState() {
+    this.FlowLogic?.FilterFlowWorldState();
   }
   get IsHiding() {
     return !this.IsNotUnload;
@@ -371,7 +371,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       (i
         ? (this.IsModelLoadedInternal ||
             (SimpleNpcLoadController_1.SimpleNpcLoadController.AddSimpleNpc(
-              this
+              this,
             ),
             (this.IsModelLoadedInternal = !0)),
           this.SetLogicTickRunning(!0))
@@ -399,7 +399,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
   }
   CacheComponents() {
     this.CachedComponents = this.K2_GetComponentsByClass(
-      UE.ActorComponent.StaticClass()
+      UE.ActorComponent.StaticClass(),
     );
   }
   SetTickEnabled(e) {
@@ -424,8 +424,8 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "NPC",
-          25,
-          "You must call CloseSkeletalMeshShadow after CacheComponents"
+          24,
+          "You must call CloseSkeletalMeshShadow after CacheComponents",
         );
   }
   SetMainShadowEnabled(e) {
@@ -433,19 +433,19 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
-          25,
+          24,
           "SetShadowEnabled, value === this.IsShowShadow",
           ["Value", e],
-          ["IsShowShadow", this.IsShowShadow]
+          ["IsShowShadow", this.IsShowShadow],
         );
     else {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
-          25,
+          24,
           "SetShadowEnabled, value !== this.IsShowShadow",
           ["Value", e],
-          ["IsShowShadow", this.IsShowShadow]
+          ["IsShowShadow", this.IsShowShadow],
         ),
         (this.IsShowShadow = e);
       var s =
@@ -458,7 +458,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
             h instanceof UE.SkinnedMeshComponent &&
             !(h instanceof UE.SkeletalMeshComponent) &&
             (h.SetCastShadow(e), Log_1.Log.CheckInfo()) &&
-            Log_1.Log.Info("Entity", 25, "SetShadowEnabled, SetCastShadow", [
+            Log_1.Log.Info("Entity", 24, "SetShadowEnabled, SetCastShadow", [
               "Value",
               e,
             ]);

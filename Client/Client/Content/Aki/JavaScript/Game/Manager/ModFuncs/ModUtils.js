@@ -20,11 +20,11 @@ class ModUtils {
   static isInGame() {
     let state = null;
     try {
-        state = ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
-            LoginDefine_1.ELoginStatus.EnterGameRet
-        );
+      state = ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
+        LoginDefine_1.ELoginStatus.EnterGameRet
+      );
     } catch {}
-    
+
     return state;
   }
   //Kuro SingleInputBox  库洛单输入框
@@ -64,6 +64,120 @@ class ModUtils {
   static KunLog(string) {
     var info = string.toString();
     // puerts_1.logger.info("[KUNMOD:]" + info);
+  }
+
+  static StackTrace() {
+    var err = new Error();
+    return err.stack;
+  }
+
+  static async getProps(e, par = "", visited = new Set(), depth = 0) {
+    const indent = "  ".repeat(depth); // Indentation for nested properties
+    for (let prop in e) {
+      if (e.hasOwnProperty(prop)) {
+        const fullPropName = par ? `${par}.${prop}` : prop;
+        const value = e[prop];
+
+        // Handle circular references
+        if (typeof value === "object" && value !== null) {
+          if (visited.has(value)) {
+            puerts_1.logger.info(
+              `${indent}${fullPropName}: [Circular Reference]`
+            );
+            continue;
+          }
+          visited.add(value);
+        }
+
+        // Format the output based on the value type
+        if (typeof value === "object" && value !== null) {
+          if (Array.isArray(value)) {
+            puerts_1.logger.info(`${indent}${fullPropName}: [Array]`);
+            value.forEach((item, index) => {
+              if (typeof item === "object") {
+                puerts_1.logger.info(`${indent}  ${fullPropName}[${index}]: {`);
+                this.getProps(
+                  item,
+                  `${fullPropName}[${index}]`,
+                  visited,
+                  depth + 2
+                );
+                puerts_1.logger.info(`${indent}  }`);
+              } else {
+                puerts_1.logger.info(
+                  `${indent}  ${fullPropName}[${index}]: ${item}`
+                );
+              }
+            });
+          } else if (value instanceof Date) {
+            puerts_1.logger.info(
+              `${indent}${fullPropName}: [Date: ${value.toISOString()}]`
+            );
+          } else {
+            puerts_1.logger.info(`${indent}${fullPropName}: {`);
+            this.getProps(value, fullPropName, visited, depth + 1);
+            puerts_1.logger.info(`${indent}}`);
+          }
+        } else {
+          puerts_1.logger.info(`${indent}${fullPropName}: ${value}`);
+        }
+      }
+    }
+  }
+
+  static serializeToJS(e, depth = 0, visited = new WeakSet()) {
+    const indent = "  ".repeat(depth); // Indentation for nested objects and arrays
+    let output = "";
+
+    // Check for circular references
+    if (typeof e === "object" && e !== null) {
+      if (visited.has(e)) {
+        return '"[Circular]"'; // Mark circular reference
+      }
+      visited.add(e); // Mark this object as visited
+    }
+
+    if (Array.isArray(e)) {
+      output += "[\n";
+      e.forEach((item, index) => {
+        output += `${indent}  ${this.serializeToJS(
+          item,
+          depth + 1,
+          visited
+        )},\n`;
+      });
+      output += `${indent}]`;
+    } else if (e instanceof Date) {
+      output += `new Date('${e.toISOString()}')`; // Date object in JS
+    } else if (typeof e === "object" && e !== null) {
+      output += "{\n";
+      for (let prop in e) {
+        // if (e.hasOwnProperty(prop)) {
+        if (Object.prototype.hasOwnProperty.call(e, prop)) {
+          // Check if the object owns the property
+          const value = e[prop];
+          if (value !== undefined) {
+            // Skip undefined properties
+            output += `${indent}  "${prop}": ${this.serializeToJS(
+              value,
+              depth + 1,
+              visited
+            )},\n`;
+          }
+        }
+      }
+      output += `${indent}}`;
+    } else if (typeof e === "string") {
+      output += `"${e}"`; // Strings should be quoted
+    } else {
+      output += `${e}`; // For numbers, booleans, null, and undefined
+    }
+
+    return output;
+  }
+
+  static async jsLog(e) {
+    puerts_1.logger.info(this.serializeToJS(e));
   }
 
   static DrawDebugBox(

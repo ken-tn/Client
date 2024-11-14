@@ -31,14 +31,6 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds"),
   RoleQteComponent_1 = require("./RoleQteComponent");
 var EAttributeId = Protocol_1.Aki.Protocol.Vks;
-const fillElementEnergyGe = new Map([
-  [1, CharacterBuffIds_1.fillElementBuffId.Ice],
-  [2, CharacterBuffIds_1.fillElementBuffId.Fire],
-  [3, CharacterBuffIds_1.fillElementBuffId.Thunder],
-  [4, CharacterBuffIds_1.fillElementBuffId.Wind],
-  [5, CharacterBuffIds_1.fillElementBuffId.Light],
-  [6, CharacterBuffIds_1.fillElementBuffId.Dark],
-]);
 let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -46,11 +38,11 @@ let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.
       (this.$te = void 0),
       (this.m1t = void 0),
       (this.Gin = void 0),
+      (this.Xte = void 0),
       (this.Nin = !1),
       (this.TriggerEnergy = 0),
-      (this.Oin = !1),
       (this.o$e = (t, e, i) => {
-        e < Number.EPSILON ? (this.kin = !1) : this.Fin(e);
+        this.Fin(e);
         var n = this.RoleElementType;
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
@@ -88,6 +80,7 @@ let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.
     (this.n$t = this.Entity.GetComponent(3)),
       (this.$te = this.Entity.GetComponent(159)),
       (this.m1t = this.Entity.GetComponent(160)),
+      (this.Xte = this.Entity.CheckGetComponent(191)),
       this.$te.AddListener(
         EAttributeId.Proto_ElementEnergy,
         this.o$e,
@@ -187,7 +180,7 @@ let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.
   }
   set kin(t) {
     ModManager_1.ModManager.Settings.NoCD
-      ? ((this.Oin = !0),
+      ? (// here should probably separate this
         this.m1t.AddBuff(CharacterBuffIds_1.buffId.ActivateQte, {
           InstigatorId: this.m1t.CreatureDataId,
           Reason: "RoleElementComponent激活QTE的Tag",
@@ -196,11 +189,9 @@ let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.
           InstigatorId: this.m1t.CreatureDataId,
           Reason: "RoleElementComponent激活Buff特效",
         }))
-      : this.Oin !== t &&
+      : this.kin !== t &&
         this.n$t?.IsAutonomousProxy &&
-        ((this.Oin = t),
-        (t = fillElementEnergyGe.get(this.RoleElementType)),
-        this.Oin
+        (t
           ? (this.m1t.AddBuff(
               ModelManager_1.ModelManager.GameModeModel.IsMulti
                 ? CharacterBuffIds_1.buffId.ActivateMultiQte
@@ -210,20 +201,15 @@ let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.
                 Reason: "RoleElementComponent获取激活QTE的Tag",
               }
             ),
-            this.m1t.AddBuff(t, {
-              InstigatorId: this.m1t.CreatureDataId,
-              Reason: "RoleElementComponent激活Buff特效",
-            }),
-            ModelManager_1.ModelManager.GameModeModel.IsMulti && this.$Pa())
-          : (this.m1t.RemoveBuff(
+            ModelManager_1.ModelManager.GameModeModel.IsMulti && this.JPa())
+          : this.m1t.RemoveBuff(
               CharacterBuffIds_1.buffId.ActivateQte,
               -1,
               "RoleElementComponent移除激活QTE的Tag"
-            ),
-            this.m1t.RemoveBuff(t, -1, "RoleElementComponent移除Buff特效")));
+            ));
   }
   get kin() {
-    return this.Oin;
+    return this.Xte.HasTag(166024319);
   }
   get RoleElementType() {
     return this.$te.GetCurrentValue(EAttributeId.Proto_ElementPropertyType);
@@ -237,18 +223,19 @@ let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.
     return this.$te.GetCurrentValue(EAttributeId.Proto_ElementEnergyMax);
   }
   Fin(t) {
-    t >= this.TriggerEnergy - Number.EPSILON &&
-      ((t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
-        this.Entity.Id,
-        { ParamType: 1 }
-      )?.IsControl()),
-      !this.kin) &&
-      t &&
-      FormationDataController_1.FormationDataController.GlobalIsInFight &&
-      ((this.kin = !0),
-      this.m1t.TriggerEvents(9, this.m1t, {
-        ElementType: this.RoleElementType,
-      }));
+    t >= this.TriggerEnergy - Number.EPSILON
+      ? ((t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
+          this.Entity.Id,
+          { ParamType: 1 }
+        )?.IsControl()),
+        !this.kin &&
+          t &&
+          FormationDataController_1.FormationDataController.GlobalIsInFight &&
+          ((this.kin = !0),
+          this.m1t.TriggerEvents(9, this.m1t, {
+            ElementType: this.RoleElementType,
+          })))
+      : (this.kin = !1);
   }
   ActivateFusion(t) {
     var t = t.GetComponent(82),
@@ -261,7 +248,7 @@ let RoleElementComponent = class RoleElementComponent extends EntityComponent_1.
       Reason: "ClearElementEnergy消耗元素能量",
     });
   }
-  $Pa() {
+  JPa() {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItemsInRange(
       this.n$t.ActorLocationProxy,
       RoleQteComponent_1.MAX_MULTI_QTE_DISTANCE

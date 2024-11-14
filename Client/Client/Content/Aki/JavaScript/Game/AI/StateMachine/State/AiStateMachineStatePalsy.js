@@ -72,7 +72,7 @@ class AiStateMachineStatePalsy extends AiStateMachineState_1.AiStateMachineState
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Resource",
-                15,
+                14,
                 "AiStateMachineStatePalsy 资源加载资产为空",
                 ["actorName", this.Node.ActorComponent?.Actor.GetName()],
                 ["pbDataId", t.GetPbDataId()],

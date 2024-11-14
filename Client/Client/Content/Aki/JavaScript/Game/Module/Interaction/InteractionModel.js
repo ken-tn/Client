@@ -148,7 +148,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Interaction",
-            18,
+            17,
             "获取交互默认退出选项失败，请检查配置InteractionConfig是否有Common_Exit"
           )
         : (this.I_i = this.y_i.交互选项组.Get(0));
@@ -193,8 +193,8 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return (
       (this.x_i = e.length),
       e.sort((t, e) => {
-        (t = t.GetComponent(182)),
-          (e = e.GetComponent(182)),
+        (t = t.GetComponent(183)),
+          (e = e.GetComponent(183)),
           (t = t.GetInteractController().InteractEntity.Priority);
         return e.GetInteractController().InteractEntity.Priority - t;
       }),
@@ -208,9 +208,9 @@ class InteractionModel extends ModelBase_1.ModelBase {
     var e;
     return (
       !!t?.Valid &&
-      !t.GetComponent(213)?.GetIsDisableOneClickCollection() &&
+      !t.GetComponent(225)?.GetIsDisableOneClickCollection() &&
       !(
-        !(e = t.GetComponent(182))?.IsPawnInteractive() ||
+        !(e = t.GetComponent(183))?.IsPawnInteractive() ||
         (!t.GetComponent(105)?.IsDropItem() &&
           !e.IsCollection() &&
           (!e.IsAnimationItem() ||
@@ -247,7 +247,8 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return false;
   }
   InteractPawn(t) {
-    const e = t.GetComponent(182),
+    // see GetInteractController
+    const e = t.GetComponent(183),
       i =
         ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
           0
@@ -297,7 +298,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Interaction",
-            37,
+            36,
             "[交互界面提前返回] bAllowPush为false"
           );
     } else {
@@ -345,7 +346,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Interaction",
-              19,
+              18,
               "交互选项配置丢失，请确认前后端配置是否一致"
             ),
           -1)
@@ -361,7 +362,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   GetInteractController(t) {
     if (t) {
-      t = t.GetComponent(182);
+      t = t.GetComponent(183);
       if (t) return t.GetInteractController();
     }
   }
@@ -369,7 +370,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     this.A_i !== t &&
       ((this.A_i = t),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Interaction", 37, "切换交互目标", ["entityId", t]),
+        Log_1.Log.Debug("Interaction", 36, "切换交互目标", ["entityId", t]),
       InputDistributeController_1.InputDistributeController.RefreshInputTag());
   }
   get CurrentInteractEntityId() {
@@ -413,7 +414,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
       }
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("World", 37, "不存在InteractOption配置文件。", [
+        Log_1.Log.Warn("World", 36, "不存在InteractOption配置文件。", [
           "Path",
           e,
         ]);
@@ -456,7 +457,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return this.L_i;
   }
   LockInteraction(t, e) {
-    t = t?.GetComponent(182);
+    t = t?.GetComponent(183);
     t && t.Valid && t.SetServerLockInteract(e, "Interacting Notify");
   }
   GetInteractEntityIds() {
@@ -467,7 +468,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelEvent",
-          37,
+          36,
           "交互锁定状态不支持多重锁定，请做到配置成对"
         )
       : ((this.LockInteractionEntity = t),
@@ -484,7 +485,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     this.LockInteractionEntity &&
       ((t = EntitySystem_1.EntitySystem.GetComponent(
         this.LockInteractionEntity,
-        182
+        183
       )),
       (this.LockInteractionEntity = void 0),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(1),

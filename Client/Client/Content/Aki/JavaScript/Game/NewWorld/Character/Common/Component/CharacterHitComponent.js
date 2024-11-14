@@ -57,6 +57,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   EntityManager_1 = require("../../../../Manager/ModFuncs/EntityManager"),
   KillAura_1 = require("../../../../Manager/ModFuncs/KillAura"),
+  ModManager_1 = require("../../../../Manager/ModManager"),
   BattleUiDefine_1 = require("../../../../Module/BattleUi/BattleUiDefine"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
   GamepadController_1 = require("../../../../Module/Gamepad/GamepadController"),
@@ -67,7 +68,6 @@ const UE = require("ue"),
   BulletStaticFunction_1 = require("../../../Bullet/BulletStaticMethod/BulletStaticFunction"),
   BulletTypes_1 = require("../../../Bullet/BulletTypes"),
   BulletUtil_1 = require("../../../Bullet/BulletUtil"),
-  ModManager_1 = require("../../../../Manager/ModManager"),
   FightLibrary_1 = require("../Blueprint/Utils/FightLibrary"),
   CharacterBuffIds_1 = require("./Abilities/CharacterBuffIds"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
@@ -119,7 +119,7 @@ class OnHitMaterialAction {
       (this.vHr = i),
       (this.TDe = void 0),
       (this.vJ = 0),
-      (this.ESa = 0),
+      (this.mSa = 0),
       (this.eXs = void 0),
       (this.tXs = 0),
       (this.iXs = 0),
@@ -127,15 +127,15 @@ class OnHitMaterialAction {
       (this.oXs = !1),
       (this.nXs = 0),
       (this.PHo = 0),
-      (this.ySa = void 0),
-      (this.ISa = void 0),
+      (this.dSa = void 0),
+      (this.CSa = void 0),
       (this.aXs = !1),
       (this.FFe = 0),
       (this.kC = (t) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Battle",
-            21,
+            20,
             "OnHitMaterialAction Loop",
             ["Delta", t],
             ["Path", this.eXs],
@@ -143,7 +143,7 @@ class OnHitMaterialAction {
           ),
           (this.tXs += t * (this.vHr?.CurrentTimeScale ?? 1)),
           !this.oXs && this.IsDelayFinish()
-            ? this.S9e(this.ySa, this.ISa)
+            ? this.S9e(this.dSa, this.CSa)
             : this.oXs &&
               this.r$t() &&
               (this.Stop(),
@@ -171,19 +171,19 @@ class OnHitMaterialAction {
     return this.aXs
       ? this.PHo === i
         ? (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Battle", 21, "同一个角色新的更优先"),
+            Log_1.Log.Debug("Battle", 20, "同一个角色新的更优先"),
           !0)
         : ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Id !==
             this.PHo ||
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Battle",
-              21,
+              20,
               "不同角色，前台角色更优先，如果都不在前台，新的更优先"
             ),
           !1)
       : (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 21, "当前没有播放就直接播放"),
+          Log_1.Log.Debug("Battle", 20, "当前没有播放就直接播放"),
         !0);
   }
   Start(t, i, e, s, h = void 0) {
@@ -194,13 +194,13 @@ class OnHitMaterialAction {
       (this.nXs = e),
       (this.PHo = s),
       (this.oXs = !1),
-      (this.ySa = void 0),
-      (this.ISa = void 0),
+      (this.dSa = void 0),
+      (this.CSa = void 0),
       (this.tXs = 0),
       this.FFe++,
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 21, "OnHitMaterialAction 行为开始"),
-      this.TSa(this.FFe, t, h),
+        Log_1.Log.Debug("Battle", 20, "OnHitMaterialAction 行为开始"),
+      this.gSa(this.FFe, t, h),
       TimerSystem_1.TimerSystem.Has(this.TDe) ||
         (this.TDe = TimerSystem_1.TimerSystem.Forever(
           this.kC,
@@ -210,18 +210,18 @@ class OnHitMaterialAction {
           "[OnHitMaterial.Loop]"
         ));
   }
-  async TSa(t, i, e) {
+  async gSa(t, i, e) {
     var s = new Array(2),
       h = [];
-    h.push(this.LSa(i, s, 0)),
-      e && h.push(this.LSa(e, s, 1)),
+    h.push(this.fSa(i, s, 0)),
+      e && h.push(this.fSa(e, s, 1)),
       await Promise.all(h),
       s[0]
         ? t !== this.FFe
           ? Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Battle",
-              21,
+              20,
               "有优先级更高的资源替代了正要播放的材质",
               ["oldPath", i],
               ["newPath", this.eXs]
@@ -239,15 +239,15 @@ class OnHitMaterialAction {
                   t,
                   "OnHitMaterialAction 加载完已经Delay完成, 直接播放"
                 )
-              : ((this.ySa = e), (this.ISa = t)))
+              : ((this.dSa = e), (this.CSa = t)))
         : ((this.oXs = !1),
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 21, "无法找到材质效果", [
+            Log_1.Log.Error("Battle", 20, "无法找到材质效果", [
               "materialDataPath",
               this.eXs,
             ]));
   }
-  async LSa(t, e, s) {
+  async fSa(t, e, s) {
     const h = new CustomPromise_1.CustomPromise();
     return (
       ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -264,7 +264,7 @@ class OnHitMaterialAction {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
-        21,
+        20,
         e,
         ["Path", this.eXs],
         ["Duration", this.iXs],
@@ -273,32 +273,32 @@ class OnHitMaterialAction {
       ),
       (this.oXs = !0),
       t && (this.vJ = this.Z$s.AddMaterialControllerData(t)),
-      i && (this.ESa = this.Z$s.AddMaterialControllerData(i));
+      i && (this.mSa = this.Z$s.AddMaterialControllerData(i));
   }
   Stop(t = !1) {
     this.vJ &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
-          21,
+          20,
           "OnHitMaterialAction 停止播放",
           ["Path", this.eXs],
           ["Force", t],
           ["Elapsed", this.tXs]
         ),
       this.Z$s.RemoveMaterialControllerData(this.vJ)),
-      this.ESa && this.Z$s.RemoveMaterialControllerData(this.ESa),
+      this.mSa && this.Z$s.RemoveMaterialControllerData(this.mSa),
       (this.vJ = 0),
-      (this.ESa = 0),
-      (this.ySa = void 0),
-      (this.ISa = void 0),
+      (this.mSa = 0),
+      (this.dSa = void 0),
+      (this.CSa = void 0),
       (this.oXs = !1);
   }
   End() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
-        21,
+        20,
         "OnHitMaterialAction 行为结束",
         ["Path", this.eXs],
         ["Elapsed", this.tXs]
@@ -328,6 +328,7 @@ let CharacterHitComponent =
         (this.lVr = []),
         (this._Vr = []),
         (this.cVr = 0),
+        (this.Leh = !1),
         (this.mVr = void 0),
         (this.dVr = void 0),
         (this.CVr = void 0),
@@ -339,11 +340,13 @@ let CharacterHitComponent =
         (this.BeHitIgnoreRotate = !1),
         (this.CounterAttackInfoInternal = void 0),
         (this.VisionCounterAttackInfoInternal = void 0),
+        (this.WindupAttackInfoInternal = void 0),
         (this.BeHitTime = 0),
         (this.NeedCalculateFallInjure = !1),
         (this.BeHitAnim = 0),
         (this.AcceptedNewBeHit = !1),
         (this.EnterFk = !1),
+        (this.vll = !1),
         (this.BeHitDirect = Vector_1.Vector.Create()),
         (this.BeHitLocation = Vector_1.Vector.Create()),
         (this.BeHitSocketName = void 0),
@@ -365,22 +368,19 @@ let CharacterHitComponent =
         (this.hXs = void 0),
         (this.xoa = void 0),
         (this.Uha = void 0),
-        (this.LVr = () => {
-          this.DeActiveStiff("落地");
-        }),
         (this.DVr = (t, i) => {
           i === CharacterUnifiedStateTypes_1.ECharPositionState.Ground
             ? t === CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
               this.DoubleHitInAirEffect?.Valid
               ? TimerSystem_1.TimerSystem.Next(this.RVr, void 0, "落地击飞")
-              : this.LVr()
+              : this.DeActiveStiff("落地")
             : t === CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
               this.DoubleHitInAirEffect.Finish();
         }),
         (this.PVr = void 0),
         (this.UVr = !1),
         (this.AVr = 0),
-        (this.xka = -1),
+        (this.BFa = -1),
         (this.xVr = Vector_1.Vector.Create()),
         (this.wVr = Vector_1.Vector.Create()),
         (this.oHo = Transform_1.Transform.Create()),
@@ -400,9 +400,6 @@ let CharacterHitComponent =
             this.BVr.MultiplyEqual(
               (MASS_RATE / this.EVr.GetCurrentValue(EAttributeId.Proto_Mass)) *
                 (this.vHr?.CurrentTimeScale ?? 1)
-            ),
-            this.Entity.GetComponent(161).SetMoveState(
-              CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp
             ),
             t.Valid &&
               (this.Hte.ActorQuatProxy.RotateVector(this.BVr, this.qVr),
@@ -446,7 +443,7 @@ let CharacterHitComponent =
         (this.tVr = this.Entity.GetComponent(60)),
         (this.vHr = this.Entity.GetComponent(110)),
         (this.EVr = this.Entity.GetComponent(159)),
-        (this.SVr = this.Entity.GetComponent(190)),
+        (this.SVr = this.Entity.GetComponent(191)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharOnPositionStateChanged,
@@ -599,13 +596,31 @@ let CharacterHitComponent =
           );
     }
     SetCounterAttackInfo(t) {
-      (this.CounterAttackInfoInternal = t), this.URe(1124064628);
+      (this.CounterAttackInfoInternal = t),
+        this.URe(1124064628),
+        this.URe(-1793427578);
     }
     SetVisionCounterAttackInfo(t) {
       (this.VisionCounterAttackInfoInternal = t), this.URe(-1576849243);
     }
+    SetWindupAttackInfo(t) {
+      if (
+        ((this.WindupAttackInfoInternal = t), this.URe(-1793427578), this.$zo)
+      ) {
+        var i = this.WindupAttackInfoInternal?.Buff,
+          e = i?.Num() ?? 0;
+        for (let t = 0; t < e; t++) {
+          var s = i.Get(t);
+          0 < s &&
+            this.$zo.AddBuff(s, {
+              InstigatorId: this.$zo.CreatureDataId,
+              Reason: "开始前摇ANS添加buff",
+            });
+        }
+      }
+    }
     SetCounterAttackAnsInfo(t) {
-      this.xka = t;
+      this.BFa = t;
     }
     GetRageMode() {
       return this.dVr;
@@ -617,7 +632,7 @@ let CharacterHitComponent =
           )),
           this.dVr ||
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Character", 15, "读取RageModeConfig失败", [
+              Log_1.Log.Error("Character", 14, "读取RageModeConfig失败", [
                 "id",
                 this.RageModeId,
               ])))
@@ -633,7 +648,7 @@ let CharacterHitComponent =
           )),
           this.CVr ||
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Character", 15, "读取白条表失败", [
+              Log_1.Log.Error("Character", 14, "读取白条表失败", [
                 "id",
                 this.HardnessModeId,
               ])))
@@ -644,66 +659,66 @@ let CharacterHitComponent =
         this.kVr(enterFkForbidHitTagIds) &&
           this.HVr(EntitySystem_1.EntitySystem.Get(i.BulletEntityId));
       else if (
-        (!this.cBe?.CurrentSkill?.Active ||
-          !this.cBe.CurrentSkill.SkillInfo.OverrideHit) &&
-        e
-      ) {
-        if (
-          ((this.rVr = i),
-          (this.LastHitData = i),
-          (this.iVr = t),
-          (this.EnterFk = h),
-          (this.sVr = r),
-          (this.cVr = o ? 1 : a ? 2 : 0),
-          (this.fVr = !1),
-          (this.nVr = !0),
-          (this.BeHitTime = UE.GameplayStatics.GetTimeSeconds(this.Hte.Actor)),
-          this.BeHitLocation.DeepCopy(i.HitPosition),
-          (this.NeedCalculateFallInjure = !0),
-          0 < _ && !h)
-        ) {
-          if (this.OVr(1447214865) && !this.IsTriggerCounterAttack)
-            return void this.jVr();
+        !this.cBe?.CurrentSkill?.Active ||
+        !this.cBe.CurrentSkill.SkillInfo.OverrideHit
+      )
+        if (((this.rVr = i), this.WVr(), e)) {
           if (
-            (this.WVr(),
-            this.IsTriggerCounterAttack &&
-              this.CounterAttackInfoInternal &&
-              this.KVr(this.rVr),
-            (this.gVr = this.oVr?.TrySwitchHitState(l, !1) ?? 0),
-            !this.oVr || this.gVr)
+            ((this.LastHitData = i),
+            (this.iVr = t),
+            (this.EnterFk = h),
+            (this.sVr = r),
+            (this.cVr = o ? 1 : a ? 2 : 0),
+            (this.fVr = !1),
+            (this.nVr = !0),
+            (this.BeHitTime = UE.GameplayStatics.GetTimeSeconds(
+              this.Hte.Actor
+            )),
+            this.BeHitLocation.DeepCopy(i.HitPosition),
+            (this.NeedCalculateFallInjure = !0),
+            0 < _ && !h)
           ) {
-            this.BeHitAnim = l;
-            e = i.ReBulletData.Base;
-            let t = e.BeHitEffect;
-            this.sVr && (t = e.HitEffectWeakness);
-            r = ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(
-              this.iVr,
-              t
-            );
-            r
-              ? (CombatLog_1.CombatLog.Info("Hit", this.Entity, "远端受击"),
-                this.Hte.SetMoveControlled(!1, 2, "远端受击"),
-                s &&
-                  this.Entity.GetComponent(3).SetActorRotation(
-                    n,
-                    "受击者旋转",
-                    !1
-                  ),
-                (this.BeHitAnim = l),
-                this.QVr(r))
-              : this.HVr(EntitySystem_1.EntitySystem.Get(i.BulletEntityId));
-          } else this.HVr(EntitySystem_1.EntitySystem.Get(i.BulletEntityId));
-        }
-        !this.EnterFk ||
-          ((o = t.GetComponent(1))?.Valid &&
-            (this.Hte.ActorLocationProxy.Subtraction(
-              o.ActorLocationProxy,
-              this.BeHitDirect
-            ),
-            this.BeHitDirect.Normalize())) ||
-          this.Hte.ActorForwardProxy.Multiply(-1, this.BeHitDirect),
-          this.jVr();
-      }
+            if (this.OVr(1447214865) && !this.IsTriggerCounterAttack)
+              return void this.jVr();
+            if (
+              (this.IsTriggerCounterAttack &&
+                this.CounterAttackInfoInternal &&
+                this.KVr(this.rVr),
+              (this.gVr = this.oVr?.TrySwitchHitState(l, !1) ?? 0),
+              !this.oVr || this.gVr)
+            ) {
+              this.BeHitAnim = l;
+              e = i.ReBulletData.Base;
+              let t = e.BeHitEffect;
+              this.sVr && (t = e.HitEffectWeakness);
+              r = ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(
+                this.iVr,
+                t
+              );
+              r
+                ? (CombatLog_1.CombatLog.Info("Hit", this.Entity, "远端受击"),
+                  this.Hte.SetMoveControlled(!1, 2, "远端受击"),
+                  s &&
+                    this.Entity.GetComponent(3).SetActorRotation(
+                      n,
+                      "受击者旋转",
+                      !1
+                    ),
+                  (this.BeHitAnim = l),
+                  this.QVr(r))
+                : this.HVr(EntitySystem_1.EntitySystem.Get(i.BulletEntityId));
+            } else this.HVr(EntitySystem_1.EntitySystem.Get(i.BulletEntityId));
+          }
+          !this.EnterFk ||
+            ((o = t.GetComponent(1))?.Valid &&
+              (this.Hte.ActorLocationProxy.Subtraction(
+                o.ActorLocationProxy,
+                this.BeHitDirect
+              ),
+              this.BeHitDirect.Normalize())) ||
+            this.Hte.ActorForwardProxy.Multiply(-1, this.BeHitDirect),
+            this.jVr();
+        } else this.rVr = void 0;
     }
     XVr(t) {
       this.Hte.CreatureData.GetEntityType() !==
@@ -712,7 +727,7 @@ let CharacterHitComponent =
         (this.tVr.CollectSampleAndSend(!0),
         (i = this.Hte.CreatureData.GetPbDataId()),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Character", 51, "怪物受击，主动同步位置", [
+          Log_1.Log.Debug("Character", 50, "怪物受击，主动同步位置", [
             "PbDataId",
             i,
           ]));
@@ -748,7 +763,7 @@ let CharacterHitComponent =
       e = Protocol_1.Aki.Protocol.P3n.create();
       (e.TWn = i),
         this.lra(e),
-        CombatMessage_1.CombatNet.Call(26643, this.Entity, e, (t) => {
+        CombatMessage_1.CombatNet.Call(28203, this.Entity, e, (t) => {
           h && this.oVr?.ConfirmState(h);
         });
     }
@@ -768,6 +783,7 @@ let CharacterHitComponent =
         (t.TWn.CWn = 0));
     }
     OnHitOne(t, i, e, s, h, r, o, a, n) {
+      CharacterHitComponent_1.$Vr.Start(),
         (this.rVr = t),
         (this.LastHitData = t),
         (this.iVr = EntitySystem_1.EntitySystem.Get(t.Attacker.Id)),
@@ -778,17 +794,33 @@ let CharacterHitComponent =
         (this._Vr = a),
         (this.IVr = h),
         (this.fVr = !1),
+        (this.vll = !1),
+        CharacterHitComponent_1.YVr.Start(),
         this.JVr(),
         this.zVr(e),
-        this.IsTriggerCounterAttack && this.ZVr(),
+        this.IsTriggerCounterAttack ? this.ZVr() : (this.Leh = this.Aeh(e)),
+        CharacterHitComponent_1.YVr.Stop(),
+        CharacterHitComponent_1.e6r.Start(),
         this.t6r(),
+        CharacterHitComponent_1.e6r.Stop(),
+        CharacterHitComponent_1.i6r.Start(),
         this.o6r(),
+        CharacterHitComponent_1.i6r.Stop(),
         this.iwr(e),
+        CharacterHitComponent_1.r6r.Start(),
         this.n6r(),
+        CharacterHitComponent_1.r6r.Stop(),
+        CharacterHitComponent_1.s6r.Start(),
         this.a6r(e),
+        CharacterHitComponent_1.s6r.Stop(),
         GlobalData_1.GlobalData.Networking() && this.XVr(e),
+        CharacterHitComponent_1.h6r.Start(),
         this.l6r(),
+        CharacterHitComponent_1.h6r.Stop(),
+        CharacterHitComponent_1.pSa.Start(),
         this.ProcessOnHitMaterial(),
+        CharacterHitComponent_1.pSa.Stop(),
+        CharacterHitComponent_1.$Vr.Stop(),
         this.jVr();
     }
     OnHit(t, i, e, s, h, r, o, a, n) {
@@ -852,11 +884,12 @@ let CharacterHitComponent =
         : (this.cVr = 0);
     }
     u6r(t) {
-      if (!t.Data.Logic.CanCounterAttack) return !1;
+      var i = t.Data.Logic;
+      if (!i.CanCounterAttack) return !1;
       if (!this.OVr(1124064628))
         return (
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Character", 21, "CheckNormalCounterAttack无Tag"),
+            Log_1.Log.Debug("Character", 20, "CheckNormalCounterAttack无Tag"),
           !1
         );
       if (this.CounterAttackInfoInternal.QTE弹刀忽略角度距离检测) {
@@ -866,41 +899,51 @@ let CharacterHitComponent =
             .GetSkillInfo(t.BulletInitParams.SkillId));
         if (t && 4 === t.SkillGenre) return !0;
       }
-      var i = this.rVr.HitPart,
-        e = this.CounterAttackInfoInternal.弹反部位,
-        s = e.Num();
-      let h = !1;
-      if (i.op_Equality(FNameUtil_1.FNameUtil.NONE) && 0 < s)
+      if (i.CounterAttackIgnoreAngle && i.CounterAttackIgnoreDist)
+        return (
+          BulletConstant_1.BulletConstant.OpenHitActorLog &&
+            Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("Test", 20, "检查弹反 不需要检查角度和距离", [
+              "Actor",
+              this.Hte.Actor.GetName(),
+            ]),
+          !0
+        );
+      var e = this.rVr.HitPart,
+        s = this.CounterAttackInfoInternal.弹反部位,
+        h = s.Num();
+      let r = !1;
+      if (e.op_Equality(FNameUtil_1.FNameUtil.NONE) && 0 < h)
         return (
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Character", 21, "检查弹反 击中部位"),
+            Log_1.Log.Debug("Character", 20, "检查弹反 击中部位"),
           !1
         );
       BulletConstant_1.BulletConstant.OpenHitActorLog &&
         Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Test", 21, "检查弹反 击中部位", [
+        Log_1.Log.Debug("Test", 20, "检查弹反 击中部位", [
           "部位",
-          i.toString(),
+          e.toString(),
         ]);
-      for (let t = 0; t < s; t++) {
-        var r = e.Get(t);
+      for (let t = 0; t < h; t++) {
+        var o = s.Get(t);
         if (
           (BulletConstant_1.BulletConstant.OpenHitActorLog &&
             Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Test", 21, "检查弹反 配置部位", [
+            Log_1.Log.Debug("Test", 20, "检查弹反 配置部位", [
               "部位",
-              r.toString(),
+              o.toString(),
             ]),
-          r.op_Equality(i))
+          o.op_Equality(e))
         ) {
-          h = !0;
+          r = !0;
           break;
         }
       }
-      if (!h && 0 < s) return !1;
+      if (!r && 0 < h) return !1;
       this.xVr.FromUeVector(this.iVr.GetComponent(3).ActorLocationProxy),
-        h
-          ? ((t = this.Hte.GetBoneLocation(i.toString())),
+        r
+          ? ((t = this.Hte.GetBoneLocation(e.toString())),
             this.wVr.FromUeVector(t),
             DEBUG &&
               UE.KismetSystemLibrary.DrawDebugSphere(
@@ -913,8 +956,8 @@ let CharacterHitComponent =
               ),
             this.xVr.SubtractionEqual(this.wVr))
           : this.xVr.SubtractionEqual(this.Hte.ActorLocationProxy);
-      var t = this.xVr.Size(),
-        o =
+      var i = this.xVr.Size(),
+        t =
           (this.xVr.Normalize(MathCommon_1.MathCommon.KindaSmallNumber),
           Vector_1.Vector.DotProduct(this.Hte.ActorForwardProxy, this.xVr)),
         a = Math.cos(
@@ -927,18 +970,25 @@ let CharacterHitComponent =
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Test",
-            21,
+            20,
             "检查弹反 最大距离和最大触发夹角",
-            ["当前距离", t],
+            ["当前距离", i],
             ["最大触发距离", n],
-            ["夹角cos值", o],
+            ["夹角cos值", t],
             ["最大触发夹角cos值", a]
           ),
-        t < n && a < o
+        i < n && a < t
       );
     }
     c6r(t) {
       return !!t.Data.Logic.CanVisionCounterAttack && !!this.OVr(-1576849243);
+    }
+    Aeh(t) {
+      return (
+        !!this.Hte.CreatureData.IsMonster() &&
+        !!t?.Data.Logic.CanBreakWindupAttack &&
+        !!this.OVr(-1793427578)
+      );
     }
     iwr(t) {
       var i = this.rVr.ReBulletData;
@@ -988,7 +1038,7 @@ let CharacterHitComponent =
                 : Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Character",
-                    21,
+                    20,
                     "",
                     ["自定义连携顿帧单位key", t],
                     ["子弹ID", this.rVr.BulletId]
@@ -1044,12 +1094,14 @@ let CharacterHitComponent =
           s = s ? s.Scale : Vector_1.Vector.OneVectorProxy,
           h =
             (this.oHo.Set(h, this.rVr.HitEffectRotation.Quaternion(), s),
+            CharacterHitComponent_1.rHo.Start(),
             this.rVr.Attacker?.GetComponent(44));
         let e = !1;
-        (0, RegisterComponent_1.isComponentInstance)(h, 174) &&
+        (0, RegisterComponent_1.isComponentInstance)(h, 175) &&
           (e = "p1" === h.Priority.State);
         var r = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
           this.rVr.Attacker,
+          !0,
           e
         );
         const _ = i.AudioOnHit;
@@ -1069,6 +1121,7 @@ let CharacterHitComponent =
             void 0,
             a ? n : void 0
           );
+        CharacterHitComponent_1.rHo.Stop();
       }
     }
     o6r() {
@@ -1217,11 +1270,12 @@ let CharacterHitComponent =
           };
     }
     C6r(t) {
-      t = Object.assign(t);
+      var t = Object.assign(t),
+        i = this.iVr.GetComponent(49)?.GetAttributeHolder();
       return (
-        (t.Attacker = this.iVr.GetComponent(49).GetAttributeHolder()),
+        i && (t.Attacker = i),
         (t.Target =
-          this.Entity.GetComponent(49)?.GetAttributeHolder() ?? this.Entity),
+          this.Entity.GetComponent(49)?.GetAttributeHolder(!0) ?? this.Entity),
         t
       );
     }
@@ -1269,7 +1323,8 @@ let CharacterHitComponent =
       }
     }
     HVr(t) {
-      !t ||
+      this.kVr([1940180710, -1388400236]) ||
+        !t ||
         t.Data.Base.DamageId <= 0 ||
         ((this.EnterFk = !0),
         (t = t.GetBulletInfo()),
@@ -1285,7 +1340,9 @@ let CharacterHitComponent =
     a6r(i) {
       if (
         (this.IsTriggerCounterAttack &&
-          (this.KVr(this.rVr)),
+          (CharacterHitComponent_1.E6r.Start(),
+          this.KVr(this.rVr),
+          CharacterHitComponent_1.E6r.Stop()),
         this.kVr(forbidHitTagIds))
       )
         (this.nVr = !1), this.kVr(enterFkForbidHitTagIds) && this.HVr(i);
@@ -1306,13 +1363,15 @@ let CharacterHitComponent =
             !(0 < s || this.ToughDecreaseValue <= 0 || this.OVr(1447214865)) ||
               (this.IsTriggerCounterAttack && this.fVr))
           ) {
+            CharacterHitComponent_1.S6r.Start();
             let t = 0;
-            e && (t = this.fVr ? 7 : e.被击动作),
+            e && (t = this.Leh || this.fVr ? 7 : e.被击动作),
               (t = this.y6r(t)),
               (this.oVr &&
               ((this.gVr = this.oVr.TrySwitchHitState(t, !0)), !this.gVr)
                 ? (this.HVr(i), CharacterHitComponent_1.S6r)
-                : (RoleAudioController_1.RoleAudioController.OnPlayerIsHit(
+                : ((this.vll = !0),
+                  RoleAudioController_1.RoleAudioController.OnPlayerIsHit(
                     this.Entity
                   ),
                   CombatLog_1.CombatLog.Info("Hit", this.Entity, "受击", [
@@ -1337,6 +1396,8 @@ let CharacterHitComponent =
                         this.rVr.HitEffect.受击朝向Z轴偏转
                       )),
                   this.I6r(),
+                  CharacterHitComponent_1.S6r.Stop(),
+                  CharacterHitComponent_1.T6r.Start(),
                   this.VVr() &&
                     (this.BeHitAnim =
                       BulletUtil_1.BulletUtil.GetOverrideHitAnimByAngle(
@@ -1347,7 +1408,7 @@ let CharacterHitComponent =
                   this.L6r(e),
                   this.M6r(lightHits.has(this.BeHitAnim) ? 1 : 2),
                   CharacterHitComponent_1.T6r)
-              );
+              ).Stop();
           } else this.HVr(i);
         }
       }
@@ -1359,7 +1420,6 @@ let CharacterHitComponent =
     l6r() {
       if (this.rVr) {
         let t = 0;
-        var i = this.nVr && !this.EnterFk;
         2 !== this.cVr ||
           this.fVr ||
           ((t = this.VisionCounterAttackInfoInternal.对策事件ID),
@@ -1367,15 +1427,16 @@ let CharacterHitComponent =
             this.VisionCounterAttackInfoInternal.对策事件ID,
             this.rVr.ToUeHitInformation()
           ));
-        var e = EntitySystem_1.EntitySystem.Get(
+        var i,
+          e = EntitySystem_1.EntitySystem.Get(
             this.rVr.BulletEntityId
           ).GetBulletInfo(),
           e = Number(e.BulletInitParams.SkillId),
-          i = {
+          e = {
             Attacker: this.iVr,
             Target: this.Entity,
             BulletId: this.rVr.BulletId,
-            HasBeHitAnim: i,
+            HasBeHitAnim: this.vll,
             BeHitAnim: this.BeHitAnim,
             VisionCounterAttackId: t,
             CounterAttackType: this.cVr,
@@ -1388,47 +1449,42 @@ let CharacterHitComponent =
             this.iVr,
             EventDefine_1.EEventName.CharHitLocal,
             this.rVr,
-            i
+            e
           ),
-          (e = this.iVr.GetComponent(0))) &&
-          (e = e.IsVision()
-            ? this.iVr.GetComponent(49)?.GetAttributeHolder()
+          (i = this.iVr.GetComponent(0))) &&
+          (i = i.IsVision()
+            ? this.iVr.GetComponent(49)?.GetAttributeHolder() ?? this.iVr
             : this.iVr) &&
           SceneTeamController_1.SceneTeamController.EmitEvent(
-            e,
+            i,
             EventDefine_1.EEventName.CharHitIncludingVision,
             this.rVr,
-            i
+            e
           ),
           SceneTeamController_1.SceneTeamController.EmitEvent(
             this.Entity,
             EventDefine_1.EEventName.CharBeHitLocal,
             this.rVr,
-            i
+            e
           ),
           GlobalData_1.GlobalData.BpEventManager.当有角色受击时.Broadcast(
             this.Hte.Actor,
             this.rVr.ToUeHitInformation()
-          );
+          ),
+          this.Entity.GetComponent(68)?.Tick(0);
       } else CombatLog_1.CombatLog.Error("Hit", this.Entity, "HitData为空");
     }
     L6r(t) {
-      this.OVr(504239013) &&
-        (i = this.Entity.GetComponent(164)).Valid &&
-        i.CharacterMovement.SetMovementMode(3),
+      if (
+        (this.OVr(504239013) &&
+          (i = this.Entity.GetComponent(164)).Valid &&
+          i.CharacterMovement.SetMovementMode(3),
         this.FVr(!0),
         this.Entity.GetComponent(161).ExitAimStatus(),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharBeHitAnim
-        );
-      var i = this.Entity.GetComponent(163);
-      if (
-        (i.Valid &&
-          i.MainAnimInstance &&
-          (i.MainAnimInstance.Montage_Stop(0),
-          i.MainAnimInstance.ForceSetCurrentMontageBlendTime(0, void 0)),
-        this.D6r(),
+        ),
         this.OVr(-1732582420))
       ) {
         var i = t.地面受击滞空,
@@ -1483,16 +1539,10 @@ let CharacterHitComponent =
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharBeHitAnim
-        );
-      var i = this.Entity.GetComponent(163);
-      i.Valid &&
-        i.MainAnimInstance &&
-        (i.MainAnimInstance.Montage_Stop(0),
-        i.MainAnimInstance.ForceSetCurrentMontageBlendTime(0, void 0)),
-        this.D6r(),
+        ),
         4 === this.BeHitAnim ? this.P6r(t, !1) : this.A6r(t);
     }
-    D6r() {
+    ActivateHitStateByHitAnim() {
       switch (this.BeHitAnim) {
         case 0:
         case 1:
@@ -1536,9 +1586,6 @@ let CharacterHitComponent =
         this.BVr.FromUeVector(i ? t.空中受击速度 : t.地面受击速度),
         (i = this.EVr?.GetCurrentValue(EAttributeId.Proto_Mass) ?? MASS_RATE),
         this.BVr.MultiplyEqual(MASS_RATE / i),
-        this.Entity.GetComponent(161).SetMoveState(
-          CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp
-        ),
         s.GetWhirlpoolEnable() && s.EndWhirlpool(),
         3 !== s.CharacterMovement.MovementMode &&
           s.CharacterMovement.SetMovementMode(3),
@@ -1576,7 +1623,7 @@ let CharacterHitComponent =
     ZVr() {
       RoleAudioController_1.RoleAudioController.PlayRoleAudio(this.iVr, 2005);
       var t = this.iVr.CheckGetComponent(160);
-      switch ((this.cBe?.SetCurSkillAnIndex(this.xka), this.cVr)) {
+      switch ((this.cBe?.SetCurSkillAnIndex(this.BFa), this.cVr)) {
         case 1:
           0 < this.CounterAttackInfoInternal.攻击者应用BuffID &&
             SkillMessageController_1.SkillMessageController
@@ -1663,7 +1710,7 @@ let CharacterHitComponent =
           0 < this.CounterAttackInfoInternal.ANS期间被弹反者生效的BuffID &&
           SkillMessageController_1.SkillMessageController
             .CloseMonsterServerLogic &&
-          (this.cBe?.SetCurSkillAnIndex(this.xka),
+          (this.cBe?.SetCurSkillAnIndex(this.BFa),
           this.$zo.AddBuffFromAnimNotify(
             this.CounterAttackInfoInternal.ANS期间被弹反者生效的BuffID,
             void 0,
@@ -1689,8 +1736,9 @@ let CharacterHitComponent =
             "结束弹反ANS附加的buff"
           ),
         this.ARe(1124064628),
+        this.ARe(-1793427578),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Character", 21, "CounterAttackEnd", [
+          Log_1.Log.Debug("Character", 20, "CounterAttackEnd", [
             "CounterAttackType",
             this.cVr,
           ]),
@@ -1698,6 +1746,16 @@ let CharacterHitComponent =
     }
     VisionCounterAttackEnd() {
       this.ARe(-1576849243);
+    }
+    WindupAttackEnd() {
+      if ((this.ARe(-1793427578), (this.Leh = !1), this.$zo)) {
+        var i = this.WindupAttackInfoInternal?.Buff,
+          e = i?.Num() ?? 0;
+        for (let t = 0; t < e; t++) {
+          var s = i.Get(t);
+          0 < s && this.$zo.RemoveBuff(s, -1, "结束前摇ANS的buff");
+        }
+      }
     }
     B6r() {
       if (!this.CounterAttackInfoInternal.受击动画忽略Buff检测 && this.$zo) {
@@ -1734,9 +1792,10 @@ let CharacterHitComponent =
           this.Hte.SetActorRotation(e.ToUeRotator(), "OnHitByWall", !1),
           this.L6r(t));
     }
-    OnReboundSuccess(t, i) {
+    OnReboundSuccess(t, i, e) {
       var e = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
-          this.Entity
+          this.Entity,
+          e
         ),
         i = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
@@ -1749,12 +1808,16 @@ let CharacterHitComponent =
         EffectSystem_1.EffectSystem.IsValid(i) &&
         ((t = this.vHr) &&
           ((e = t.CurrentTimeScale),
-          EffectSystem_1.EffectSystem.SetTimeScale(i, e * this.TimeDilation)),
+          EffectSystem_1.EffectSystem.SetTimeScale(
+            i,
+            e * this.TimeDilation,
+            !0
+          )),
         this.MVr.push(i));
     }
     static HitEndRequest(t) {
       var i = Protocol_1.Aki.Protocol.B3n.create();
-      CombatMessage_1.CombatNet.Call(29578, t, i, this.O6r);
+      CombatMessage_1.CombatNet.Call(22039, t, i, this.O6r);
     }
     static PreHitNotify(t, i) {
       return (
@@ -1823,13 +1886,13 @@ let CharacterHitComponent =
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "World",
-                15,
+                14,
                 `[ControllerHolder.CreatureController.HitNotify] 子弹数据不存在;${e}。`
               ))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "World",
-            15,
+            14,
             "[ControllerHolder.CreatureController.HitNotify] 攻击者为空，不存在动态实体:" +
               r
           );
@@ -1872,27 +1935,36 @@ let CharacterHitComponent =
         );
     }
     PlayCounterAttackEffect(t, i, e) {
+      var s;
       i &&
         ((e = new UE.Transform(
           t.HitEffectRotation.ToUeRotator(),
           t.HitPosition.ToUeVector(),
           e
         )),
-        (t = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
-          t.Attacker
+        (s = ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
+          t.BulletEntityId
         )),
-        (e = EffectSystem_1.EffectSystem.SpawnEffect(
+        (t = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
+          t.Attacker,
+          s?.GetBulletInfo().EffectInfo.DisablePostProcess ?? !1
+        )),
+        (s = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           e,
           i,
           "[CharacterHitComponent.BeCounterattack]",
           t
         )),
-        EffectSystem_1.EffectSystem.IsValid(e)) &&
-        ((i = this.vHr) &&
-          ((t = i.CurrentTimeScale),
-          EffectSystem_1.EffectSystem.SetTimeScale(e, t * this.TimeDilation)),
-        this.MVr.push(e));
+        EffectSystem_1.EffectSystem.IsValid(s)) &&
+        ((e = this.vHr) &&
+          ((i = e.CurrentTimeScale),
+          EffectSystem_1.EffectSystem.SetTimeScale(
+            s,
+            i * this.TimeDilation,
+            !0
+          )),
+        this.MVr.push(s));
     }
     q6r(t) {
       var i = t.被击者顿帧;
@@ -2013,7 +2085,7 @@ let CharacterHitComponent =
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Character",
-                  21,
+                  20,
                   "OnHitMaterialAction 命中部位",
                   ["Part", h]
                 ),
@@ -2062,18 +2134,18 @@ let CharacterHitComponent =
     }
   });
 (CharacterHitComponent.GVr = void 0),
-  (CharacterHitComponent.$Vr = void 0),
-  (CharacterHitComponent.YVr = void 0),
-  (CharacterHitComponent.e6r = void 0),
-  (CharacterHitComponent.i6r = void 0),
-  (CharacterHitComponent.r6r = void 0),
-  (CharacterHitComponent.s6r = void 0),
-  (CharacterHitComponent.h6r = void 0),
-  (CharacterHitComponent.DSa = void 0),
-  (CharacterHitComponent.rHo = void 0),
-  (CharacterHitComponent.E6r = void 0),
-  (CharacterHitComponent.S6r = void 0),
-  (CharacterHitComponent.T6r = void 0),
+  (CharacterHitComponent.$Vr = Stats_1.Stat.Create("OnHit")),
+  (CharacterHitComponent.YVr = Stats_1.Stat.Create("OnHit0")),
+  (CharacterHitComponent.e6r = Stats_1.Stat.Create("OnHit1")),
+  (CharacterHitComponent.i6r = Stats_1.Stat.Create("OnHit2")),
+  (CharacterHitComponent.r6r = Stats_1.Stat.Create("OnHit3")),
+  (CharacterHitComponent.s6r = Stats_1.Stat.Create("OnHit4")),
+  (CharacterHitComponent.h6r = Stats_1.Stat.Create("OnHit5")),
+  (CharacterHitComponent.pSa = Stats_1.Stat.Create("OnHit6")),
+  (CharacterHitComponent.rHo = Stats_1.Stat.Create("PlayHitEffect")),
+  (CharacterHitComponent.E6r = Stats_1.Stat.Create("ProcessMain1")),
+  (CharacterHitComponent.S6r = Stats_1.Stat.Create("ProcessMain2")),
+  (CharacterHitComponent.T6r = Stats_1.Stat.Create("ProcessMain3")),
   (CharacterHitComponent.O6r = (t) => {}),
   __decorate(
     [CombatMessage_1.CombatNet.PreHandle("TFn")],

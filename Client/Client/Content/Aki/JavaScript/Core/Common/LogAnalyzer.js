@@ -10,8 +10,8 @@ const cpp_1 = require("cpp"),
   Json_1 = require("./Json"),
   Log_1 = require("./Log"),
   Stats_1 = require("./Stats"),
-  SHIPPING = cpp_1.FKuroUtilityForPuerts.IsBuildShipping() ? 1 : 0,
-  IS_WITH_EDITOR = cpp_1.FKuroUtilityForPuerts.IsWithEditor() ? 1 : void 0,
+  SHIPPING = cpp_1.KuroApplication.IsBuildShipping() ? 1 : 0,
+  IS_WITH_EDITOR = cpp_1.KuroApplication.IsWithEditor() ? 1 : void 0,
   STATISTICS_INTERVAL = 6e5,
   STATISTICS_MESSAGE_ERRO_THRESHOLD = 0.01,
   STATISTICS_THRESHOLD = 10,
@@ -63,7 +63,7 @@ class LogReportRecord extends Json_1.JsonObjBase {
 }
 class LogAnalyzer {
   static SetPlayerId(e) {
-    LogAnalyzer.j8 = 0;
+    LogAnalyzer.j8 = e;
   }
   static SetP4Version(e) {
     (LogAnalyzer.W8 = e),

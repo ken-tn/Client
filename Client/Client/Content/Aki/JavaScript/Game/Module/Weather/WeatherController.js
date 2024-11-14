@@ -33,43 +33,43 @@ class WeatherController extends ControllerBase_1.ControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.EnterGameSuccess,
-      WeatherController.nTo,
+      WeatherController.nTo
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BeforeLoadMap,
-        WeatherController.SYi,
+        WeatherController.SYi
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
-        WeatherController.nye,
+        WeatherController.nye
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
-        this.Ilt,
+        this.Ilt
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.EnterGameSuccess,
-      WeatherController.nTo,
+      WeatherController.nTo
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BeforeLoadMap,
-        WeatherController.SYi,
+        WeatherController.SYi
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
-        WeatherController.nye,
+        WeatherController.nye
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
-        this.Ilt,
+        this.Ilt
       );
   }
   static P3e() {
     WeatherController.Wko = TimerSystem_1.TimerSystem.Forever(
       WeatherController.Kko,
-      CHECKGAP,
+      CHECKGAP
     );
   }
   static R6t() {
@@ -78,10 +78,10 @@ class WeatherController extends ControllerBase_1.ControllerBase {
       (WeatherController.Wko = void 0));
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(16084, WeatherController.Qko);
+    Net_1.Net.Register(26088, WeatherController.Qko);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(16084);
+    Net_1.Net.UnRegister(26088);
   }
   static jko() {
     WeatherModel_1.WeatherModel.GetWorldWeatherActor().Destroy();
@@ -89,21 +89,21 @@ class WeatherController extends ControllerBase_1.ControllerBase {
   static RequestChangeWeather(e) {
     var t = new Protocol_1.Aki.Protocol.Ods();
     if (ModManager_1.ModManager.Settings.WeatherChanger) {
-        e = ModManager_1.ModManager.Settings.WeatherType + 1; //天气e//1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
-      }
+      e = ModManager_1.ModManager.Settings.WeatherType + 1; //天气e//1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
+    }
     (t.pjn = e),
-      Net_1.Net.Call(29155, t, (e) => {
+      Net_1.Net.Call(27581, t, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            18110,
+            15992
           );
       });
   }
   static ChangeCurrentWeather(e, t) {
     if (ModManager_1.ModManager.Settings.WeatherChanger) {
-        e = ModManager_1.ModManager.Settings.WeatherType + 1; //天气e//1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
-      }
+      e = ModManager_1.ModManager.Settings.WeatherType + 1; //天气e//1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
+    }
     ModelManager_1.ModelManager.WeatherModel.CurrentWeatherId !== e &&
       (ModelManager_1.ModelManager.WeatherModel.SetCurrentWeatherId(e),
       WeatherModel_1.WeatherModel.GetWorldWeatherActor().ChangeWeather(e, t)),
@@ -113,7 +113,7 @@ class WeatherController extends ControllerBase_1.ControllerBase {
     ModelManager_1.ModelManager.WeatherModel.SetCurrentWeatherId(e),
       WeatherModel_1.WeatherModel.GetWorldWeatherActor().ChangeWeather(
         e,
-        CHANGE_WEATHER_SMOOTH_TIME,
+        CHANGE_WEATHER_SMOOTH_TIME
       );
   }
   static StopWeather() {
@@ -127,7 +127,7 @@ class WeatherController extends ControllerBase_1.ControllerBase {
   ((_a = WeatherController).Wko = void 0),
   (WeatherController.Kko = () => {
     WeatherModel_1.WeatherModel.GetWorldWeatherActor().SetActorState(
-      !GlobalData_1.GlobalData.IsUiSceneOpen,
+      !GlobalData_1.GlobalData.IsUiSceneOpen
     );
   }),
   (WeatherController.nTo = () => {}),
@@ -145,20 +145,20 @@ class WeatherController extends ControllerBase_1.ControllerBase {
       0 === ModelManager_1.ModelManager.WeatherModel.CurrentWeatherId ||
       WeatherModel_1.WeatherModel.GetWorldWeatherActor().ChangeWeather(
         ModelManager_1.ModelManager.WeatherModel.CurrentWeatherId,
-        0,
+        0
       );
   }),
   (WeatherController.Qko = (e) => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Weather", 28, "OnWeatherNotify", ["WeatherNotify", e]),
+      Log_1.Log.Info("Weather", 27, "OnWeatherNotify", ["WeatherNotify", e]),
       e.kDs
         ? WeatherController.ChangeCurrentWeather(
             e.pjn,
-            CHANGE_WEATHER_SMOOTH_TIME_QUICK,
+            CHANGE_WEATHER_SMOOTH_TIME_QUICK
           )
         : WeatherController.ChangeCurrentWeather(
             e.pjn,
-            CHANGE_WEATHER_SMOOTH_TIME,
+            CHANGE_WEATHER_SMOOTH_TIME
           );
   });
 //# sourceMappingURL=WeatherController.js.map

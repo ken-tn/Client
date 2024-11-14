@@ -6,6 +6,7 @@ const UE = require("ue"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
   PlayerExpByPlayerLevel_1 = require("../../../../Core/Define/ConfigQuery/PlayerExpByPlayerLevel"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -61,7 +62,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       }),
       (this.z7t = () => {
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-          "CopiedMyUid",
+          "CopiedMyUid"
         ),
           UE.LGUIBPLibrary.ClipBoardCopy(
             ModManager_1.ModManager.Settings.Uid
@@ -74,7 +75,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10060) &&
           UiManager_1.UiManager.OpenView(
             "PersonalRootView",
-            ModelManager_1.ModelManager.PersonalModel.GetPersonalInfoData(),
+            ModelManager_1.ModelManager.PersonalModel.GetPersonalInfoData()
           ),
           ModelManager_1.ModelManager.PersonalModel.TryHidePersonalTip();
       }),
@@ -110,13 +111,13 @@ class FunctionView extends UiViewBase_1.UiViewBase {
             2,
             () => {
               ControllerHolder_1.ControllerHolder.OnlineController.LeaveWorldTeamRequest(
-                ModelManager_1.ModelManager.FunctionModel.PlayerId,
+                ModelManager_1.ModelManager.FunctionModel.PlayerId
               ),
                 this.CloseMe();
-            },
+            }
           ),
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-              t,
+              t
             );
         }
       }),
@@ -195,6 +196,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       [33, UE.UISprite],
       [34, UE.UIItem],
       [35, UE.UIItem],
+      [36, UE.UISprite],
     ]),
       (this.BtnBindInfo = [
         [6, this.W7t],
@@ -222,7 +224,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       (this.k7t = this.GetItem(18)),
       (this.B7t = new FunctionTabLayout_1.FunctionTabLayout(this.GetItem(28))),
       (this.ovt = new NoCircleAttachView_1.NoCircleAttachView(
-        this.GetItem(10).GetOwner(),
+        this.GetItem(10).GetOwner()
       ));
     var t = this.GetItem(29),
       t =
@@ -232,11 +234,11 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         this.ovt.SetMoveMultiFactor(50),
         (this.F7t = new FunctionBottomButtonItem_1.FunctionBottomButtonItem(
           this.GetButton(8).RootUIComp,
-          "FunctionMail",
+          "FunctionMail"
         )),
         (this.V7t = new FunctionBottomButtonItem_1.FunctionBottomButtonItem(
           this.GetButton(15).RootUIComp,
-          "FunctionNotice",
+          "FunctionNotice"
         )),
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10060)),
       t =
@@ -244,69 +246,73 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         this.gHt(),
         this.mWs(),
         this.ovt.GetCurrentSelectIndex());
-    this.BNe(t), this.B7t.SetToggleSelectByIndex(t);
+    this.BNe(t),
+      this.B7t.SetToggleSelectByIndex(t),
+      Platform_1.Platform.IsPs5Platform() &&
+        (this.GetButton(14)?.SetSelfInteractive(!1),
+        this.GetSprite(36)?.SetUIActive(!1));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CurWorldLevelChange,
-      this.aHt,
+      this.aHt
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignChange,
-        this.$At,
+        this.$At
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnNameChange,
-        this.XAt,
+        this.XAt
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnHeadIconChange,
-        this.lHt,
+        this.lHt
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnCardChange,
-        this.uHt,
+        this.uHt
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBirthChange,
-        this.mHt,
+        this.mHt
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FunctionGridSelected,
-        this.dHt,
+        this.dHt
       ),
       EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnFunctionViewShow,
+        EventDefine_1.EEventName.OnFunctionViewShow
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CurWorldLevelChange,
-      this.aHt,
+      this.aHt
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignChange,
-        this.$At,
+        this.$At
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnNameChange,
-        this.XAt,
+        this.XAt
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnHeadIconChange,
-        this.lHt,
+        this.lHt
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnCardChange,
-        this.uHt,
+        this.uHt
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBirthChange,
-        this.mHt,
+        this.mHt
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FunctionGridSelected,
-        this.dHt,
+        this.dHt
       );
   }
   BNe(t) {
@@ -359,7 +365,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       this.V7t.BindRedDot(),
       RedDotController_1.RedDotController.BindRedDot(
         "PersonalCard",
-        this.GetItem(34),
+        this.GetItem(34)
       );
   }
   Ovt() {
@@ -367,7 +373,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       this.V7t.UnBindRedDot(),
       RedDotController_1.RedDotController.UnBindGivenUi(
         "PersonalCard",
-        this.GetItem(34),
+        this.GetItem(34)
       );
   }
   vHt() {
@@ -391,7 +397,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(1),
           "UserId",
-          ModManager_1.ModManager.Settings.Uid,
+          ModelManager_1.ModelManager.FunctionModel.PlayerId
         ),
         PlayerExpByPlayerLevel_1.configPlayerExpByPlayerLevel.GetConfig(e));
     e?.PlayerExp &&
@@ -400,7 +406,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         this.GetText(5),
         "ExpText",
         t,
-        e.PlayerExp,
+        e.PlayerExp
       ),
       this.GetSprite(9).SetFillAmount(t / e.PlayerExp));
   }
@@ -408,7 +414,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(2),
       "WorldLevelNum",
-      ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+      ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel
     );
   }
   _Ht() {
@@ -464,9 +470,9 @@ class FunctionView extends UiViewBase_1.UiViewBase {
   }
   LHt(i) {
     var r = this.ypt;
-    let n = -1;
-    for (let t = 0, e = r.length; t < e; ++t) r[t].includes(i) && (n = t);
-    return n;
+    let o = -1;
+    for (let t = 0, e = r.length; t < e; ++t) r[t].includes(i) && (o = t);
+    return o;
   }
   mWs() {
     var t,
@@ -474,7 +480,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
     ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? (e?.SetUIActive(!0),
         (t = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
-          ModelManager_1.ModelManager.FunctionModel.PlayerId,
+          ModelManager_1.ModelManager.FunctionModel.PlayerId
         )?.PingState),
         this.pOi(t))
       : e?.SetUIActive(!1);
@@ -486,32 +492,32 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       t === Protocol_1.Aki.Protocol.r7s.Proto_UNKNOWN
         ? ((e =
             ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-              "SP_SignalUnknown",
+              "SP_SignalUnknown"
             )),
           this.SetSpriteByPath(e, i, !1))
         : t === Protocol_1.Aki.Protocol.r7s.Proto_GREAT
-          ? ((e =
-              ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-                "SP_SignalGreat",
-              )),
-            this.SetSpriteByPath(e, i, !1))
-          : t === Protocol_1.Aki.Protocol.r7s.Proto_GOOD
-            ? ((e =
-                ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-                  "SP_SignalGood",
-                )),
-              this.SetSpriteByPath(e, i, !1))
-            : t === Protocol_1.Aki.Protocol.r7s.Proto_POOR &&
-              ((e =
-                ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-                  "SP_SignalPoor",
-                )),
-              this.SetSpriteByPath(e, i, !1));
+        ? ((e =
+            ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+              "SP_SignalGreat"
+            )),
+          this.SetSpriteByPath(e, i, !1))
+        : t === Protocol_1.Aki.Protocol.r7s.Proto_GOOD
+        ? ((e =
+            ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+              "SP_SignalGood"
+            )),
+          this.SetSpriteByPath(e, i, !1))
+        : t === Protocol_1.Aki.Protocol.r7s.Proto_POOR &&
+          ((e =
+            ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+              "SP_SignalPoor"
+            )),
+          this.SetSpriteByPath(e, i, !1));
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
     if (1 < t.length || isNaN(Number(t[0])))
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Guide", 17, "功能菜单聚焦引导的ExtraParam配置错误", [
+        Log_1.Log.Error("Guide", 16, "功能菜单聚焦引导的ExtraParam配置错误", [
           "configParams",
           t,
         ]);
@@ -522,9 +528,9 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "功能菜单聚焦引导的ExtraParam配置错误, 检查functionId",
-            ["functionId", t],
+            ["functionId", t]
           );
       else {
         this.ovt.AttachToIndex(e, !0);
@@ -539,47 +545,47 @@ class FunctionView extends UiViewBase_1.UiViewBase {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Guide",
-              17,
+              16,
               "功能菜单聚焦引导的ExtraParam配置错误, 检查functionId",
-              ["functionId", t],
+              ["functionId", t]
             );
       }
     }
   }
   MHt() {
     this.GetButton(8).SetSelfInteractive(
-      ModelManager_1.ModelManager.FunctionModel.IsOpen(10020),
+      ModelManager_1.ModelManager.FunctionModel.IsOpen(10020)
     ),
       this.GetButton(12).SetSelfInteractive(
-        ModelManager_1.ModelManager.FunctionModel.IsOpen(10018),
+        ModelManager_1.ModelManager.FunctionModel.IsOpen(10018)
       ),
       this.GetButton(13).SetSelfInteractive(
-        ModelManager_1.ModelManager.FunctionModel.IsOpen(10019),
+        ModelManager_1.ModelManager.FunctionModel.IsOpen(10019)
       ),
       this.GetButton(15).SetSelfInteractive(
-        ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk(),
+        ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
       ),
       this.GetButton(20).SetSelfInteractive(
-        ModelManager_1.ModelManager.FunctionModel.IsOpen(10049),
+        ModelManager_1.ModelManager.FunctionModel.IsOpen(10049)
       );
   }
   EHt() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Functional",
-        11,
+        10,
         "功能开启界面Start阶段计算数据输出",
         ["剩余宽度", this.j7t.OffsetWidth],
-        ["显示数量", this.j7t.TotalGridNumber],
+        ["显示数量", this.j7t.TotalGridNumber]
       );
     var t = this.THt();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Functional",
-        11,
+        10,
         "功能开启界面AfterShow阶段计算数据输出",
         ["剩余宽度", t.OffsetWidth],
-        ["显示数量", t.TotalGridNumber],
+        ["显示数量", t.TotalGridNumber]
       );
   }
   THt() {
@@ -588,16 +594,16 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       i = e.GetCellSize(),
       r = e.GetSpacing(),
       e = e.GetPadding(),
-      n = t.GetWidth(),
+      o = t.GetWidth(),
       t = t.GetHeight(),
-      o = (n - e.Left - e.Right) % (i.X + r.X),
-      s = o >= i.X ? 1 : 0,
-      n = Math.floor((n - e.Left - e.Right) / (i.X + r.X)) + s,
+      n = (o - e.Left - e.Right) % (i.X + r.X),
+      s = n >= i.X ? 1 : 0,
+      o = Math.floor((o - e.Left - e.Right) / (i.X + r.X)) + s,
       s = (t - e.Top - e.Bottom) % (i.Y + r.Y) > i.Y ? 1 : 0;
     return {
       TotalGridNumber:
-        n * (Math.floor((t - e.Top - e.Bottom) / (i.Y + r.Y)) + s),
-      OffsetWidth: o >= i.X ? o - i.X : o + r.X,
+        o * (Math.floor((t - e.Top - e.Bottom) / (i.Y + r.Y)) + s),
+      OffsetWidth: n >= i.X ? n - i.X : n + r.X,
     };
   }
 }

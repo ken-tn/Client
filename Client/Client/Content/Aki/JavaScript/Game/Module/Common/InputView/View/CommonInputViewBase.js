@@ -8,6 +8,7 @@ const puerts_1 = require("puerts"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  Platform_1 = require("../../../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
@@ -143,7 +144,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
         },
         () => {
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("UiCommon", 11, "通用输入框执行出现未知错误");
+            Log_1.Log.Error("UiCommon", 10, "通用输入框执行出现未知错误");
         }
       );
     }
@@ -179,9 +180,11 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
     this.YAt(), this.mGe(), this.RefreshTips(0), this.InitExtraParam();
   }
   SetClearOrPaste() {
-    "" === this.InputText.GetText()
-      ? (this.wAt.RefreshSprite("SP_Paste"), this.wAt.BindCallback(this.QAt))
-      : (this.wAt.RefreshSprite("SP_Clear"), this.wAt.BindCallback(this.KAt));
+    this.wAt &&
+      ("" === this.InputText.GetText()
+        ? (this.wAt.RefreshSprite("SP_Paste"), this.wAt.BindCallback(this.QAt))
+        : (this.wAt.RefreshSprite("SP_Clear"),
+          this.wAt.BindCallback(this.KAt)));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -215,8 +218,12 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       (this.ConfirmButton = void 0);
   }
   YAt() {
-    (this.wAt = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(7))),
-      this.GetItem(7).SetUIActive(this.InputData.NeedFunctionButton),
+    var t = !Platform_1.Platform.IsPs5Platform();
+    t &&
+      (this.wAt = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(
+        this.GetItem(7)
+      )),
+      this.GetItem(7).SetUIActive(t && this.InputData.NeedFunctionButton),
       (this.ConfirmButton = this.GetButton(4)),
       (this.InputText = this.GetInputText(5)),
       (this.InputText.bAllowMultiLine = this.IsAllowMultiLine()),
@@ -235,15 +242,11 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
     this.InputText.OnTextChange.Unbind();
   }
   mGe() {
-    if (this.InputData?.Title) {
-      this.GetText(0).SetText(this.InputData.Title);
-    } else {
-      LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(0),
-        this.InputData.TitleTextArgs.TextKey,
-        ...this.InputData.TitleTextArgs.Params
-      );
-    }
+    LguiUtil_1.LguiUtil.SetLocalTextNew(
+      this.GetText(0),
+      this.InputData.TitleTextArgs.TextKey,
+      ...this.InputData.TitleTextArgs.Params
+    );
   }
   RefreshTips(t) {
     t !== this.PAt && ((this.PAt = t), this.xAt[t]());

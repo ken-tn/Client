@@ -74,7 +74,7 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
             this.Entity?.GameBudgetManagedToken,
             () => {
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Interaction", 37, "进入交互范围", [
+                Log_1.Log.Debug("Interaction", 36, "进入交互范围", [
                   "EntityId",
                   this.Entity.Id,
                 ]),
@@ -82,7 +82,7 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
             },
             () => {
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Interaction", 37, "离开交互范围", [
+                Log_1.Log.Debug("Interaction", 36, "离开交互范围", [
                   "EntityId",
                   this.Entity.Id,
                 ]),
