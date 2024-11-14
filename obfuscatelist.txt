@@ -1,9 +1,9 @@
-Client\Client\Content\Aki\JavaScript\Game\Module\LogUpload\LogUpload.js 6
+Client\Client\Content\Aki\JavaScript\Game\Module\LogUpload\LogUpload.js 4
 Client\Client\Content\Aki\JavaScript\Game\Module\LogReport\ThinkingAnalyticsReporter.js 4
 Client\Client\Content\Aki\JavaScript\Game\PerfSight\PerfSightController.js 4
 Client\Client\Content\Aki\JavaScript\Game\Manager\ThirdPartySdkManager.js 3
-Client\Client\Content\Aki\JavaScript\Game\Module\AntiCheat\AntiCheatController.js 3
-Client\Client\Content\Aki\JavaScript\Game\Module\AntiCheat\AntiCheatModel.js 4
+Client\Client\Content\Aki\JavaScript\Game\Module\AntiCheat\AntiCheatController.js 4
+Client\Client\Content\Aki\JavaScript\Game\Module\AntiCheat\AntiCheatModel.js 3
 Client\Client\Content\Aki\JavaScript\Core\Common\Log.js 3
 Client\Client\Content\Aki\JavaScript\Core\Common\LogAnalyzer.js 4
 Client\Client\Content\Aki\JavaScript\Core\Common\Stats.js 3
