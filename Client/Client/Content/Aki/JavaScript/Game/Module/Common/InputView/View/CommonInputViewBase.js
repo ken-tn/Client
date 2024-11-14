@@ -242,11 +242,15 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
     this.InputText.OnTextChange.Unbind();
   }
   mGe() {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(
-      this.GetText(0),
-      this.InputData.TitleTextArgs.TextKey,
-      ...this.InputData.TitleTextArgs.Params
-    );
+    if (this.InputData?.Title) {
+      this.GetText(0).SetText(this.InputData.Title);
+    } else {
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(0),
+        this.InputData.TitleTextArgs.TextKey,
+        ...this.InputData.TitleTextArgs.Params
+      );
+    }
   }
   RefreshTips(t) {
     t !== this.PAt && ((this.PAt = t), this.xAt[t]());
