@@ -28,11 +28,14 @@ const puerts_1 = require("puerts"),
   TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
   EntityManager_1 = require("./EntityManager"),
   CreateController_1 = require("../../World/Controller/CreatureController"),
+  BaseBuffComponent_1 = require("../../NewWorld/Character/Common/Component/Abilities/BaseBuffComponent"),
+  ActiveBuffConfigs_1 = require("../../NewWorld/Character/Common/Component/Abilities/Buff/ActiveBuffConfigs"),
   ModDebuger_1 = require("./ModDebuger");
 const { ModUtils } = require("./ModUtils");
 
 class ModMethod {
   static best = {};
+  static sprintTicks = 0;
 
   static GenerateBest() {
     const damageBlacklist = [
@@ -143,27 +146,27 @@ class ModMethod {
 
   static getSl(lv) {
     if (lv < 21) {
-        return 1; // level 20 until 1
+      return 1; // level 20 until 1
     } else if (lv < 31) {
-        return 3; // 3 until level 30
+      return 3; // 3 until level 30
     } else if (lv < 41) {
-        return 4; // 4 until level 40
+      return 4; // 4 until level 40
     } else if (lv < 51) {
-        return 6; // 6 until level 50
+      return 6; // 6 until level 50
     } else if (lv < 61) {
-        return 8; // 8 until level 60
+      return 8; // 8 until level 60
     } else if (lv >= 61) {
-        return 10; // 10
+      return 10; // 10
     }
     return 1;
   }
 
   static FireDamage(CharacterDamageComponent, t) {
-    if ((!CharacterDamageComponent) || (!t)) {
-        return;
+    if (!CharacterDamageComponent || !t) {
+      return;
     }
     let lv = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
-    
+
     // see CharacterDamageComponent.GetServerDamage
     let dmgProto = 21253;
     let s = Protocol_1.Aki.Protocol.U3n.create({
@@ -194,14 +197,17 @@ class ModMethod {
       dmgProto,
       CharacterDamageComponent.Entity,
       s,
-      async e => {
+      async (e) => {
         // e.nAs = damage
         if (e.nAs === 0) {
-          await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 100) + 100) // wait 100-200ms
+          await TimerSystem_1.TimerSystem.Wait(
+            Math.floor(Math.random() * 100) + 100
+          ); // wait 100-200ms
           s.Fjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n); // xiangli liberation
           s.Njn.Mjn = MathUtils_1.MathUtils.BigIntToLong(1305061001n);
           s.Njn.r5n = 1305061;
-          s.lHn = ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0);
+          s.lHn =
+            ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0);
           CombatMessage_1.CombatNet.Call(
             dmgProto,
             CharacterDamageComponent.Entity,
@@ -210,6 +216,34 @@ class ModMethod {
         }
       }
     );
+  }
+
+  static AddBuffRequest(BuffId) {
+    // OrderAddBuffS2cNotify
+    let t = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint();
+    let e = {
+      s5n: MathUtils_1.MathUtils.BigIntToLong(BuffId),
+      F6n: 1, // Level
+      Rjn: MathUtils_1.MathUtils.NumberToLong(
+        34 // ActiveBuffConfigs_1.NULL_INSTIGATOR_ID
+      ), // Creator ID
+      xjn: 0, // ApplyType
+      wjn: ActiveBuffConfigs_1.DEFAULT_GE_SERVER_ID, // ServerId
+      Bjn: 1, // r, r && 0 < r ? r : f.DefaultStackCount;
+      Pjn: true, // IsIterable
+      x9n: 19, // reason
+      // n5n: 1800.0001220703125 // duration?
+    };
+    // let f = {
+    //   X8n: MathUtils_1.MathUtils.NumberToLong(0), // PreMessageId
+    //   $8n: MathUtils_1.MathUtils.NumberToLong(4), // MessageId
+    //   Y8n: MathUtils_1.MathUtils.NumberToLong(0),
+    //   J8n: 0,
+    //   F4n: MathUtils_1.MathUtils.NumberToLong(32), // entity id
+    //   z8n: true,
+    // };
+
+    BaseBuffComponent_1.BaseBuffComponent.OrderAddBuffS2cNotify(t, e, void 0);
   }
 
   //怪物淹死
@@ -229,7 +263,7 @@ class ModMethod {
     let its = 0;
     let itsLimit = 6;
 
-    await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 50) + 20) // wait 20-50ms
+    await TimerSystem_1.TimerSystem.Wait(Math.floor(Math.random() * 50) + 20); // wait 20-50ms
     timer = TimerSystem_1.TimerSystem.Forever(() => {
       if (!CharacterDamageComponent.Entity || its > itsLimit) {
         ModMenu_1.MainMenu.KunLog(
@@ -347,6 +381,21 @@ class ModMethod {
         }
       }
     }, 100);
+  }
+
+  static async ApplyBuffs() {
+    if (ModManager_1.ModManager.Settings.IllusiveSprint) {
+      // 500ms runtime
+      this.sprintTicks++;
+      if (this.sprintTicks > ((3500 / ModManager_1.ModManager.Settings.playerSpeedValue) / 500)) {
+        this.AddBuffRequest(640003017n);
+        this.sprintTicks = 0;
+      }
+      //   let tags = [640003016n, 640003019n, 640003020n, 640003023n];
+      //   for (let tag in tags) {
+      //     this.AddBuffRequest(tag);
+      //   }
+    }
   }
 
   static ThrowDamageChangeRequest(Entity, count, DamageId) {
