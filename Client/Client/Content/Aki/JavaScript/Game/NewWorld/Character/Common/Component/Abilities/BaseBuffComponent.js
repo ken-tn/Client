@@ -788,7 +788,7 @@ let BaseBuffComponent = (BaseBuffComponent_1 = class BaseBuffComponent extends (
         640003017n: [0.01], // illusive sprint enable
         640003016n: [60] // illusive sprint state
     }
-    if (DurationMagnitudes.includes(e)) {
+    if (e in DurationMagnitudes) {
         f.DurationMagnitude = DurationMagnitudes[e];
     }
     ModUtils_1.ModUtils.jsLog("Buff here");
