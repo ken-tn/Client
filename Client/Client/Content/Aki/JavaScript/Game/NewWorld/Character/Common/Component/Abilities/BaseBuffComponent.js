@@ -791,8 +791,8 @@ let BaseBuffComponent = (BaseBuffComponent_1 = class BaseBuffComponent extends (
     if (e in DurationMagnitudes) {
         f.DurationMagnitude = DurationMagnitudes[e];
     }
-    ModUtils_1.ModUtils.jsLog("Buff here");
-    ModUtils_1.ModUtils.jsLog(e); // buffid
+    // ModUtils_1.ModUtils.jsLog("Buff here");
+    // ModUtils_1.ModUtils.jsLog(e); // buffid
     // ModUtils_1.ModUtils.jsLog(f);
     // ModUtils_1.ModUtils.jsLog(o); // Creator ID
     // ModUtils_1.ModUtils.jsLog(i);
