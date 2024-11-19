@@ -106,7 +106,9 @@ class ModManager {
     QuestX: 0,
     QuestY: 0,
     QuestZ: 0,
-    AlwaysCrit: false
+    AlwaysCrit: false,
+    IllusiveSprint: false,
+    BuffType: 0,
   };
 
   // please set all settings to false, preventing unverified users
@@ -262,6 +264,9 @@ class ModManager {
     }
   }
   static IsMyKeyDown(str) {
+    if (!InputSettings_1.InputSettings) {
+        return false;
+    }
     //add key func
     var IsInputKeyDown_1 = InputSettings_1.InputSettings.IsInputKeyDown(str);
     if (IsInputKeyDown_1 && !this.key_State) {
@@ -276,6 +281,9 @@ class ModManager {
   }
 
   static IsMyKeyUp(str) {
+    if (!InputSettings_1.InputSettings) {
+        return false;
+    }
     if (!keys_State[str]) {
       keys_State[str] = { key_Down: false, key_Up: false };
     }
