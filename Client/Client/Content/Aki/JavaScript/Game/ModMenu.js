@@ -179,83 +179,85 @@ class MainMenu {
     DiscordGrant_1.DiscordGrant.GetToken();
   }
 
-  static SwitchTypeface(Typeface) {
-    let Texts = [
-      "AlwaysCritText",
-      "AntiDitherText",
-      "AutoDestroyText",
-      "AutoLootText",
-      "AutoPickTreasureText",
-      "AutoPuzzleText",
-      "BuffSwitchText",
-      "BuffText",
-      "ConsoleCommandText",
-      "CustomBuffText",
-      "CustomTPText",
-      "CustomUidText",
-      "DebugEntityText",
-      "DebugSwitchText",
-      "DisclaimerText",
-      "ESPAnimalText",
-      "ESPBlobflyText",
-      "ESPCasketText",
-      "ESPCollectionText",
-      "ESPMonsterText",
-      "ESPMutterflyText",
-      "ESPPuzzleText",
-      "ESPRockText",
-      "ESPShowBoxText",
-      "ESPShowDistanceText",
-      "ESPShowNameText",
-      "ESPSwitchText",
-      "ESPText",
-      "ESPTreasureText",
-      "FOVText",
-      "FPSShowText",
-      "FPSUnlockerText",
-      "GodModeText",
-      "HideDmgText",
-      "HideHUDText",
-      "HitMultiplierText",
-      "IllusiveSprintText",
-      "InfiniteStaminaText",
-      "KillAnimalText",
-      "KillAuraText",
-      "LanguageText",
-      "MarkTPText",
-      "MobVacuumText",
-      "NewAutoAbsorbText",
-      "NewKillAuraText",
-      "NoCDText",
-      "NoClipText",
-      "PerceptionRangeText",
-      "PlayerSpeedText",
-      "PlayerSwitchText",
-      "PlotSkipText",
-      "QuestTPText",
-      "SaveConfigText",
-      "TitleText",
-      "UISwitchText",
-      "VacuumCollectText",
-      "WeatherText",
-      "WorldSpeedText",
-      "WorldSwitchText",
-      "HeadingBuff",
-      "HeadingDebug",
-      "HeadingESP",
-      "HeadingESPFilter",
-      "HeadingPlayer",
-      "HeadingTeleport",
-      "HeadingUI",
-      "HeadingWorld",
-    ];
-    Typeface = new UE.FName(Typeface);
+  static getTranslation(Lang) {
+    let Texts = {
+        "AlwaysCritText": "TEXT_ALWAYS_CRIT",
+        "AntiDitherText": "TEXT_ANTI_DITHER",
+        "AutoDestroyText": "TEXT_AUTO_DESTROY",
+        "AutoLootText": "TEXT_AUTO_LOOT",
+        "AutoPickTreasureText": "TEXT_AUTO_PICK_TREASURE",
+        "AutoPuzzleText": "TEXT_AUTO_PUZZLE",
+        "BuffSwitchText": null,
+        "BuffText": null,
+        "ConsoleCommandText": "TEXT_CONSOLE_COMMAND",
+        "CustomBuffText": null,
+        "CustomTPText": "TEXT_CUSTOM_TP",
+        "CustomUidText": "TEXT_CUSTOM_UID",
+        "DebugEntityText": "TEXT_DEBUG_ENTITY",
+        "DebugSwitchText": "HEADING_DEBUG",
+        "DisclaimerText": null,
+        "ESPAnimalText": "TEXT_ANIMAL",
+        "ESPBlobflyText": "TEXT_BLOBFLY",
+        "ESPCasketText": "TEXT_SONANCE_CASKET",
+        "ESPCollectionText": "TEXT_COLLECTION",
+        "ESPMonsterText": "TEXT_MONSTER",
+        "ESPMutterflyText": "TEXT_MUTTERFLY",
+        "ESPPuzzleText": "TEXT_PUZZLE",
+        "ESPRockText": "TEXT_ROCK",
+        "ESPShowBoxText": "TEXT_SHOW_BOX",
+        "ESPShowDistanceText": "TEXT_SHOW_DISTANCE",
+        "ESPShowNameText": "TEXT_SHOW_NAME",
+        "ESPSwitchText": "HEADING_ESP",
+        "ESPText": "HEADING_ESP",
+        "ESPTreasureText": "TEXT_TREASURE",
+        "FOVText": "TEXT_FOV",
+        "FPSShowText": "TEXT_SHOW_FPS",
+        "FPSUnlockerText": "TEXT_FPS_UNLOCKER",
+        "GodModeText": "TEXT_GOD_MODE",
+        "HideDmgText": "TEXT_HIDE_DAMAGE_TEXT",
+        "HideHUDText": "TEXT_HIDE_HUD",
+        "HitMultiplierText": "TEXT_HIT_MULTIPLIER",
+        "IllusiveSprintText": "TEXT_ILLUSIVE_SPRINT",
+        "InfiniteStaminaText": "TEXT_INFINITE_STAMINA",
+        "KillAnimalText": "TEXT_KILL_ANIMAL",
+        "KillAuraText": "TEXT_HIT_ALL",
+        "LanguageText": "TEXT_LANGUAGE",
+        "MarkTPText": "TEXT_MARK_TELEPORT",
+        "MobVacuumText": "TEXT_MOB_VACUUM",
+        "NewAutoAbsorbText": "TEXT_AUTO_ABSORB",
+        "NewKillAuraText": "TEXT_NEW_KILL_AURA",
+        "NoCDText": "TEXT_NO_COOLDOWN",
+        "NoClipText": "TEXT_NOCLIP",
+        "PerceptionRangeText": "TEXT_PERCEPTION_RANGE",
+        "PlayerSpeedText": "TEXT_PLAYER_SPEED",
+        "PlayerSwitchText": "HEADING_PLAYER",
+        "PlotSkipText": "TEXT_PLOT_SKIP",
+        "QuestTPText": "TEXT_QUEST_TP",
+        "SaveConfigText": "TEXT_SAVE_CONFIG",
+        "TitleText": null,
+        "UISwitchText": "HEADING_VISUAL",
+        "VacuumCollectText": "TEXT_VACUUM_COLLECT",
+        "WeatherText": "TEXT_WEATHER",
+        "WorldSpeedText": "TEXT_WORLD_SPEED",
+        "WorldSwitchText": "HEADING_WORLD",
+        "HeadingBuff": null,
+        "HeadingDebug": "HEADING_DEBUG",
+        "HeadingESP": "HEADING_ESP",
+        "HeadingESPFilter": "HEADING_FILTER",
+        "HeadingPlayer": "HEADING_PLAYER",
+        "HeadingTeleport": "HEADING_TELEPORT",
+        "HeadingUI": "HEADING_VISUAL",
+        "HeadingWorld": "HEADING_WORLD"
+    }    
+    let Typeface = new UE.FName(Lang);
 
-    Texts.forEach((text) => {
-        this.KunLog(text);
-        this.Menu.SwitchFontTypeface(this.Menu[text], Typeface);
-        this.KunLog(`Switched ${text}`);
-    });
+    for (const [text, translation] of Object.entries(Texts)) {
+      this.Menu.SwitchFontTypeface(this.Menu[text], Typeface);
+      if (translation) {
+        this.Menu[text].SetText(ModLanguage_1.ModLanguage.ModTr(translation));
+      }
+    };
+    this.Menu.DisclaimerText.SetText(this.Getfreetip());
   }
 
   static LoadRealMenu() {
@@ -283,11 +285,9 @@ class MainMenu {
     ESP_1.ESP.ESPCanvas.AddToViewport();
     ESP_1.ESP.ESPCanvas.SetVisibility(0);
 
-    this.SwitchTypeface("Ko");
-
     try {
       this.updateMenuState();
-      this.getTranslation();
+      this.getTranslation(ModLanguage_1.ModLanguage.GetCurrLang());
 
       for (const option in ModLanguage_1.ModLanguage.Langs) {
         this.Menu.LanguageValue.AddOption(
@@ -303,7 +303,7 @@ class MainMenu {
         if (selectedItem && this.isMenuLoaded) {
           ModManager_1.ModManager.Settings.Language = selectedItem;
           this.KunLog("Language: " + selectedItem);
-          this.getTranslation();
+          this.getTranslation(ModLanguage_1.ModLanguage.GetCurrLang());
 
           // update kill aura selection
           this.Menu.KillAuraValue.ClearOptions();
@@ -783,208 +783,6 @@ class MainMenu {
       ModLanguage_1.ModLanguage.ModTr("KUN_MOD_LOADED")
     );
     this.KunLog("KUN-MOD Menu Loaded!");
-  }
-
-  static getTranslation() {
-    if (this.Menu) {
-      this.Menu.PlayerSwitchText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_PLAYER")
-      );
-      this.Menu.WorldSwitchText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_WORLD")
-      );
-      this.Menu.ESPSwitchText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_ESP")
-      );
-      this.Menu.UISwitchText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_VISUAL")
-      );
-      this.Menu.DebugSwitchText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_DEBUG")
-      );
-
-      this.Menu.HeadingPlayer.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_PLAYER")
-      );
-      this.Menu.HeadingWorld.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_WORLD")
-      );
-      this.Menu.HeadingESP.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_ESP")
-      );
-      this.Menu.HeadingESPFilter.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_FILTER")
-      );
-      this.Menu.HeadingUI.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_VISUAL")
-      );
-      this.Menu.HeadingTeleport.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_TELEPORT")
-      );
-      this.Menu.HeadingDebug.SetText(
-        ModLanguage_1.ModLanguage.ModTr("HEADING_DEBUG")
-      );
-
-      this.Menu.SaveConfigText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_SAVE_CONFIG")
-      );
-
-      // player
-      this.Menu.GodModeText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_GOD_MODE")
-      );
-      this.Menu.PlayerSpeedText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_PLAYER_SPEED")
-      );
-      this.Menu.NoCDText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_NO_COOLDOWN")
-      );
-      this.Menu.HitMultiplierText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_HIT_MULTIPLIER")
-      );
-      this.Menu.InfiniteStaminaText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_INFINITE_STAMINA")
-      );
-      this.Menu.AntiDitherText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_ANTI_DITHER")
-      );
-      this.Menu.NoClipText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_NOCLIP")
-      );
-      this.Menu.AlwaysCritText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_ALWAYS_CRIT")
-      );
-
-      // teleport
-      this.Menu.MarkTPText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_MARK_TELEPORT")
-      );
-      this.Menu.CustomTPText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_CUSTOM_TP")
-      );
-      this.Menu.QuestTPText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_QUEST_TP")
-      );
-
-      // world
-      this.Menu.WorldSpeedText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_WORLD_SPEED")
-      );
-      this.Menu.NewAutoAbsorbText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_AUTO_ABSORB")
-      );
-      this.Menu.AutoPickTreasureText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE")
-      );
-      this.Menu.KillAuraText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_HIT_ALL")
-      );
-      this.Menu.PerceptionRangeText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_PERCEPTION_RANGE")
-      );
-      this.Menu.AutoLootText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_AUTO_LOOT")
-      );
-      this.Menu.AutoDestroyText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_AUTO_DESTROY")
-      );
-      this.Menu.KillAnimalText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_KILL_ANIMAL")
-      );
-      this.Menu.NewKillAuraText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_NEW_KILL_AURA")
-      );
-      this.Menu.MobVacuumText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_MOB_VACUUM")
-      );
-      this.Menu.VacuumCollectText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_VACUUM_COLLECT")
-      );
-      this.Menu.WeatherText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_WEATHER")
-      );
-      this.Menu.PlotSkipText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_PLOT_SKIP")
-      );
-      this.Menu.AutoPuzzleText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_AUTO_PUZZLE")
-      );
-
-      // esp
-      this.Menu.ESPText.SetText(ModLanguage_1.ModLanguage.ModTr("HEADING_ESP"));
-      this.Menu.ESPShowNameText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_SHOW_NAME")
-      );
-      this.Menu.ESPShowDistanceText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_SHOW_DISTANCE")
-      );
-      this.Menu.ESPShowBoxText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_SHOW_BOX")
-      );
-      this.Menu.ESPMonsterText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_MONSTER")
-      );
-      this.Menu.ESPCollectionText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_COLLECTION")
-      );
-      this.Menu.ESPTreasureText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_TREASURE")
-      );
-      this.Menu.ESPAnimalText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_ANIMAL")
-      );
-      this.Menu.ESPPuzzleText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_PUZZLE")
-      );
-      this.Menu.ESPCasketText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_SONANCE_CASKET")
-      );
-      this.Menu.ESPRockText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_ROCK")
-      );
-      this.Menu.ESPMutterflyText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_MUTTERFLY")
-      );
-      this.Menu.ESPBlobflyText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_BLOBFLY")
-      );
-
-      // buff
-      this.Menu.IllusiveSprintText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_ILLUSIVE_SPRINT")
-      );
-
-      // visual
-      this.Menu.CustomUidText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_CUSTOM_UID")
-      );
-      this.Menu.HideHUDText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_HIDE_HUD")
-      );
-      this.Menu.HideDmgText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_HIDE_DAMAGE_TEXT")
-      );
-      this.Menu.FPSUnlockerText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_FPS_UNLOCKER")
-      );
-      this.Menu.FPSShowText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_SHOW_FPS")
-      );
-      this.Menu.FOVText.SetText(ModLanguage_1.ModLanguage.ModTr("TEXT_FOV"));
-
-      // debug
-      this.Menu.DebugEntityText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_DEBUG_ENTITY")
-      );
-      this.Menu.ConsoleCommandText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_CONSOLE_COMMAND")
-      );
-
-      this.Menu.DisclaimerText.SetText(this.Getfreetip());
-      this.Menu.LanguageText.SetText(
-        ModLanguage_1.ModLanguage.ModTr("TEXT_LANGUAGE")
-      );
-    }
   }
 
   static Getfreetip() {
