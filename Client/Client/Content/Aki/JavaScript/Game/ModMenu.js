@@ -359,7 +359,7 @@ class MainMenu {
       });
 
       this.Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(2);
+        value = value.toFixed(1);
         this.Menu.PlayerSpeedValue.SetText(value);
         ModManager_1.ModManager.Settings.playerSpeedValue = value;
         this.KunLog("Player Speed Value: " + value);
