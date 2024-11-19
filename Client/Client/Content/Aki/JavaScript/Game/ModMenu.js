@@ -462,7 +462,7 @@ class MainMenu {
         ModMethod_1.ModMethod.AddBuffRequest(
           buffIds[ModManager_1.ModManager.Settings.BuffType]
         );
-        this.KunLog("Buff Requested: " + UID);
+        this.KunLog("Buff Requested: " + buffIds[ModManager_1.ModManager.Settings.BuffType]);
       });
 
       this.Menu.CustomBuffSubmit.OnClicked.Add(() => {
