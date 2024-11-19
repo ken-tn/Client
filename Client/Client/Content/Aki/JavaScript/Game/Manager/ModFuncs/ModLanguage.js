@@ -864,6 +864,16 @@ class ModLanguage {
       vi: "Blobfly",
     },
     {
+      Text: "TEXT_ILLUSIVE_SPRINT",
+      chs: "虚幻的冲刺",
+      en: "Illusive Sprint",
+      es: "Sprint Ilusivo",
+      id: "Sprint ilusif",
+      ja: "幻想的なスプリント",
+      ko: "환상적인 스프린트",
+      vi: "Chạy nước rút ảo ảnh",
+    },
+    {
       Text: "TEXT_NOCLIP",
       chs: "空中飞人",
       en: "No Clip",
@@ -962,7 +972,7 @@ class ModLanguage {
       ja: "トークンが無効です",
       ko: "토큰이 유효하지 않습니다",
       vi: "Thẻ không hợp lệ",
-    }
+    },
   ];
 
   static ModTr = (string) => {

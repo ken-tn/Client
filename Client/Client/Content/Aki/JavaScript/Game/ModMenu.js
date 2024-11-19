@@ -179,6 +179,85 @@ class MainMenu {
     DiscordGrant_1.DiscordGrant.GetToken();
   }
 
+  static SwitchTypeface(Typeface) {
+    let Texts = [
+      "AlwaysCritText",
+      "AntiDitherText",
+      "AutoDestroyText",
+      "AutoLootText",
+      "AutoPickTreasureText",
+      "AutoPuzzleText",
+      "BuffSwitchText",
+      "BuffText",
+      "ConsoleCommandText",
+      "CustomBuffText",
+      "CustomTPText",
+      "CustomUidText",
+      "DebugEntityText",
+      "DebugSwitchText",
+      "DisclaimerText",
+      "ESPAnimalText",
+      "ESPBlobflyText",
+      "ESPCasketText",
+      "ESPCollectionText",
+      "ESPMonsterText",
+      "ESPMutterflyText",
+      "ESPPuzzleText",
+      "ESPRockText",
+      "ESPShowBoxText",
+      "ESPShowDistanceText",
+      "ESPShowNameText",
+      "ESPSwitchText",
+      "ESPText",
+      "ESPTreasureText",
+      "FOVText",
+      "FPSShowText",
+      "FPSUnlockerText",
+      "GodModeText",
+      "HideDmgText",
+      "HideHUDText",
+      "HitMultiplierText",
+      "IllusiveSprintText",
+      "InfiniteStaminaText",
+      "KillAnimalText",
+      "KillAuraText",
+      "LanguageText",
+      "MarkTPText",
+      "MobVacuumText",
+      "NewAutoAbsorbText",
+      "NewKillAuraText",
+      "NoCDText",
+      "NoClipText",
+      "PerceptionRangeText",
+      "PlayerSpeedText",
+      "PlayerSwitchText",
+      "PlotSkipText",
+      "QuestTPText",
+      "SaveConfigText",
+      "TitleText",
+      "UISwitchText",
+      "VacuumCollectText",
+      "WeatherText",
+      "WorldSpeedText",
+      "WorldSwitchText",
+      "HeadingBuff",
+      "HeadingDebug",
+      "HeadingESP",
+      "HeadingESPFilter",
+      "HeadingPlayer",
+      "HeadingTeleport",
+      "HeadingUI",
+      "HeadingWorld",
+    ];
+    Typeface = new UE.FName(Typeface);
+
+    Texts.forEach((text) => {
+        this.KunLog(text);
+        this.Menu.SwitchFontTypeface(this.Menu[text], Typeface);
+        this.KunLog(`Switched ${text}`);
+    });
+  }
+
   static LoadRealMenu() {
     ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
     ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
@@ -203,6 +282,8 @@ class MainMenu {
 
     ESP_1.ESP.ESPCanvas.AddToViewport();
     ESP_1.ESP.ESPCanvas.SetVisibility(0);
+
+    this.SwitchTypeface("Ko");
 
     try {
       this.updateMenuState();
@@ -866,6 +947,11 @@ class MainMenu {
       );
       this.Menu.ESPBlobflyText.SetText(
         ModLanguage_1.ModLanguage.ModTr("TEXT_BLOBFLY")
+      );
+
+      // buff
+      this.Menu.IllusiveSprintText.SetText(
+        ModLanguage_1.ModLanguage.ModTr("TEXT_ILLUSIVE_SPRINT")
       );
 
       // visual
