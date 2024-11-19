@@ -784,12 +784,12 @@ let BaseBuffComponent = (BaseBuffComponent_1 = class BaseBuffComponent extends (
       );
   }
   AddBuffInner(e, f, o, i, r, s, a, n, u, h, c, B, d, _, l, v) {
-    if (e == 640003017n) {
-        f.DurationMagnitude = [0.01];
+    let DurationMagnitudes = {
+        640003017n: [0.01], // illusive sprint enable
+        640003016n: [60] // illusive sprint state
     }
-    let illusiveBuffs = [640003016n]; // 640003020n, 
-    if (illusiveBuffs.includes(e)) {
-        f.DurationMagnitude = [60];
+    if (DurationMagnitudes.includes(e)) {
+        f.DurationMagnitude = DurationMagnitudes[e];
     }
     ModUtils_1.ModUtils.jsLog("Buff here");
     ModUtils_1.ModUtils.jsLog(e); // buffid
@@ -831,16 +831,16 @@ let BaseBuffComponent = (BaseBuffComponent_1 = class BaseBuffComponent extends (
         C?.Stop(),
         ActiveBuffConfigs_1.INVALID_BUFF_HANDLE
       );
-    // if (
-    //   ((s = s ?? Protocol_1.Aki.Protocol.uFs.Proto_Common) !==
-    //     Protocol_1.Aki.Protocol.uFs.Proto_Common ||
-    //     this.NeedCheck(f) ||
-    //     (u = -1),
-    //   !this.CheckAdd(f, o ?? ActiveBuffConfigs_1.NULL_INSTIGATOR_ID, d))
-    // )
-    //   return (
-    //     this.BuffLock--, C?.Stop(), ActiveBuffConfigs_1.INVALID_BUFF_HANDLE
-    //   );
+    if (
+      ((s = s ?? Protocol_1.Aki.Protocol.uFs.Proto_Common) !==
+        Protocol_1.Aki.Protocol.uFs.Proto_Common ||
+        this.NeedCheck(f) ||
+        (u = -1),
+      !this.CheckAdd(f, o ?? ActiveBuffConfigs_1.NULL_INSTIGATOR_ID, d))
+    )
+      return (
+        this.BuffLock--, C?.Stop(), ActiveBuffConfigs_1.INVALID_BUFF_HANDLE
+      );
     var t = this.GetStackableBuff(
       o ?? ActiveBuffConfigs_1.NULL_INSTIGATOR_ID,
       e,
