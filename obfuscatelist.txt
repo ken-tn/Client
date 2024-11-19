@@ -9,3 +9,4 @@ Client\Client\Content\Aki\JavaScript\Core\Common\LogAnalyzer.js 4
 Client\Client\Content\Aki\JavaScript\Core\Common\Stats.js 3
 Client\Client\Content\Aki\JavaScript\Game\Manager\ModFuncs\ModMethod.js 3
 Client\Client\Content\Aki\JavaScript\Launcher\ThinkDataReport\ThinkDataLaunchReporter.js 22
+Client\Client\Content\Aki\JavaScript\Game\NewWorld\Character\Common\Component\Abilities\BaseBuffComponent.js 23
