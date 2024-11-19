@@ -84,12 +84,12 @@ class MainMenu {
 
     if (this.IsKey("X")) {
       if (this.isMenuShow) {
-        // ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
-        // ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
         this.Menu.PlayAnimClose();
       } else {
-        // ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(true);
-        // ModelManager_1.ModelManager.LoadingModel.SetIsLoading(true);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(true);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoading(true);
         this.Menu.SetVisibility(0);
         this.Menu.PlayAnimOpen();
       }
@@ -266,8 +266,8 @@ class MainMenu {
   }
 
   static LoadRealMenu() {
-    // ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
-    // ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
+    ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
+    ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
     DiscordGrant_1.DiscordGrant.SaveToken();
     // DCG.SetVisibility(2);
     IS_INVALID = false;
