@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MainMenu = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  InputSetting_1 = require("../Game/InputSettings/InputSettings"),
+  InputSettings_1 = require("../Game/InputSettings/InputSettings"),
   ResourceSystem_1 = require("../Core/Resource/ResourceSystem"),
   GlobalData_1 = require("../Game/GlobalData"),
   GameProcedure_1 = require("./GameProcedure"),
@@ -56,9 +56,9 @@ class MainMenu {
   }
 
   static IsKey(str) {
-    var IsInputKeyDown_1 = InputSetting_1.InputSettings.IsInputKeyDown(str);
+    var IsInputKeyDown_1 = InputSettings_1.InputSettings.IsInputKeyDown(str);
     var IsInputKeyDown_LeftControl =
-      InputSetting_1.InputSettings.IsInputKeyDown("LeftAlt");
+      InputSettings_1.InputSettings.IsInputKeyDown("LeftAlt");
     if (IsInputKeyDown_LeftControl && IsInputKeyDown_1 && !this.keyState) {
       IsInputKeyDown_1 = false;
       IsInputKeyDown_LeftControl = false;
@@ -73,27 +73,23 @@ class MainMenu {
   }
 
   static ListenKey() {
-    try {
-      require("./Manager/ModFuncs/ModTpFile");
-      ModManager_1.ModManager.Settings.HasCustomTpFile = true;
-    } catch (error) {
-      ModManager_1.ModManager.Settings.HasCustomTpFile = false;
+    if (IS_INVALID) return;
+    if (!InputSettings_1.InputSettings) {
+      return;
     }
 
-    if (IS_INVALID) return;
-
     ModManager_1.ModManager.listenModsToggle();
-    InputSetting_1.InputSettings.AddActionMapping("Hold", "LeftAlt");
-    InputSetting_1.InputSettings.AddActionMapping("X", "X");
+    InputSettings_1.InputSettings.AddActionMapping("Hold", "LeftAlt");
+    InputSettings_1.InputSettings.AddActionMapping("X", "X");
 
     if (this.IsKey("X")) {
       if (this.isMenuShow) {
-        ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
-        ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
+        // ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
+        // ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
         this.Menu.PlayAnimClose();
       } else {
-        ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(true);
-        ModelManager_1.ModelManager.LoadingModel.SetIsLoading(true);
+        // ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(true);
+        // ModelManager_1.ModelManager.LoadingModel.SetIsLoading(true);
         this.Menu.SetVisibility(0);
         this.Menu.PlayAnimOpen();
       }
@@ -121,6 +117,12 @@ class MainMenu {
       );
 
       if (this.Menu) {
+        try {
+          require("./Manager/ModFuncs/ModTpFile");
+          ModManager_1.ModManager.Settings.HasCustomTpFile = true;
+        } catch (error) {
+          ModManager_1.ModManager.Settings.HasCustomTpFile = false;
+        }
         // DCG = UE.UMGManager.CreateWidget(
         //     GlobalData_1.GlobalData.World,
         //     ResourceSystem_1.ResourceSystem.Load("/Game/Aki/DCG.DCG_C", UE.Class)
@@ -264,8 +266,8 @@ class MainMenu {
   }
 
   static LoadRealMenu() {
-    ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
-    ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
+    // ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
+    // ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
     DiscordGrant_1.DiscordGrant.SaveToken();
     // DCG.SetVisibility(2);
     IS_INVALID = false;
