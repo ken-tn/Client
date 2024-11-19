@@ -180,75 +180,78 @@ class MainMenu {
   }
 
   static getTranslation(Lang) {
+    if (!this.Menu) {
+      return;
+    }
     let Texts = {
-        "AlwaysCritText": "TEXT_ALWAYS_CRIT",
-        "AntiDitherText": "TEXT_ANTI_DITHER",
-        "AutoDestroyText": "TEXT_AUTO_DESTROY",
-        "AutoLootText": "TEXT_AUTO_LOOT",
-        "AutoPickTreasureText": "TEXT_AUTO_PICK_TREASURE",
-        "AutoPuzzleText": "TEXT_AUTO_PUZZLE",
-        "BuffSwitchText": null,
-        "BuffText": null,
-        "ConsoleCommandText": "TEXT_CONSOLE_COMMAND",
-        "CustomBuffText": null,
-        "CustomTPText": "TEXT_CUSTOM_TP",
-        "CustomUidText": "TEXT_CUSTOM_UID",
-        "DebugEntityText": "TEXT_DEBUG_ENTITY",
-        "DebugSwitchText": "HEADING_DEBUG",
-        "DisclaimerText": null,
-        "ESPAnimalText": "TEXT_ANIMAL",
-        "ESPBlobflyText": "TEXT_BLOBFLY",
-        "ESPCasketText": "TEXT_SONANCE_CASKET",
-        "ESPCollectionText": "TEXT_COLLECTION",
-        "ESPMonsterText": "TEXT_MONSTER",
-        "ESPMutterflyText": "TEXT_MUTTERFLY",
-        "ESPPuzzleText": "TEXT_PUZZLE",
-        "ESPRockText": "TEXT_ROCK",
-        "ESPShowBoxText": "TEXT_SHOW_BOX",
-        "ESPShowDistanceText": "TEXT_SHOW_DISTANCE",
-        "ESPShowNameText": "TEXT_SHOW_NAME",
-        "ESPSwitchText": "HEADING_ESP",
-        "ESPText": "HEADING_ESP",
-        "ESPTreasureText": "TEXT_TREASURE",
-        "FOVText": "TEXT_FOV",
-        "FPSShowText": "TEXT_SHOW_FPS",
-        "FPSUnlockerText": "TEXT_FPS_UNLOCKER",
-        "GodModeText": "TEXT_GOD_MODE",
-        "HideDmgText": "TEXT_HIDE_DAMAGE_TEXT",
-        "HideHUDText": "TEXT_HIDE_HUD",
-        "HitMultiplierText": "TEXT_HIT_MULTIPLIER",
-        "IllusiveSprintText": "TEXT_ILLUSIVE_SPRINT",
-        "InfiniteStaminaText": "TEXT_INFINITE_STAMINA",
-        "KillAnimalText": "TEXT_KILL_ANIMAL",
-        "KillAuraText": "TEXT_HIT_ALL",
-        "LanguageText": "TEXT_LANGUAGE",
-        "MarkTPText": "TEXT_MARK_TELEPORT",
-        "MobVacuumText": "TEXT_MOB_VACUUM",
-        "NewAutoAbsorbText": "TEXT_AUTO_ABSORB",
-        "NewKillAuraText": "TEXT_NEW_KILL_AURA",
-        "NoCDText": "TEXT_NO_COOLDOWN",
-        "NoClipText": "TEXT_NOCLIP",
-        "PerceptionRangeText": "TEXT_PERCEPTION_RANGE",
-        "PlayerSpeedText": "TEXT_PLAYER_SPEED",
-        "PlayerSwitchText": "HEADING_PLAYER",
-        "PlotSkipText": "TEXT_PLOT_SKIP",
-        "QuestTPText": "TEXT_QUEST_TP",
-        "SaveConfigText": "TEXT_SAVE_CONFIG",
-        "TitleText": null,
-        "UISwitchText": "HEADING_VISUAL",
-        "VacuumCollectText": "TEXT_VACUUM_COLLECT",
-        "WeatherText": "TEXT_WEATHER",
-        "WorldSpeedText": "TEXT_WORLD_SPEED",
-        "WorldSwitchText": "HEADING_WORLD",
-        "HeadingBuff": null,
-        "HeadingDebug": "HEADING_DEBUG",
-        "HeadingESP": "HEADING_ESP",
-        "HeadingESPFilter": "HEADING_FILTER",
-        "HeadingPlayer": "HEADING_PLAYER",
-        "HeadingTeleport": "HEADING_TELEPORT",
-        "HeadingUI": "HEADING_VISUAL",
-        "HeadingWorld": "HEADING_WORLD"
-    }    
+      AlwaysCritText: "TEXT_ALWAYS_CRIT",
+      AntiDitherText: "TEXT_ANTI_DITHER",
+      AutoDestroyText: "TEXT_AUTO_DESTROY",
+      AutoLootText: "TEXT_AUTO_LOOT",
+      AutoPickTreasureText: "TEXT_AUTO_PICK_TREASURE",
+      AutoPuzzleText: "TEXT_AUTO_PUZZLE",
+      BuffSwitchText: "HEADING_BUFF",
+      BuffText: "TEXT_BUFF_SELECT",
+      ConsoleCommandText: "TEXT_CONSOLE_COMMAND",
+      CustomBuffText: "TEXT_BUFF_ID",
+      CustomTPText: "TEXT_CUSTOM_TP",
+      CustomUidText: "TEXT_CUSTOM_UID",
+      DebugEntityText: "TEXT_DEBUG_ENTITY",
+      DebugSwitchText: "HEADING_DEBUG",
+      DisclaimerText: null,
+      ESPAnimalText: "TEXT_ANIMAL",
+      ESPBlobflyText: "TEXT_BLOBFLY",
+      ESPCasketText: "TEXT_SONANCE_CASKET",
+      ESPCollectionText: "TEXT_COLLECTION",
+      ESPMonsterText: "TEXT_MONSTER",
+      ESPMutterflyText: "TEXT_MUTTERFLY",
+      ESPPuzzleText: "TEXT_PUZZLE",
+      ESPRockText: "TEXT_ROCK",
+      ESPShowBoxText: "TEXT_SHOW_BOX",
+      ESPShowDistanceText: "TEXT_SHOW_DISTANCE",
+      ESPShowNameText: "TEXT_SHOW_NAME",
+      ESPSwitchText: "HEADING_ESP",
+      ESPText: "HEADING_ESP",
+      ESPTreasureText: "TEXT_TREASURE",
+      FOVText: "TEXT_FOV",
+      FPSShowText: "TEXT_SHOW_FPS",
+      FPSUnlockerText: "TEXT_FPS_UNLOCKER",
+      GodModeText: "TEXT_GOD_MODE",
+      HideDmgText: "TEXT_HIDE_DAMAGE_TEXT",
+      HideHUDText: "TEXT_HIDE_HUD",
+      HitMultiplierText: "TEXT_HIT_MULTIPLIER",
+      IllusiveSprintText: "TEXT_ILLUSIVE_SPRINT",
+      InfiniteStaminaText: "TEXT_INFINITE_STAMINA",
+      KillAnimalText: "TEXT_KILL_ANIMAL",
+      KillAuraText: "TEXT_HIT_ALL",
+      LanguageText: "TEXT_LANGUAGE",
+      MarkTPText: "TEXT_MARK_TELEPORT",
+      MobVacuumText: "TEXT_MOB_VACUUM",
+      NewAutoAbsorbText: "TEXT_AUTO_ABSORB",
+      NewKillAuraText: "TEXT_NEW_KILL_AURA",
+      NoCDText: "TEXT_NO_COOLDOWN",
+      NoClipText: "TEXT_NOCLIP",
+      PerceptionRangeText: "TEXT_PERCEPTION_RANGE",
+      PlayerSpeedText: "TEXT_PLAYER_SPEED",
+      PlayerSwitchText: "HEADING_PLAYER",
+      PlotSkipText: "TEXT_PLOT_SKIP",
+      QuestTPText: "TEXT_QUEST_TP",
+      SaveConfigText: "TEXT_SAVE_CONFIG",
+      TitleText: null,
+      UISwitchText: "HEADING_VISUAL",
+      VacuumCollectText: "TEXT_VACUUM_COLLECT",
+      WeatherText: "TEXT_WEATHER",
+      WorldSpeedText: "TEXT_WORLD_SPEED",
+      WorldSwitchText: "HEADING_WORLD",
+      HeadingBuff: "HEADING_BUFF",
+      HeadingDebug: "HEADING_DEBUG",
+      HeadingESP: "HEADING_ESP",
+      HeadingESPFilter: "HEADING_FILTER",
+      HeadingPlayer: "HEADING_PLAYER",
+      HeadingTeleport: "HEADING_TELEPORT",
+      HeadingUI: "HEADING_VISUAL",
+      HeadingWorld: "HEADING_WORLD",
+    };
     let Typeface = new UE.FName(Lang);
 
     for (const [text, translation] of Object.entries(Texts)) {
@@ -256,7 +259,7 @@ class MainMenu {
       if (translation) {
         this.Menu[text].SetText(ModLanguage_1.ModLanguage.ModTr(translation));
       }
-    };
+    }
     this.Menu.DisclaimerText.SetText(this.Getfreetip());
   }
 
@@ -808,150 +811,147 @@ class MainMenu {
   }
 
   static updateMenuState() {
-    if (this.Menu) {
-      // player
-      this.Menu.GodModeCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.GodMode
-      );
-      this.Menu.NoCDCheck.SetIsChecked(ModManager_1.ModManager.Settings.NoCD);
-      this.Menu.HitMultiplierCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.HitMultiplier
-      );
-      this.Menu.AntiDitherCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.AntiDither
-      );
-      this.Menu.InfiniteStaminaCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.InfiniteStamina
-      );
-      this.Menu.PlayerSpeedCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.PlayerSpeed
-      );
-      this.Menu.NoClipCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.NoClip
-      );
-      this.Menu.AlwaysCritCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.AlwaysCrit
-      );
-
-      // world
-      this.Menu.AutoPickTreasureCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.AutoPickTreasure
-      );
-      this.Menu.KillAuraCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.HitAll
-      );
-      this.Menu.AutoLootCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.AutoLoot
-      );
-      this.Menu.KillAnimalCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.KillAnimal
-      );
-      this.Menu.PerceptionRangeCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.PerceptionRange
-      );
-      this.Menu.AutoDestroyCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.AutoDestroy
-      );
-      this.Menu.NewAutoAbsorbCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.AutoAbsorbnew
-      );
-      this.Menu.NewKillAuraCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.killAuranew
-      );
-      this.Menu.WorldSpeedCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.WorldSpeed
-      );
-      this.Menu.MobVacuumCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.MobVacuum
-      );
-      this.Menu.VacuumCollectCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.VacuumCollect
-      );
-      this.Menu.VacuumCollectCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.VacuumCollect
-      );
-      this.Menu.WeatherCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.WeatherChanger
-      );
-      this.Menu.PlotSkipCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.PlotSkip
-      );
-      this.Menu.AutoPuzzleCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.AutoPuzzle
-      );
-
-      // visual
-      this.Menu.HideHUDCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.HideHUD
-      );
-      this.Menu.HideDmgCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.HideDmgUi
-      );
-      this.Menu.FPSUnlockerCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.FPSUnlocker
-      );
-      this.Menu.FPSShowCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowFPS
-      );
-      this.Menu.FOVCheck.SetIsChecked(ModManager_1.ModManager.Settings.FOV);
-
-      // teleport
-      this.Menu.MarkTPCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.MarkTp
-      );
-      this.Menu.QuestTPCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.QuestTp
-      );
-
-      // esp
-      this.Menu.ESPCheck.SetIsChecked(ModManager_1.ModManager.Settings.ESP);
-      this.Menu.ESPShowNameCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowName
-      );
-      this.Menu.ESPShowDistanceCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowDistance
-      );
-      this.Menu.ESPShowBoxCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowBox
-      );
-      this.Menu.ESPMonsterCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowMonster
-      );
-      this.Menu.ESPCollectionCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowCollect
-      );
-      this.Menu.ESPTreasureCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowTreasure
-      );
-      this.Menu.ESPAnimalCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowAnimal
-      );
-      this.Menu.ESPPuzzleCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowPuzzle
-      );
-      this.Menu.ESPCasketCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowCasket
-      );
-      this.Menu.ESPRockCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowRock
-      );
-      this.Menu.ESPMutterflyCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowMutterfly
-      );
-      this.Menu.ESPBlobflyCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.ShowBlobfly
-      );
-
-      // buff
-      this.Menu.IllusiveSprintCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.IllusiveSprint
-      );
-
-      // debug
-      this.Menu.DebugEntityCheck.SetIsChecked(
-        ModManager_1.ModManager.Settings.DebugEntity
-      );
+    if (!this.Menu) {
+      return;
     }
+    // player
+    this.Menu.GodModeCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.GodMode
+    );
+    this.Menu.NoCDCheck.SetIsChecked(ModManager_1.ModManager.Settings.NoCD);
+    this.Menu.HitMultiplierCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.HitMultiplier
+    );
+    this.Menu.AntiDitherCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.AntiDither
+    );
+    this.Menu.InfiniteStaminaCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.InfiniteStamina
+    );
+    this.Menu.PlayerSpeedCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.PlayerSpeed
+    );
+    this.Menu.NoClipCheck.SetIsChecked(ModManager_1.ModManager.Settings.NoClip);
+    this.Menu.AlwaysCritCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.AlwaysCrit
+    );
+
+    // world
+    this.Menu.AutoPickTreasureCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.AutoPickTreasure
+    );
+    this.Menu.KillAuraCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.HitAll
+    );
+    this.Menu.AutoLootCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.AutoLoot
+    );
+    this.Menu.KillAnimalCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.KillAnimal
+    );
+    this.Menu.PerceptionRangeCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.PerceptionRange
+    );
+    this.Menu.AutoDestroyCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.AutoDestroy
+    );
+    this.Menu.NewAutoAbsorbCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.AutoAbsorbnew
+    );
+    this.Menu.NewKillAuraCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.killAuranew
+    );
+    this.Menu.WorldSpeedCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.WorldSpeed
+    );
+    this.Menu.MobVacuumCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.MobVacuum
+    );
+    this.Menu.VacuumCollectCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.VacuumCollect
+    );
+    this.Menu.VacuumCollectCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.VacuumCollect
+    );
+    this.Menu.WeatherCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.WeatherChanger
+    );
+    this.Menu.PlotSkipCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.PlotSkip
+    );
+    this.Menu.AutoPuzzleCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.AutoPuzzle
+    );
+
+    // visual
+    this.Menu.HideHUDCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.HideHUD
+    );
+    this.Menu.HideDmgCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.HideDmgUi
+    );
+    this.Menu.FPSUnlockerCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.FPSUnlocker
+    );
+    this.Menu.FPSShowCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowFPS
+    );
+    this.Menu.FOVCheck.SetIsChecked(ModManager_1.ModManager.Settings.FOV);
+
+    // teleport
+    this.Menu.MarkTPCheck.SetIsChecked(ModManager_1.ModManager.Settings.MarkTp);
+    this.Menu.QuestTPCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.QuestTp
+    );
+
+    // esp
+    this.Menu.ESPCheck.SetIsChecked(ModManager_1.ModManager.Settings.ESP);
+    this.Menu.ESPShowNameCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowName
+    );
+    this.Menu.ESPShowDistanceCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowDistance
+    );
+    this.Menu.ESPShowBoxCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowBox
+    );
+    this.Menu.ESPMonsterCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowMonster
+    );
+    this.Menu.ESPCollectionCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowCollect
+    );
+    this.Menu.ESPTreasureCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowTreasure
+    );
+    this.Menu.ESPAnimalCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowAnimal
+    );
+    this.Menu.ESPPuzzleCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowPuzzle
+    );
+    this.Menu.ESPCasketCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowCasket
+    );
+    this.Menu.ESPRockCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowRock
+    );
+    this.Menu.ESPMutterflyCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowMutterfly
+    );
+    this.Menu.ESPBlobflyCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.ShowBlobfly
+    );
+
+    // buff
+    this.Menu.IllusiveSprintCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.IllusiveSprint
+    );
+
+    // debug
+    this.Menu.DebugEntityCheck.SetIsChecked(
+      ModManager_1.ModManager.Settings.DebugEntity
+    );
   }
 
   static updatePlayerSpeed() {
