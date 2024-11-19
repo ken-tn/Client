@@ -35,7 +35,6 @@ const { ModUtils } = require("./ModUtils");
 
 class ModMethod {
   static best = {};
-  static sprintTicks = 0;
 
   static GenerateBest() {
     const damageBlacklist = [
@@ -383,18 +382,61 @@ class ModMethod {
     }, 100);
   }
 
+  static SprintTimer;
+  static async OnIllusiveSprintAdded(t, HasTag) {
+    if (!ModManager_1.ModManager.Settings.IllusiveSprint || !HasTag) {
+      return;
+    }
+    if (ModMethod.SprintTimer) {
+      clearTimeout(ModMethod.SprintTimer); // limit to 1 recursion
+    }
+    // sprinting
+    let BaseTagComponent = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
+      ?.GetComponent(195)
+      .GetExactEntity()
+      ?.GetComponent(191);
+    ModMethod.SprintTimer = setTimeout(
+      () => {
+        // this (self) is changed, use ModMethod instead
+        ModMethod.AddBuffRequest(640003017n);
+        ModMethod.OnIllusiveSprintAdded(t, BaseTagComponent.HasTag(917667812));
+      },
+      ModManager_1.ModManager.Settings.PlayerSpeed
+        ? 3500 / ModManager_1.ModManager.Settings.playerSpeedValue
+        : 3500
+    );
+  }
+
+  static CurrentCharacter;
+  static VisitedCharacters = [];
   static async ApplyBuffs() {
-    if (ModManager_1.ModManager.Settings.IllusiveSprint) {
-      // 500ms runtime
-      this.sprintTicks++;
-      if (this.sprintTicks > ((3500 / ModManager_1.ModManager.Settings.playerSpeedValue) / 500)) {
-        this.AddBuffRequest(640003017n);
-        this.sprintTicks = 0;
-      }
-      //   let tags = [640003016n, 640003019n, 640003020n, 640003023n];
-      //   for (let tag in tags) {
-      //     this.AddBuffRequest(tag);
-      //   }
+    // setup listeners
+    let t = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint();
+    if (!t) {
+      return;
+    }
+
+    // BaseTagComponent
+    let BaseTagComponent = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
+      ?.GetComponent(195)
+      .GetExactEntity()
+      ?.GetComponent(191);
+    if (this.CurrentCharacter !== t && !this.VisitedCharacters.includes(t)) {
+      ModUtils.jsLog("Initialized listener");
+      this.CurrentCharacter = t;
+      this.VisitedCharacters.push(t);
+      BaseTagComponent.ListenForTagAddOrRemove(
+        917667812,
+        this.OnIllusiveSprintAdded
+      );
+    }
+
+    if (
+      ModManager_1.ModManager.Settings.IllusiveSprint &&
+      !BaseTagComponent.HasTag(917667812) && // not sprinting ["关卡.子弹跑.生效中", 917667812],
+      !BaseTagComponent.HasTag(-1935387692) // doesn't have buff already ["关卡.子弹跑.可使用", -1935387692],
+    ) {
+      this.AddBuffRequest(640003017n);
     }
   }
 

@@ -372,7 +372,7 @@ class MainMenu {
       });
 
       this.Menu.BuffSubmit.OnClicked.Add(() => {
-        let buffIds = [83010902n, 83011302n, 83010201n];
+        let buffIds = [83010902n, 83011302n, 83011202n, 83010201n];
         ModMethod_1.ModMethod.AddBuffRequest(
           buffIds[ModManager_1.ModManager.Settings.BuffType]
         );
@@ -1100,7 +1100,7 @@ class MainMenu {
   }
 
   static buffValue() {
-    return ["50% Echo", "50% Materials", "30% Atk"];
+    return ["50% Echo", "50% Materials", "50% Credits", "30% Atk"];
   }
 
   static WeatherValue() {
