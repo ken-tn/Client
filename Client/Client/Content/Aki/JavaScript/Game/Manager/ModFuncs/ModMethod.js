@@ -308,7 +308,6 @@ class ModMethod {
       .GetExactEntity()
       ?.GetComponent(191);
     if (this.CurrentCharacter !== t && !this.VisitedCharacters.includes(t)) {
-      ModUtils.jsLog("Initialized listener");
       this.CurrentCharacter = t;
       this.VisitedCharacters.push(t);
       BaseTagComponent.ListenForTagAddOrRemove(
