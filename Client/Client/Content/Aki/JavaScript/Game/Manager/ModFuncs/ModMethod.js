@@ -32,6 +32,9 @@ const puerts_1 = require("puerts"),
   ActiveBuffConfigs_1 = require("../../NewWorld/Character/Common/Component/Abilities/Buff/ActiveBuffConfigs"),
   ModDebuger_1 = require("./ModDebuger");
 
+let SprintTimer;
+let CurrentCharacter;
+let VisitedCharacters = [];
 class ModMethod {
   static getSl(lv) {
     if (lv < 21) {
@@ -268,20 +271,19 @@ class ModMethod {
     }, 100);
   }
 
-  static SprintTimer;
   static async OnIllusiveSprintAdded(t, HasTag) {
     if (!ModManager_1.ModManager.Settings.IllusiveSprint || !HasTag) {
       return;
     }
-    if (ModMethod.SprintTimer) {
-      clearTimeout(ModMethod.SprintTimer); // limit to 1 recursion
+    if (SprintTimer) {
+      clearTimeout(SprintTimer); // limit to 1 recursion
     }
     // sprinting
     let BaseTagComponent = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
       ?.GetComponent(195)
       .GetExactEntity()
       ?.GetComponent(191);
-    ModMethod.SprintTimer = setTimeout(
+    SprintTimer = setTimeout(
       () => {
         // this (self) is changed, use ModMethod instead
         ModMethod.AddBuffRequest(640003017n);
@@ -293,8 +295,6 @@ class ModMethod {
     );
   }
 
-  static CurrentCharacter;
-  static VisitedCharacters = [];
   static async ApplyBuffs() {
     // setup listeners
     let t = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint();
@@ -307,9 +307,9 @@ class ModMethod {
       ?.GetComponent(195)
       .GetExactEntity()
       ?.GetComponent(191);
-    if (this.CurrentCharacter !== t && !this.VisitedCharacters.includes(t)) {
-      this.CurrentCharacter = t;
-      this.VisitedCharacters.push(t);
+    if (CurrentCharacter !== t && !VisitedCharacters.includes(t)) {
+      CurrentCharacter = t;
+      VisitedCharacters.push(t);
       BaseTagComponent.ListenForTagAddOrRemove(
         917667812,
         this.OnIllusiveSprintAdded
