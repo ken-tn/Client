@@ -130,7 +130,8 @@ class EntityFilter {
     "Monster144", // ranger
     "Monster143", // ranger
     "Monster142", // ranger
-    "Floater_1.2"
+    "Floater_1.2",
+    "Floater_1.3_FollowAndShoot",
   ]
 
   static isFilter(list, blueprint) {
